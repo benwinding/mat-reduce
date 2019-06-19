@@ -19,6 +19,7 @@ import {
   MatProgressSpinnerModule
 } from "@angular/material";
 import { CommonModule } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { CommonModule } from '@angular/common';
     BrowserModule,
     ReactiveFormsModule,
     FormsModule,
+    BrowserAnimationsModule,
     MatInputModule,
     MatButtonModule,
     MatDialogModule,

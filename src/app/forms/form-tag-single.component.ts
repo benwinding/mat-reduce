@@ -11,16 +11,15 @@ import {
 import {
   MatAutocomplete,
   MatAutocompleteSelectedEvent,
-  MatAutocompleteTrigger
 } from '@angular/material';
 import { FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, Subject } from 'rxjs';
 import { auditTime, map, mergeMap, startWith, take } from 'rxjs/operators';
 import { ConfirmationService } from '../dialogs/app-confirmation.component';
 import { FormBase } from './form-base-class';
 import { Tag } from './Tag';
 
-const uuidv1 = require('uuid/v1');
+import {v1 as uuidv1 } from 'uuid';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -38,16 +37,6 @@ const uuidv1 = require('uuid/v1');
         [matAutocomplete]="auto"
         [name]="autoCompleteObscureName"
       />
-      <button
-        *ngIf="textInput.nativeElement.focused"
-        class="add-icon"
-        mat-mini-fab
-        matSuffix
-        color="primary"
-        matTooltip="Add tag to global taglist"
-      >
-        <mat-icon>add_circle</mat-icon>
-      </button>
       <mat-icon
         class="is-grey r15"
         matTooltip="Add a single tag here, you can manage all your tags using the tag list editor in the settings menu"
@@ -70,6 +59,9 @@ const uuidv1 = require('uuid/v1');
   `,
   styles: [
     `
+      .full-width {
+        width: 100%;
+      }
       .add-icon {
         position: absolute;
         right: 43px;
@@ -111,8 +103,7 @@ export class AppFormTagSingleComponent extends FormBase<Tag>
 
   inputTextControl = new FormControl();
 
-  // Subscriptions
-  subscriptionTags: Subscription;
+  destroyed = new Subject<void>();
 
   @ViewChild('auto')
   matAutocomplete: MatAutocomplete;
@@ -137,8 +128,9 @@ export class AppFormTagSingleComponent extends FormBase<Tag>
     this.checkExists(this.selectChoices$, 'this.selectChoices$');
 
     this.internalControl.valueChanges.pipe(take(1)).subscribe(() => {
-      if (this.value && this.value.hasOwnProperty('name')) {
-        this.inputTextControl.setValue(this.value.name);
+      const currentTagValue = this.value;
+      if (!!currentTagValue && currentTagValue.hasOwnProperty('name')) {
+        this.inputTextControl.patchValue(currentTagValue.name);
       }
     });
 
@@ -176,6 +168,10 @@ export class AppFormTagSingleComponent extends FormBase<Tag>
     );
   }
 
+  ngOnDestroy() {
+    this.destroyed.next();
+  }
+
   setDisabledState?(isDisabled: boolean): void {
     if (isDisabled) {
       this.inputTextControl.disable();
@@ -202,10 +198,6 @@ export class AppFormTagSingleComponent extends FormBase<Tag>
     this.value = newTag;
     this.inputTextControl.patchValue(newTag.name);
     this.selected.emit(newTag);
-  }
-
-  selectTag($event) {
-    console.log($event);
   }
 
   async onBlur() {

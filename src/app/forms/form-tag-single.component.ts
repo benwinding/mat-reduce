@@ -1,3 +1,4 @@
+// tslint:disable: variable-name
 import {
   Component,
   EventEmitter,
@@ -6,53 +7,74 @@ import {
   OnDestroy,
   OnInit,
   Output,
-  ViewChild
+  ViewChild,
+  ElementRef
 } from '@angular/core';
 import {
   MatAutocomplete,
   MatAutocompleteSelectedEvent,
+  MatChipInputEvent,
+  MatSnackBar,
+  MatAutocompleteTrigger
 } from '@angular/material';
 import { FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Observable, Subscription, Subject } from 'rxjs';
-import { auditTime, map, mergeMap, startWith, take } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { map, startWith, takeUntil } from 'rxjs/operators';
 import { ConfirmationService } from '../dialogs/app-confirmation.component';
 import { FormBase } from './form-base-class';
 import { Tag } from './Tag';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 
-import {v1 as uuidv1 } from 'uuid';
+import { v1 as uuidv1 } from 'uuid';
 
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'form-tag-single',
   template: `
     <mat-form-field class="full-width">
-      <input
-        #textInput
-        matInput
-        type="text"
-        (keyup)="preventEnterKey($event)"
-        (keydown)="preventEnterKey($event)"
-        [placeholder]="placeholder"
-        [formControl]="inputTextControl"
-        [matAutocomplete]="auto"
-        [name]="autoCompleteObscureName"
-      />
-      <mat-icon
-        class="is-grey r15"
-        matTooltip="Add a single tag here, you can manage all your tags using the tag list editor in the settings menu"
-        matBadge="1"
-        matSuffix
-        >local_offer</mat-icon
-      >
-      <mat-autocomplete
-        #auto="matAutocomplete"
-        (optionSelected)="onOptionSelected($event)"
-      >
-        <mat-option
-          *ngFor="let tag of this.filteredTags$ | async"
-          [value]="tag.name"
+      <mat-chip-list #chipList>
+        <mat-chip
+          *ngIf="selectedTag as tag"
+          [selectable]="selectable"
+          [removable]="removable"
+          (removed)="removeTagChip(tag)"
+          [disabled]="this.internalControl.disabled"
         >
           {{ tag.name }}
+          <mat-icon
+            matChipRemove
+            *ngIf="removable && this.internalControl.enabled"
+            >cancel</mat-icon
+          >
+        </mat-chip>
+        <input
+          [placeholder]="placeholder"
+          #textInput
+          [formControl]="inputTextControl"
+          [matAutocomplete]="auto"
+          [matChipInputFor]="chipList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          [matChipInputAddOnBlur]="addOnBlur"
+          (matChipInputTokenEnd)="addFromTextInput($event)"
+          (keydown)="focusOnEnter($event)"
+        />
+        <mat-icon
+          class="is-grey r15"
+          matTooltip="Add a single tag here, you can manage all your tags using the tag list editor in the settings menu"
+          matBadge="1"
+          matSuffix
+          >local_offer</mat-icon
+        >
+      </mat-chip-list>
+      <mat-autocomplete
+        #auto="matAutocomplete"
+        (optionSelected)="optionSelectedFromList($event)"
+      >
+        <mat-option
+          *ngFor="let choiceName of filteredTagNames | async"
+          [value]="choiceName"
+        >
+          {{ choiceName }}
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>
@@ -61,10 +83,6 @@ import {v1 as uuidv1 } from 'uuid';
     `
       .full-width {
         width: 100%;
-      }
-      .add-icon {
-        position: absolute;
-        right: 43px;
       }
       .is-grey {
         color: grey;
@@ -95,27 +113,80 @@ import {v1 as uuidv1 } from 'uuid';
 })
 export class AppFormTagSingleComponent extends FormBase<Tag>
   implements OnInit, OnDestroy {
+  // EXTERNAL API
+  @Input() placeholder = '';
+  private _choices: Tag[];
   @Input()
-  placeholder = '';
+  set choices(newChoices) {
+    if (!newChoices) {
+      newChoices = [];
+    }
+    this._choices = newChoices;
+  }
+  get choices() {
+    return this._choices;
+  }
+  @Input() customValues: boolean;
+  @Input() removable: boolean;
+  @Output() addedNewTag = new EventEmitter<Tag>();
 
-  filteredTags$: Observable<Tag[]>;
-  choicesArr: Tag[];
+  // INTERNAL
 
+  get selectedTag() {
+    return this.value;
+  }
+  get choicesStrings(): string[] {
+    return this.choices.map(t => (!!t ? t.name : ''));
+  }
+  visible = true;
+  selectable = true;
+  addOnBlur = true;
+  separatorKeysCodes: number[] = [ENTER, COMMA];
   inputTextControl = new FormControl();
+  filteredTagNames: Observable<string[]>;
 
-  destroyed = new Subject<void>();
-
+  @ViewChild('textInput') textInput: ElementRef<HTMLInputElement>;
+  @ViewChild('textInput', { read: MatAutocompleteTrigger }) matAutocompleteTrigger: MatAutocompleteTrigger;
   @ViewChild('auto')
   matAutocomplete: MatAutocomplete;
 
-  // Variables Passed into this component
-  @Input() selectChoices$: Observable<Tag[]>;
-  @Input() customValues: boolean;
-  @Output() addedNewTag = new EventEmitter<Tag>();
-  @Output() selected = new EventEmitter<Tag>();
+  destroyed = new Subject<void>();
 
-  constructor(private confirm: ConfirmationService) {
+  constructor(
+    private confirm: ConfirmationService,
+    private snack: MatSnackBar
+  ) {
     super();
+  }
+
+  ngOnInit() {
+    this.checkExists(this.choices, 'this.selectChoices$');
+
+    this.filteredTagNames = this.inputTextControl.valueChanges.pipe(
+      startWith(null),
+      map((tagName: string | null) =>
+        tagName ? this._filter(tagName) : this.getChoicesMinusSelected()
+      )
+    );
+  }
+
+  ngOnDestroy() {
+    this.destroyed.next();
+  }
+
+  private getChoicesMinusSelected(): string[] {
+    const selectedTagName = this.selectedTag ? this.selectedTag.name : '';
+    const alreadySelectedSet = new Set([selectedTagName]);
+    return this.choicesStrings.filter(
+      choice => !alreadySelectedSet.has(choice)
+    );
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.getChoicesMinusSelected().filter(
+      choice => choice.toLowerCase().indexOf(filterValue) === 0
+    );
   }
 
   checkExists(val, name) {
@@ -124,52 +195,101 @@ export class AppFormTagSingleComponent extends FormBase<Tag>
     }
   }
 
-  ngOnInit() {
-    this.checkExists(this.selectChoices$, 'this.selectChoices$');
-
-    this.internalControl.valueChanges.pipe(take(1)).subscribe(() => {
-      const currentTagValue = this.value;
-      if (!!currentTagValue && currentTagValue.hasOwnProperty('name')) {
-        this.inputTextControl.patchValue(currentTagValue.name);
-      }
-    });
-
-    // this.inputTextControl.valueChanges.subscribe(() => {
-    // })
-    //  selectChoices resolves (once)
-    this.filteredTags$ = this.selectChoices$.pipe(
-      mergeMap(selectChoicesArr => {
-        console.log('form-tag-single: NewChoices', { selectChoicesArr });
-        this.choicesArr = selectChoicesArr;
-
-        // set the tags filtering pipe
-        return this.inputTextControl.valueChanges.pipe(
-          auditTime(300),
-          startWith(null),
-          map((keyboardInput: string) => {
-            // Filter based on the input value
-            if (!keyboardInput) {
-              return selectChoicesArr;
-            }
-            return selectChoicesArr.filter(val => {
-              if (!val.name && !val.name.length) {
-                return false;
-              }
-              const valLower = val.name.toLowerCase();
-              const keyLower = (keyboardInput + '').toLowerCase();
-              if (valLower.includes(keyLower)) {
-                return true;
-              }
-              return false;
-            });
-          })
-        );
-      })
-    );
+  removeTagChip(tagToRemove: Tag) {
+    this.log('removeTagChip', { tagToRemove });
+    this.matAutocompleteTrigger.closePanel();
+    this.value = null;
+    this.inputTextControl.setValue(null);
   }
 
-  ngOnDestroy() {
-    this.destroyed.next();
+  async addFromTextInput(event: MatChipInputEvent): Promise<void> {
+    const value = event.value;
+    const inputTrimmed = (value || '').trim();
+    if (!inputTrimmed) {
+      this.resetTextInput();
+      return;
+    }
+    this.log('addFromTextInput', { value: event.value });
+    // Add fruit only when MatAutocomplete is not open
+    // To make sure this does not conflict with OptionSelected Event
+    if (this.matAutocomplete.isOpen) {
+      this.resetTextInput();
+      return;
+    }
+    if (!this.customValues) {
+      this.resetTextInput();
+      this.snack.open('Must select item from list', 'Close', {
+        duration: 3000,
+        horizontalPosition: 'center',
+        verticalPosition: 'bottom'
+      });
+      this.log('addFromTextInput() unable to add custom values...');
+      return;
+    }
+    this.resetTextInput();
+    const confirmed = await this.confirm.AskConfirm(
+      `Are you sure you want to add: "${inputTrimmed}" to the global list?`
+    );
+    if (!confirmed) {
+      this.log('addFromTextInput() not confirmed, nothing changed...');
+      this.notify('Nothing added globally');
+      return;
+    }
+    const newTag = await this.makeNewTag(inputTrimmed);
+    this.addedNewTag.emit(newTag);
+    this.choices.push(newTag);
+    this.addedTagToInternalValue(newTag);
+    this.notify(`Adding "${newTag.name}" to the global list...`);
+    this.log('addFromTextInput() added new tag', { newTag, confirmed });
+  }
+
+  resetTextInput() {
+    // Reset the input value
+    this.textInput.nativeElement.value = '';
+    this.inputTextControl.setValue('');
+  }
+
+  optionSelectedFromList(event: MatAutocompleteSelectedEvent): void {
+    this.log('optionSelectedFromList()', {
+      event,
+      value: event.option.viewValue
+    });
+    const autoCompleteValue = event.option.viewValue;
+    const selectedTag = [...(this.choices || [])]
+      .filter(tag => tag.name === autoCompleteValue)
+      .pop();
+    if (!selectedTag) {
+      this.warn(
+        'optionSelectedFromList() not sure how autocomplete selected something not in the list...'
+      );
+      return;
+    }
+    this.addedTagToInternalValue(selectedTag);
+    this.textInput.nativeElement.value = '';
+    this.textInput.nativeElement.blur();
+    this.inputTextControl.setValue(null);
+  }
+
+  async makeNewTag(name): Promise<Tag> {
+    const newTagId = uuidv1();
+    const newTag: Tag = {
+      id: newTagId,
+      name: name.trim()
+    };
+    return newTag;
+  }
+
+  private addedTagToInternalValue(newTag: Tag) {
+    this.value = newTag;
+  }
+
+  focusOnEnter(e: KeyboardEvent) {
+    if (e.keyCode === 13) {
+      this.log('enter key pressed', { key: e.key, code: e.keyCode });
+      setTimeout(() => {
+        this.textInput.nativeElement.focus();
+      });
+    }
   }
 
   setDisabledState?(isDisabled: boolean): void {
@@ -181,91 +301,25 @@ export class AppFormTagSingleComponent extends FormBase<Tag>
     super.setDisabledState(isDisabled);
   }
 
-  preventEnterKey(e: KeyboardEvent) {
-    if (e.keyCode === 13) {
-      e.preventDefault();
-    }
-  }
-
-  resetTag() {
-    this.inputTextControl.setValidators(this.internalControl.validator);
-    this.inputTextControl.setValue(null);
-    this.value = null;
-    console.log('form-tag-single: resetTag');
-  }
-
-  setTag(newTag: Tag) {
-    this.value = newTag;
-    this.inputTextControl.patchValue(newTag.name);
-    this.selected.emit(newTag);
-  }
-
-  async onBlur() {
-    const input = this.inputTextControl.value;
-    console.log('form-tag-single: onBlur()', {
-      inputValue: input,
-      autocompleteValue: this.matAutocomplete
+  notify(message: string) {
+    this.snack.open(message, 'Close', {
+      duration: 3000,
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom'
     });
-    const hasInput = !!input;
-    // no input
-    if (!hasInput) {
-      this.resetTag();
-      return;
-    }
-    const inputTrimmed = input ? input.trim() : '';
-    const matchedTag = this.choicesArr
-      .filter(v => v.name.toLowerCase() === inputTrimmed.toLowerCase())
-      .pop();
-
-    if (matchedTag) {
-      this.setTag(matchedTag);
-      return;
-    }
-    if (!this.customValues) {
-      this.resetTag();
-      return;
-    }
-    // can add custom
-    const newTag = await this.getMakeNewTag(inputTrimmed);
-    if (newTag) {
-      this.addedNewTag.emit(newTag);
-      this.setTag(newTag);
-    } else {
-      this.resetTag();
-    }
   }
 
-  onSelectionChange(e: MatAutocompleteSelectedEvent) {
-    const selectedTagName = e.option.value;
-    console.log('form-tag-single: onSelectionChange()', { selectedTagName });
-    const selectedTag = this.choicesArr
-      .filter(tag => tag.name === selectedTagName)
-      .pop();
-    if (!selectedTag) {
-      this.resetTag();
-      return;
+  log(msg: string, obj?: any) {
+    if (!obj) {
+      return console.log('form-tag-single: ', msg);
     }
-    this.setTag(selectedTag);
+    console.log('form-tag-single: ', msg, obj);
   }
 
-  onOptionSelected($event) {
-    console.log('form-tag-single: onOptionSelected()', { $event });
-  }
-
-  async getMakeNewTag(name): Promise<Tag> {
-    // tslint:disable-next-line:max-line-length
-    const isConfirmed = await this.confirm.AskConfirm(
-      `The Tag - '${name}' will be added to the global list - Continue?`
-    );
-    if (isConfirmed) {
-      const newTagId = uuidv1();
-      const newTag: Tag = {
-        id: newTagId,
-        name: name.trim()
-      };
-      return newTag;
-    } else {
-      return null;
+  warn(msg: string, obj?: any) {
+    if (!obj) {
+      return console.log('form-tag-single: ', msg);
     }
+    console.warn('form-tag-single: ', msg, obj);
   }
 }

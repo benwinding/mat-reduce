@@ -14,11 +14,12 @@ import {
   MatAutocomplete,
   MatAutocompleteSelectedEvent,
   MatChipInputEvent,
-  MatSnackBar
+  MatSnackBar,
+  MatAutocompleteTrigger
 } from '@angular/material';
 import { FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { map, startWith, takeUntil } from 'rxjs/operators';
 import { ConfirmationService } from '../dialogs/app-confirmation.component';
 import { FormBase } from './form-base-class';
 import { Tag } from './Tag';
@@ -35,6 +36,7 @@ import { v1 as uuidv1 } from 'uuid';
         <mat-chip
           *ngFor="let tag of selectedTags"
           [selectable]="selectable"
+          [disabled]="this.internalControl.disabled"
           [removable]="removable"
           (removed)="removeTagChip(tag)"
         >
@@ -46,7 +48,7 @@ import { v1 as uuidv1 } from 'uuid';
           >
         </mat-chip>
         <input
-          placeholder="New fruit..."
+          [placeholder]="placeholder"
           #textInput
           [formControl]="inputTextControl"
           [matAutocomplete]="auto"
@@ -56,6 +58,13 @@ import { v1 as uuidv1 } from 'uuid';
           (matChipInputTokenEnd)="addFromTextInput($event)"
           (keydown)="focusOnEnter($event)"
         />
+        <mat-icon
+        class="is-grey r15"
+        matTooltip="Add a single tag here, you can manage all your tags using the tag list editor in the settings menu"
+        matBadge="∞"
+        matSuffix
+        >local_offer</mat-icon
+      >
       </mat-chip-list>
       <mat-autocomplete
         #auto="matAutocomplete"
@@ -75,10 +84,6 @@ import { v1 as uuidv1 } from 'uuid';
       .full-width {
         width: 100%;
       }
-      .add-icon {
-        position: absolute;
-        right: 43px;
-      }
       .is-grey {
         color: grey;
       }
@@ -96,17 +101,17 @@ import { v1 as uuidv1 } from 'uuid';
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => AppFormTagSingleComponent),
+      useExisting: forwardRef(() => AppFormTagMultipleComponent),
       multi: true
     },
     {
       provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => AppFormTagSingleComponent),
+      useExisting: forwardRef(() => AppFormTagMultipleComponent),
       multi: true
     }
   ]
 })
-export class AppFormTagSingleComponent extends FormBase<Tag[]>
+export class AppFormTagMultipleComponent extends FormBase<Tag[]>
   implements OnInit, OnDestroy {
   // EXTERNAL API
   @Input() placeholder = '';
@@ -122,6 +127,7 @@ export class AppFormTagSingleComponent extends FormBase<Tag[]>
     return this._choices;
   }
   @Input() customValues: boolean;
+  @Input() removable: boolean;
   @Output() addedNewTag = new EventEmitter<Tag>();
 
   // INTERNAL
@@ -134,15 +140,17 @@ export class AppFormTagSingleComponent extends FormBase<Tag[]>
   }
   visible = true;
   selectable = true;
-  removable = true;
   addOnBlur = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
   inputTextControl = new FormControl();
   filteredTagNames: Observable<string[]>;
 
   @ViewChild('textInput') textInput: ElementRef<HTMLInputElement>;
+  @ViewChild('textInput', { read: MatAutocompleteTrigger }) matAutocompleteTrigger: MatAutocompleteTrigger;
   @ViewChild('auto')
   matAutocomplete: MatAutocomplete;
+
+  destroyed = new Subject<void>();
 
   constructor(
     private confirm: ConfirmationService,
@@ -153,12 +161,17 @@ export class AppFormTagSingleComponent extends FormBase<Tag[]>
 
   ngOnInit() {
     this.checkExists(this.choices, 'this.selectChoices$');
+
     this.filteredTagNames = this.inputTextControl.valueChanges.pipe(
       startWith(null),
       map((tagName: string | null) =>
         tagName ? this._filter(tagName) : this.getChoicesMinusSelected()
       )
     );
+  }
+
+  ngOnDestroy() {
+    this.destroyed.next();
   }
 
   private getChoicesMinusSelected(): string[] {
@@ -183,7 +196,9 @@ export class AppFormTagSingleComponent extends FormBase<Tag[]>
 
   removeTagChip(tagToRemove: Tag) {
     this.log('removeTagChip', { tagToRemove });
+    this.matAutocompleteTrigger.closePanel();
     this.value = this.value.filter(t => t.id !== tagToRemove.id);
+    this.inputTextControl.setValue(null);
   }
 
   async addFromTextInput(event: MatChipInputEvent): Promise<void> {

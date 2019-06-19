@@ -1,16 +1,46 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { BrowserModule } from "@angular/platform-browser";
+import { NgModule } from "@angular/core";
 
-import { AppComponent } from './app.component';
+import { AppComponent } from "./app.component";
+import { AppFormTagSingleComponent } from "./forms/form-tag-single.component";
+import {
+  AppConfirmationDialogComponent,
+  ConfirmationService
+} from "./dialogs/app-confirmation.component";
+import { ReactiveFormsModule, FormsModule } from "@angular/forms";
+import {
+  MatAutocompleteModule,
+  MatInputModule,
+  MatButtonModule,
+  MatDialogModule,
+  MatFormFieldModule,
+  MatIconModule,
+  MatTooltipModule,
+  MatProgressSpinnerModule
+} from "@angular/material";
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AppFormTagSingleComponent,
+    AppConfirmationDialogComponent
   ],
   imports: [
-    BrowserModule
+    CommonModule,
+    BrowserModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatInputModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatAutocompleteModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatTooltipModule,
+    MatProgressSpinnerModule
   ],
-  providers: [],
+  providers: [ConfirmationService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

@@ -2,7 +2,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 
 import { AppComponent } from "./app.component";
-import { AppFormTagSingleComponent } from "./forms/form-tag-single.component";
+import { AppFormTagSingleComponent } from "./forms/form-tag-multiple.component";
 import {
   AppConfirmationDialogComponent,
   ConfirmationService
@@ -16,12 +16,18 @@ import {
   MatFormFieldModule,
   MatIconModule,
   MatTooltipModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatChipsModule,
+  MatCheckboxModule,
+  MatSnackBarModule
 } from "@angular/material";
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
+  entryComponents: [
+    AppConfirmationDialogComponent
+  ],
   declarations: [
     AppComponent,
     AppFormTagSingleComponent,
@@ -33,12 +39,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
+    MatSnackBarModule,
     MatInputModule,
+    MatChipsModule,
     MatButtonModule,
     MatDialogModule,
     MatAutocompleteModule,
     MatFormFieldModule,
     MatIconModule,
+    MatCheckboxModule,
     MatTooltipModule,
     MatProgressSpinnerModule
   ],

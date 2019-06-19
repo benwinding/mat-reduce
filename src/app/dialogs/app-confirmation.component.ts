@@ -24,16 +24,16 @@ interface ConfirmationDialogData {
   template: `
     <p class="title is-centered">Confirm</p>
     <p class="subtitle is-centered">{{ message }}</p>
-    <div class="buttons">
-      <button #okButton mat-raised-button color="primary" (click)="onClickOk()">
+    <form (submit)="onSubmitOk()" class="buttons">
+      <button #okButton mat-raised-button color="primary" type="submit">
         <mat-icon>{{ okIcon }}</mat-icon>
         <span>{{ okLabel }}</span>
       </button>
-      <button mat-raised-button color="white" (click)="onClickCancel()">
+      <button mat-raised-button color="white" (click)="onClickCancel($event)">
         <mat-icon>cancel</mat-icon>
         <span>Cancel</span>
       </button>
-    </div>
+    </form>
   `,
   styles: [
     `
@@ -78,11 +78,12 @@ export class AppConfirmationDialogComponent implements OnInit {
     this.okButton.focus();
   }
 
-  onClickCancel(): void {
+  onClickCancel(e): void {
+    e.preventDefault();
     this.dialogRef.close(false);
   }
 
-  onClickOk(): void {
+  onSubmitOk(): void {
     this.dialogRef.close(true);
   }
 }

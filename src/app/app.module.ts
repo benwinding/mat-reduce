@@ -33,6 +33,7 @@ import { AppFormSelectObjectComponent } from './forms/form-select-object.compone
 import { AppFormAssigneeSelectorComponent } from './forms-composed/form-assignee-selector.component';
 import { TestTagsComponent } from './tests/tags.component';
 import { TestAssigneeComponent } from './tests/test-assignee-selector.component';
+import { TestSelectComponent } from './tests/select.component';
 
 @NgModule({
   entryComponents: [
@@ -49,7 +50,8 @@ import { TestAssigneeComponent } from './tests/test-assignee-selector.component'
 
     // Test components
     TestTagsComponent,
-    TestAssigneeComponent
+    TestAssigneeComponent,
+    TestSelectComponent
   ],
   imports: [
     CommonModule,

@@ -141,22 +141,22 @@ export class AppFormAssigneeSelectorComponent extends FormBase<Assignee>
         this.checkStatus(this.selectItemContractorControl, disabled);
       });
 
-    // Check if import type has changed
-    this.selectImportTypeControl.valueChanges
-      .pipe(this.makeLogPipe('selectImportTypeControl.valueChanges'))
-      .subscribe(val => {
-        if (val === AssigneeType.myDetails) {
-          return this.handleSelectedMyDetails();
-        }
-        if (val === AssigneeType.contractor) {
-          this.hideSelectStaff = false;
-          this.hideSelectContractor = true;
-        }
-        if (val === AssigneeType.staffMember) {
-          this.hideSelectContractor = false;
-          this.hideSelectStaff = true;
-        }
-      });
+    // // Check if import type has changed
+    // this.selectImportTypeControl.valueChanges
+    //   .pipe(this.makeLogPipe('selectImportTypeControl.valueChanges'))
+    //   .subscribe(val => {
+    //     if (val === AssigneeType.myDetails) {
+    //       return this.handleSelectedMyDetails();
+    //     }
+    //     if (val === AssigneeType.contractor) {
+    //       this.hideSelectStaff = false;
+    //       this.hideSelectContractor = true;
+    //     }
+    //     if (val === AssigneeType.staffMember) {
+    //       this.hideSelectContractor = false;
+    //       this.hideSelectStaff = true;
+    //     }
+    //   });
 
     // Check if selectItemContractorControl has changed
     this.selectItemContractorControl.valueChanges

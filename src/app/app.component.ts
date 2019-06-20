@@ -11,6 +11,9 @@ import { Component } from '@angular/core';
     <app-test-assignee-selector>
     </app-test-assignee-selector>
 
+    <app-test-select>
+    </app-test-select>
+
     <app-test-tags>
     </app-test-tags>
   `

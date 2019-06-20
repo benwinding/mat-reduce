@@ -1,7 +1,7 @@
 import { Contractor, blankContact } from './form-assignee.models';
 
 export function GetFirstContact(c: Contractor) {
-  if (c) {
+  if (!c) {
     const blank = blankContact();
     blank.name = 'NO CONTRACTOR FOUND';
     return blank;

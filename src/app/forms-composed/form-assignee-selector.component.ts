@@ -220,7 +220,7 @@ export class AppFormAssigneeSelectorComponent extends FormBase<Assignee>
 
   async handleSelectedSingleContractor(selected: Tag) {
     if (!selected) {
-      console.warn('assignee-selector: no staff selected', { selected });
+      console.warn('assignee-selector: no contractor selected', { selected });
       return;
     }
     const contractor = selected.obj as Contractor;

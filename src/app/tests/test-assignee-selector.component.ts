@@ -4,8 +4,7 @@ import { of, Observable } from 'rxjs';
 import { v1 as uuidv1 } from 'uuid';
 import { FormControl } from '@angular/forms';
 import { Tag } from '../forms/Tag';
-import { FormControlTypeSafe } from '../services/form-builder-typed.service';
-import { Assignee, Contractor, StaffMember, User, blankContact } from '../forms-composed/form-assignee.models';
+import { Contractor, StaffMember, User, blankContact } from '../forms-composed/form-assignee.models';
 
 function makeStaff(staffName): Tag {
   const staff: StaffMember ={
@@ -39,21 +38,21 @@ function makeContractor(contractorsName: string): Tag {
   };
 }
 
-const contractorsList = [
+const contractorsList: Tag[] = [
   makeContractor('David Franklin'),
   makeContractor('Sam Degan'),
   makeContractor('Phillip Smithford'),
 ];
-const staffList = [
+const staffList: Tag[] = [
   makeStaff('Abigale Waterford'),
   makeStaff('Fred Goodman'),
 ];
 const currentUser: User = {
   id: '02184184y81y2481284',
-  Email: 'string',
-  'First Name': 'string',
-  'Last Name': 'string',
-  Phone: 'string',
+  Email: 'mydetails@component.com',
+  'First Name': 'Fred',
+  'Last Name': 'Wailsman',
+  Phone: '09214717214',
 };
 
 @Component({
@@ -75,7 +74,7 @@ export class TestAssigneeComponent {
   formControlEnabled = new FormControl(false);
   assigneeSelectorControl = new FormControl();
 
-  contractorsList$: Observable<Contractor[]> = of(contractorsList);
-  staffList$: Observable<StaffMember[]> = of(staffList);
+  contractorsList$: Observable<Tag[]> = of(contractorsList);
+  staffList$: Observable<Tag[]> = of(staffList);
   currentUser$: Observable<User> = of(currentUser);
 }

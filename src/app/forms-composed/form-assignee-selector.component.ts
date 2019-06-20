@@ -4,10 +4,18 @@ import { Subject, pipe } from 'rxjs';
 import { FormBase } from '../forms/form-base-class';
 import { Tag } from '../forms/Tag';
 import { takeUntil, auditTime, tap } from 'rxjs/operators';
-import { FormControlTypeSafe } from '../services/form-builder-typed.service';
-import { Assignee, AssigneeType, User, StaffMember, Contractor } from './form-assignee.models';
+import {
+  FormControlTypeSafe,
+  FormBuilderTypedService
+} from '../services/form-builder-typed.service';
+import {
+  Assignee,
+  AssigneeType,
+  User,
+  StaffMember,
+  Contractor
+} from './form-assignee.models';
 import { GetFirstContact } from './contact-helper';
-
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -21,9 +29,7 @@ import { GetFirstContact } from './contact-helper';
           placeholder="Assignee Type"
         >
         </form-select-string>
-
         <form-tag-single
-          class="import-select"
           placeholder="Select Contractor"
           [hidden]="this.hideSelectContractor"
           [formControl]="this.selectItemContractorControl"
@@ -33,7 +39,6 @@ import { GetFirstContact } from './contact-helper';
         </form-tag-single>
 
         <form-tag-single
-          class="import-select"
           placeholder="Select Staff Member"
           [hidden]="this.hideSelectStaff"
           [formControl]="this.selectItemStaffControl"
@@ -69,9 +74,6 @@ import { GetFirstContact } from './contact-helper';
         grid-gap: 2%;
         margin-bottom: 10px;
       }
-      .import-select {
-        width: 100%;
-      }
       .assignee p {
         margin: 0;
       }
@@ -102,9 +104,9 @@ export class AppFormAssigneeSelectorComponent extends FormBase<Assignee>
   @Input()
   staffList: Tag[];
 
-  selectImportTypeControl = new FormControlTypeSafe<AssigneeType>();
-  selectItemContractorControl = new FormControlTypeSafe<Tag>();
-  selectItemStaffControl = new FormControlTypeSafe<Tag>();
+  selectImportTypeControl: FormControlTypeSafe<string>;
+  selectItemContractorControl: FormControlTypeSafe<Tag>;
+  selectItemStaffControl: FormControlTypeSafe<Tag>;
 
   assigneeTypes: string[] = Object.keys(AssigneeType).map(k => AssigneeType[k]);
 
@@ -113,11 +115,18 @@ export class AppFormAssigneeSelectorComponent extends FormBase<Assignee>
 
   destroyed = new Subject();
 
+  constructor(private fb: FormBuilderTypedService) {
+    super();
+    this.selectImportTypeControl = this.fb.control<AssigneeType>();
+    this.selectItemContractorControl = this.fb.control<Tag>();
+    this.selectItemStaffControl = this.fb.control<Tag>();
+  }
+
   makeLogPipe(logString: string) {
     return pipe(
       takeUntil(this.destroyed),
       auditTime(300),
-      tap(() => console.log('assignee-selector: ', logString))
+      tap(val => console.log('assignee-selector: ', logString, { val }))
     );
   }
 
@@ -140,38 +149,34 @@ export class AppFormAssigneeSelectorComponent extends FormBase<Assignee>
         this.checkStatus(this.selectItemStaffControl, disabled);
         this.checkStatus(this.selectItemContractorControl, disabled);
       });
-
-    // // Check if import type has changed
-    // this.selectImportTypeControl.valueChanges
-    //   .pipe(this.makeLogPipe('selectImportTypeControl.valueChanges'))
-    //   .subscribe(val => {
-    //     if (val === AssigneeType.myDetails) {
-    //       return this.handleSelectedMyDetails();
-    //     }
-    //     if (val === AssigneeType.contractor) {
-    //       this.hideSelectStaff = false;
-    //       this.hideSelectContractor = true;
-    //     }
-    //     if (val === AssigneeType.staffMember) {
-    //       this.hideSelectContractor = false;
-    //       this.hideSelectStaff = true;
-    //     }
-    //   });
-
+    // Check if import type has changed
+    this.selectImportTypeControl.valueChanges
+      .pipe(this.makeLogPipe('selectImportTypeControl.valueChanges'))
+      .subscribe(val => {
+        if (val === AssigneeType.myDetails) {
+          return this.handleSelectedMyDetails();
+        }
+        if (val === AssigneeType.contractor) {
+          this.hideSelectContractor = false;
+          this.hideSelectStaff = true;
+        }
+        if (val === AssigneeType.staffMember) {
+          this.hideSelectStaff = false;
+          this.hideSelectContractor = true;
+        }
+      });
     // Check if selectItemContractorControl has changed
     this.selectItemContractorControl.valueChanges
       .pipe(this.makeLogPipe('selectItemContractorControl.valueChanges'))
       .subscribe(async (val: Tag) => {
         return this.handleSelectedSingleContractor(val);
       });
-
     // Check if selectItemStaffControl has changed
     this.selectItemStaffControl.valueChanges
       .pipe(this.makeLogPipe('selectItemStaffControl.valueChanges'))
       .subscribe(async (val: Tag) => {
         return this.handleSelectedSingleStaff(val);
       });
-
     const currentValue = this.value;
     if (currentValue) {
       this.selectImportTypeControl.patchValue(currentValue.type);

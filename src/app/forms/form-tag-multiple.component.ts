@@ -127,7 +127,7 @@ export class AppFormTagMultipleComponent extends FormBase<Tag[]>
     return this._choices;
   }
   @Input() customValues: boolean;
-  @Input() removable: boolean;
+  @Input() removable = true;
   @Output() addedNewTag = new EventEmitter<Tag>();
 
   // INTERNAL

@@ -7,17 +7,22 @@ import { Tag } from '../forms/Tag';
 import { FormControlTypeSafe } from '../services/form-builder-typed.service';
 import { Assignee, Contractor, StaffMember, User, blankContact } from '../forms-composed/form-assignee.models';
 
-function makeStaff(staffName): StaffMember {
-  return {
+function makeStaff(staffName): Tag {
+  const staff: StaffMember ={
     id: uuidv1(),
     name: staffName,
     email: staffName + '@example.com',
     phone: '2194818482',
   };
+  return {
+    id: staff.id,
+    name: staffName,
+    obj: staff
+  };
 }
 
-function makeContractor(contractorsName: string): Contractor {
-  return {
+function makeContractor(contractorsName: string): Tag {
+  const contractor: Contractor = {
     id: uuidv1(),
     contactsArray: [
       {...blankContact(),
@@ -26,6 +31,11 @@ function makeContractor(contractorsName: string): Contractor {
         email: contractorsName.replace(' ', '.').toLowerCase() + '@example.com'
       },
     ]
+  };
+  return {
+    id: contractor.id,
+    name: contractorsName,
+    obj: contractor
   };
 }
 
@@ -63,7 +73,7 @@ const currentUser: User = {
 })
 export class TestAssigneeComponent {
   formControlEnabled = new FormControl(false);
-  assigneeSelectorControl = new FormControlTypeSafe<Assignee>();
+  assigneeSelectorControl = new FormControl();
 
   contractorsList$: Observable<Contractor[]> = of(contractorsList);
   staffList$: Observable<StaffMember[]> = of(staffList);

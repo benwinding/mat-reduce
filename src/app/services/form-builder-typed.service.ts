@@ -3,7 +3,10 @@ import {
   FormArray,
   FormBuilder,
   FormControl,
-  FormGroup
+  FormGroup,
+  ValidatorFn,
+  AbstractControlOptions,
+  AsyncValidatorFn
 } from '@angular/forms';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -50,7 +53,7 @@ export abstract class FormArrayTypeSafe<T> extends FormArray {
   }
 }
 
-export class FormControlTypeSafe<T> extends FormControl {
+export abstract class FormControlTypeSafe<T> extends FormControl {
   value: T;
   valueChanges: Observable<T>;
   setValue(newValue: T) {
@@ -60,6 +63,22 @@ export class FormControlTypeSafe<T> extends FormControl {
 
 @Injectable()
 export class FormBuilderTypedService extends FormBuilder {
+  control<T>(
+    formState?: any,
+    validatorOrOpts?:
+      | ValidatorFn
+      | ValidatorFn[]
+      | AbstractControlOptions
+      | null,
+    asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null
+  ): FormControlTypeSafe<T> {
+    const control = super.control(
+      formState,
+      validatorOrOpts,
+      asyncValidator
+    ) as FormControlTypeSafe<T>;
+    return control;
+  }
   array<T>(
     controlsConfig:
       | FormGroupControlsOf<T>[]

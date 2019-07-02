@@ -14,10 +14,20 @@
     "typeRoots": [
       "node_modules/@types"
     ],
-    "types": ["node"],
+    "types": [
+      "node"
+    ],
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "mat-reduce": [
+        "dist/mat-reduce"
+      ],
+      "mat-reduce/*": [
+        "dist/mat-reduce/*"
+      ]
+    }
   }
 }

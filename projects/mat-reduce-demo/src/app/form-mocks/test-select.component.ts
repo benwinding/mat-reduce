@@ -18,11 +18,10 @@ const friendArray = [
   template: `
     <h1>form-select Testing</h1>
 
-    <mat-checkbox [formControl]="formControlEnabled"
-      >Form Enabled ({{
-        formControlEnabled.value ? 'Yes' : 'No'
-      }})</mat-checkbox
-    >
+    <form-toggle
+      [formControl]="formControlEnabled"
+      placeholder="Form Enabled"
+    ></form-toggle>
 
     <form-select-string
       placeholder="Select a friend!"

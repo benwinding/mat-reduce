@@ -3,7 +3,7 @@ import { of, Observable } from 'rxjs';
 
 import { v1 as uuidv1 } from 'uuid';
 import { FormControl } from '@angular/forms';
-import { Tag } from '../forms/Tag';
+import { Tag } from 'projects/mat-reduce/src/lib/forms/Tag';
 
 function makeTag(name): Tag {
   return {
@@ -17,17 +17,18 @@ const friendArray = [makeTag('Frank'), makeTag('Albert'), makeTag('John')];
 @Component({
   selector: 'app-test-tags',
   template: `
-    <mat-checkbox [formControl]="formControlCustomValues"
-      >Custom Values ({{
-        formControlCustomValues.value ? 'Yes' : 'No'
-      }})</mat-checkbox
-    >
-    <mat-checkbox [formControl]="formControlRemovable"
-      >Removable ({{ formControlRemovable.value ? 'Yes' : 'No' }})</mat-checkbox
-    >
-    <mat-checkbox [formControl]="formControlEnabled"
-      >Form Enabled ({{ formControlEnabled.value ? 'Yes' : 'No' }})</mat-checkbox
-    >
+    <form-toggle
+      [formControl]="formControlEnabled"
+      placeholder="Form Enabled"
+    ></form-toggle>
+    <form-toggle
+      [formControl]="formControlRemovable"
+      placeholder="Tags Removable"
+    ></form-toggle>
+    <form-toggle
+      [formControl]="formControlCustomValues"
+      placeholder="Tags Custom Values"
+    ></form-toggle>
 
     <h1>Single</h1>
 
@@ -75,7 +76,7 @@ export class TestTagsComponent {
   selectChoices$: Observable<Tag[]> = of(friendArray);
 
   constructor() {
-    this.formControlEnabled.valueChanges.subscribe((isEnabled) => {
+    this.formControlEnabled.valueChanges.subscribe(isEnabled => {
       if (isEnabled) {
         this.tagControlSingle.enable();
         this.tagControlMultiple.enable();

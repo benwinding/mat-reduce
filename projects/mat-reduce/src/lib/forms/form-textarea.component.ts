@@ -4,47 +4,41 @@ import { FormBase } from './form-base-class';
 
 @Component({
   // tslint:disable-next-line:component-selector
-  selector: 'form-toggle',
+  selector: 'form-textarea',
   template: `
-    <div class="full-width">
-      <mat-slide-toggle
+    <mat-form-field class="full-width">
+      <textarea
+        matInput
+        [rows]="rows"
+        [placeholder]="placeholder"
         [formControl]="internalControl"
         [name]="autoCompleteObscureName"
         autocomplete="dontcompleteme"
-      >
-        {{ placeholder }} ({{ value ? yes : no }})
-      </mat-slide-toggle>
-    </div>
+      ></textarea>
+    </mat-form-field>
   `,
   styles: [
     `
       .full-width {
         width: 100%;
-        padding-bottom: 15px;
       }
     `
   ],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => AppFormToggleComponent),
+      useExisting: forwardRef(() => AppFormTextAreaComponent),
       multi: true
     },
     {
       provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => AppFormToggleComponent),
+      useExisting: forwardRef(() => AppFormTextAreaComponent),
       multi: true
     }
   ]
 })
-export class AppFormToggleComponent extends FormBase<string> {
+export class AppFormTextAreaComponent extends FormBase<string> {
 
   @Input()
-  yes = 'Yes';
-  @Input()
-  no = 'No';
-
-  writeValue(value: any): void {
-    this.value = value;
-  }
+  rows = 4;
 }

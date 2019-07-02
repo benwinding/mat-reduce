@@ -61,8 +61,6 @@ function compareObject(l1: {}, l2: {}) {
 })
 export class AppFormSelectObjectComponent extends FormBase<Object> {
   @Input()
-  placeholder = '';
-  @Input()
   selectionObjects: Object[];
   @Input()
   selectionKey: string;

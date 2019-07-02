@@ -40,7 +40,5 @@ import { FormBase } from './form-base-class';
 })
 export class AppFormSelectStringComponent extends FormBase<string> {
   @Input()
-  placeholder = '';
-  @Input()
   selections: string[];
 }

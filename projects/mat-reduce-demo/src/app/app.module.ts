@@ -11,6 +11,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatTabsModule, MatIconModule, MatButtonModule } from '@angular/material';
 import { AppBtnBackComponent } from './extra/btn-back.component';
 import { AppRoutingModule } from './app.routing';
+import { TestTextComponent } from './form-mocks/test-text.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { AppRoutingModule } from './app.routing';
     TestTagsComponent,
     TestSelectComponent,
     TestAssigneeComponent,
+    TestTextComponent,
 
     AppBtnBackComponent
   ],

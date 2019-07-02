@@ -1,21 +1,28 @@
+// tslint:disable: variable-name
 import { ControlValueAccessor, FormControl, Validator } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { OnDestroy, OnInit } from '@angular/core';
+import { OnDestroy, OnInit, Input } from '@angular/core';
 
 import {v1 as uuidv1 } from 'uuid';
+import { FormBuilderTypedService, FormControlTypeSafe } from '../services/form-builder-typed.service';
 
 export class FormBase<T>
   implements OnInit, OnDestroy, ControlValueAccessor, Validator {
-  internalControl: FormControl = new FormControl();
+  internalControl: FormControlTypeSafe<T>;
   internalControlSubscription: Subscription;
   autoCompleteObscureName: string;
 
   disabled = false;
   validationError: string;
 
+  @Input()
+  placeholder: string;
+
   _value: T;
 
   constructor() {
+    const fb = new FormBuilderTypedService();
+    this.internalControl = fb.control<T>();
     // Garrentee that init and destroy are called
     // even if ngOnInit() or ngOnDestroy() are overriden
     const originalOnDestroy = this.ngOnDestroy;

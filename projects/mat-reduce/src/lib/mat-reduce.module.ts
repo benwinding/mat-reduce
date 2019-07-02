@@ -31,6 +31,13 @@ import {
 } from '@angular/material';
 import { FormBuilderTypedService } from './services/form-builder-typed.service';
 import { AppFormToggleComponent } from './forms/form-toggle.component';
+import { AppFormTextClearableComponent } from './forms/form-text-clearable.component';
+import { AppFormTextDisabledComponent } from './forms/form-text-disabled.component';
+import { AppFormTextIconsComponent } from './forms/form-text-icons.component';
+import { AppFormTextPasswordComponent } from './forms/form-text-password.component';
+import { AppFormTextComponent } from './forms/form-text.component';
+import { AppFormTextAreaDisabledComponent } from './forms/form-textarea-disabled.component';
+import { AppFormTextAreaComponent } from './forms/form-textarea.component';
 
 const exported = [
   AppFormTagSingleComponent,
@@ -38,6 +45,15 @@ const exported = [
   AppFormSelectStringComponent,
   AppFormSelectObjectComponent,
   AppFormToggleComponent,
+
+  AppFormTextClearableComponent,
+  AppFormTextDisabledComponent,
+  AppFormTextIconsComponent,
+  AppFormTextPasswordComponent,
+  AppFormTextComponent,
+  AppFormTextAreaDisabledComponent,
+  AppFormTextAreaComponent,
+
   AppFormAssigneeSelectorComponent
 ];
 

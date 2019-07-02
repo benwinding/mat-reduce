@@ -8,6 +8,9 @@ import { TestAssigneeComponent } from './form-mocks/test-assignee-selector.compo
 import { MatReducedModule } from 'projects/mat-reduce/src/public-api';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatTabsModule, MatIconModule, MatButtonModule } from '@angular/material';
+import { AppBtnBackComponent } from './extra/btn-back.component';
+import { AppRoutingModule } from './app.routing';
 
 @NgModule({
   declarations: [
@@ -15,13 +18,21 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     TestTagsComponent,
     TestSelectComponent,
     TestAssigneeComponent,
+
+    AppBtnBackComponent
   ],
   imports: [
     BrowserModule,
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    MatReducedModule
+
+    MatTabsModule,
+    MatButtonModule,
+    MatIconModule,
+    MatReducedModule,
+
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

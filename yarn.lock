@@ -5029,6 +5029,11 @@ ng-packagr@^5.2.0:
     terser "^4.0.0"
     update-notifier "^3.0.0"
 
+ngx-color-picker@^8.0.1:
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/ngx-color-picker/-/ngx-color-picker-8.0.1.tgz#efa8f653362c4594280908b7aca4cf5ba4022b94"
+  integrity sha512-aA55g49ZGF1xfc0iJS6xK/qOds2GZC3mId4lcJarCGrjQbg44qYv6BaodLzSFcYRMPN9+O7z6n4+2pWrjQqWfA==
+
 nice-try@^1.0.4:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"

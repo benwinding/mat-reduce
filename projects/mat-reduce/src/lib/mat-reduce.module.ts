@@ -12,6 +12,8 @@ import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ColorPickerModule } from 'ngx-color-picker';
+
 import {
   MatSnackBarModule,
   MatInputModule,
@@ -38,6 +40,7 @@ import { AppFormTextPasswordComponent } from './forms/form-text-password.compone
 import { AppFormTextComponent } from './forms/form-text.component';
 import { AppFormTextAreaDisabledComponent } from './forms/form-textarea-disabled.component';
 import { AppFormTextAreaComponent } from './forms/form-textarea.component';
+import { AppFormColorComponent } from './forms/form-color.component';
 
 const exported = [
   AppFormTagSingleComponent,
@@ -45,6 +48,7 @@ const exported = [
   AppFormSelectStringComponent,
   AppFormSelectObjectComponent,
   AppFormToggleComponent,
+  AppFormColorComponent,
 
   AppFormTextClearableComponent,
   AppFormTextDisabledComponent,
@@ -81,7 +85,9 @@ const exported = [
     MatSelectModule,
     MatCheckboxModule,
     MatTooltipModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+
+    ColorPickerModule
   ],
   providers: [ConfirmationService, FormBuilderTypedService]
 })

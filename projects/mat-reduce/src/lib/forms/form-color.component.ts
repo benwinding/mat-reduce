@@ -6,10 +6,10 @@ import { FormBase } from './form-base-class';
   // tslint:disable-next-line:component-selector
   selector: 'form-color',
   template: `
-    <mat-form-field class="full-width">
-      <h5>
-        {{placeholder}}
-      </h5>
+    <mat-form-field class="full-width m-top">
+      <span [class.txt-grey]="disabled">
+        {{ placeholder }}
+      </span>
       <input
         matInput
         [hidden]="true"
@@ -22,7 +22,7 @@ import { FormBase } from './form-base-class';
         class="box"
         [style.background]="value"
         [(colorPicker)]="value"
-        [cpPosition]="'right'"
+        [cpPosition]="'top'"
       >
         <div class="flex-space-between">
           <span>
@@ -31,10 +31,11 @@ import { FormBase } from './form-base-class';
           <button
             mat-mini-fab
             (click)="onClickClear($event)"
+            [disabled]="disabled"
             matTooltip="Clear current color"
-            class="is-white"
+            class="bg-white close-btn"
           >
-            <mat-icon class="is-black">
+            <mat-icon class="txt-black">
               clear
             </mat-icon>
           </button>
@@ -44,11 +45,23 @@ import { FormBase } from './form-base-class';
   `,
   styles: [
     `
-      .is-white {
-        background: white;
+      .close-btn {
+        position: absolute;
+        right: -4px;
+        top: -4px;
+        transform: scale(0.6);
       }
-      .is-black {
+      .m-top {
+        margin-top: -20px;
+      }
+      .bg-white {
+        background-color: white !important
+      }
+      .txt-black {
         color: black;
+      }
+      .txt-grey {
+        color: grey;
       }
       .full-width {
         width: 100%;

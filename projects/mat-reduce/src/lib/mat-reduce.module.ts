@@ -10,7 +10,6 @@ import { AppFormSelectObjectComponent } from './forms/form-select-object.compone
 import { AppFormAssigneeSelectorComponent } from './forms-composed/form-assignee-selector.component';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ColorPickerModule } from 'ngx-color-picker';
 
 import {
@@ -68,7 +67,6 @@ const exported = [
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    BrowserAnimationsModule,
     MatSnackBarModule,
     MatInputModule,
     MatSlideToggleModule,

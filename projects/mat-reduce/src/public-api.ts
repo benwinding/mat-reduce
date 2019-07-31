@@ -3,3 +3,4 @@
  */
 
 export * from './lib/mat-reduce.module';
+export * from './lib/services/form-builder-typed.service';

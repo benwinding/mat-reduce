@@ -89,4 +89,4 @@ const exported = [
   ],
   providers: [ConfirmationService, FormBuilderTypedService]
 })
-export class MatReducedModule {}
+export class MatReduceModule {}

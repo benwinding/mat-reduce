@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { TestTagsComponent } from './form-mocks/test-tags.component';
 import { TestSelectComponent } from './form-mocks/test-select.component';
 import { TestAssigneeComponent } from './form-mocks/test-assignee-selector.component';
-import { MatReducedModule } from 'projects/mat-reduce/src/public-api';
+import { MatReduceModule } from 'projects/mat-reduce/src/public-api';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatTabsModule, MatIconModule, MatButtonModule } from '@angular/material';
@@ -34,7 +34,7 @@ import { TestColorComponent } from './form-mocks/test-color.component';
     MatTabsModule,
     MatButtonModule,
     MatIconModule,
-    MatReducedModule,
+    MatReduceModule,
 
     AppRoutingModule
   ],

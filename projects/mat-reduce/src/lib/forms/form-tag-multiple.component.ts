@@ -59,12 +59,12 @@ import { v1 as uuidv1 } from 'uuid';
           (keydown)="focusOnEnter($event)"
         />
         <mat-icon
-        class="is-grey r15"
-        matTooltip="Add a single tag here, you can manage all your tags using the tag list editor in the settings menu"
-        matBadge="∞"
-        matSuffix
-        >local_offer</mat-icon
-      >
+          class="is-grey r15"
+          matTooltip="Add a single tag here, you can manage all your tags using the tag list editor in the settings menu"
+          matBadge="∞"
+          matSuffix
+          >local_offer</mat-icon
+        >
       </mat-chip-list>
       <mat-autocomplete
         #auto="matAutocomplete"
@@ -145,9 +145,10 @@ export class AppFormTagMultipleComponent extends FormBase<Tag[]>
   inputTextControl = new FormControl();
   filteredTagNames: Observable<string[]>;
 
-  @ViewChild('textInput') textInput: ElementRef<HTMLInputElement>;
-  @ViewChild('textInput', { read: MatAutocompleteTrigger }) matAutocompleteTrigger: MatAutocompleteTrigger;
-  @ViewChild('auto')
+  @ViewChild('textInput', {} as any) textInput: ElementRef<HTMLInputElement>;
+  @ViewChild('textInput', { read: MatAutocompleteTrigger } as any)
+  matAutocompleteTrigger: MatAutocompleteTrigger;
+  @ViewChild('auto', {} as any)
   matAutocomplete: MatAutocomplete;
 
   destroyed = new Subject<void>();

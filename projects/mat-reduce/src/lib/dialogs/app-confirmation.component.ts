@@ -59,7 +59,7 @@ interface ConfirmationDialogData {
   ]
 })
 export class AppConfirmationDialogComponent implements OnInit {
-  @ViewChild('okButton') okButton: MatButton;
+  @ViewChild('okButton', {} as any) okButton: MatButton;
 
   message: string;
   okIcon: string;

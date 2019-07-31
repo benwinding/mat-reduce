@@ -145,9 +145,10 @@ export class AppFormTagSingleComponent extends FormBase<Tag>
   inputTextControl = new FormControl();
   filteredTagNames: Observable<string[]>;
 
-  @ViewChild('textInput') textInput: ElementRef<HTMLInputElement>;
-  @ViewChild('textInput', { read: MatAutocompleteTrigger }) matAutocompleteTrigger: MatAutocompleteTrigger;
-  @ViewChild('auto')
+  @ViewChild('textInput', {} as any) textInput: ElementRef<HTMLInputElement>;
+  @ViewChild('textInput', { read: MatAutocompleteTrigger } as any)
+  matAutocompleteTrigger: MatAutocompleteTrigger;
+  @ViewChild('auto', {} as any)
   matAutocomplete: MatAutocomplete;
 
   destroyed = new Subject<void>();

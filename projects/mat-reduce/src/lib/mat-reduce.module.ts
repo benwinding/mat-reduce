@@ -9,7 +9,6 @@ import { AppFormSelectStringComponent } from './forms/form-select-string.compone
 import { AppFormSelectObjectComponent } from './forms/form-select-object.component';
 import { AppFormAssigneeSelectorComponent } from './forms-composed/form-assignee-selector.component';
 import { CommonModule } from '@angular/common';
-import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ColorPickerModule } from 'ngx-color-picker';
@@ -67,7 +66,6 @@ const exported = [
   exports: [...exported],
   imports: [
     CommonModule,
-    BrowserModule,
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,

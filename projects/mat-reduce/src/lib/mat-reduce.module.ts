@@ -40,10 +40,12 @@ import { AppFormTextAreaDisabledComponent } from './forms/form-textarea-disabled
 import { AppFormTextAreaComponent } from './forms/form-textarea.component';
 import { AppFormColorComponent } from './forms/form-color.component';
 import { AppFormToggleReversedComponent } from './forms/form-toggle-reversed.component';
+import { AppFormSelectObjectMultipleComponent } from './forms/form-select-object-multiple.component';
 
 const exported = [
   AppFormColorComponent,
   AppFormSelectObjectComponent,
+  AppFormSelectObjectMultipleComponent,
   AppFormSelectStringComponent,
   AppFormTagMultipleComponent,
   AppFormTagSingleComponent,

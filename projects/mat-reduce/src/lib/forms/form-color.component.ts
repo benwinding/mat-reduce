@@ -108,8 +108,6 @@ import { FormBase } from './form-base-class';
 })
 export class AppFormColorComponent extends FormBase<string> implements OnInit {
   @Input()
-  placeholder = '';
-  @Input()
   defaultColor = '#42d742';
 
   ngOnInit() {

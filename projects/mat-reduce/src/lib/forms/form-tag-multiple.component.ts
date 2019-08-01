@@ -114,7 +114,6 @@ import { v1 as uuidv1 } from 'uuid';
 export class AppFormTagMultipleComponent extends FormBase<Tag[]>
   implements OnInit, OnDestroy {
   // EXTERNAL API
-  @Input() placeholder = '';
   private _choices: Tag[];
   @Input()
   set choices(newChoices) {

@@ -1,4 +1,4 @@
-import { Tag } from '../forms/Tag';
+import { Tag } from '../material/Tag';
 
 export interface Assignee {
   selected_tag?: Tag;

@@ -1,13 +1,13 @@
 import { Component, Input, OnDestroy, OnInit, forwardRef } from '@angular/core';
 import { FormControl, NG_VALUE_ACCESSOR, NG_VALIDATORS } from '@angular/forms';
 import { Subject, pipe } from 'rxjs';
-import { FormBase } from '../forms/form-base-class';
-import { Tag } from '../forms/Tag';
+import { FormBase } from '../form-base-class';
+import { Tag } from '../material/Tag';
 import { takeUntil, auditTime, tap } from 'rxjs/operators';
 import {
   FormControlTypeSafe,
   FormBuilderTypedService
-} from '../services/form-builder-typed.service';
+} from '../../services/form-builder-typed.service';
 import {
   Assignee,
   AssigneeType,

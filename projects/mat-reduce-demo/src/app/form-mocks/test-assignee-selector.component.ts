@@ -3,13 +3,13 @@ import { of, Observable } from 'rxjs';
 
 import { v1 as uuidv1 } from 'uuid';
 import { FormControl } from '@angular/forms';
-import { Tag } from 'projects/mat-reduce/src/lib/forms/Tag';
+import { Tag } from 'projects/mat-reduce/src/lib/controls/material/Tag';
 import {
   StaffMember,
   Contractor,
   blankContact,
   User
-} from 'projects/mat-reduce/src/lib/forms-composed/form-assignee.models';
+} from 'projects/mat-reduce/src/lib/controls/composed/form-assignee.models';
 
 function makeStaff(staffName): Tag {
   const staff: StaffMember = {

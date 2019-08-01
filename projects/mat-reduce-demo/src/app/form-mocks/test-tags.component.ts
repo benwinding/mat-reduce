@@ -3,7 +3,7 @@ import { of, Observable } from 'rxjs';
 
 import { v1 as uuidv1 } from 'uuid';
 import { FormControl } from '@angular/forms';
-import { Tag } from 'projects/mat-reduce/src/lib/forms/Tag';
+import { Tag } from 'projects/mat-reduce/src/lib/controls/material/Tag';
 
 function makeTag(name): Tag {
   return {

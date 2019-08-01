@@ -1,10 +1,10 @@
 import { Component, forwardRef, OnInit, OnDestroy } from '@angular/core';
 import { NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { FormBase } from './form-base-class';
+import { FormBase } from '../form-base-class';
 import {
   FormControlTypeSafe,
   FormBuilderTypedService
-} from '../services/form-builder-typed.service';
+} from '../../services/form-builder-typed.service';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({

@@ -20,8 +20,8 @@ import {
 import { FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { map, startWith, takeUntil } from 'rxjs/operators';
-import { ConfirmationService } from '../dialogs/app-confirmation.component';
-import { FormBase } from './form-base-class';
+import { ConfirmationService } from '../../dialogs/app-confirmation.component';
+import { FormBase } from '../form-base-class';
 import { Tag } from './Tag';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 

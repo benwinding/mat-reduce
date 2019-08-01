@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+yarn build-lib
+pushd dist/mat-reduce
+npm publish
+popd

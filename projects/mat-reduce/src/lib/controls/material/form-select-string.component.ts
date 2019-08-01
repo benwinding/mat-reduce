@@ -28,17 +28,17 @@ import { FormBase } from '../form-base-class';
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => AppFormSelectStringComponent),
+      useExisting: forwardRef(() => LibFormSelectStringComponent),
       multi: true
     },
     {
       provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => AppFormSelectStringComponent),
+      useExisting: forwardRef(() => LibFormSelectStringComponent),
       multi: true
     }
   ]
 })
-export class AppFormSelectStringComponent extends FormBase<string> {
+export class LibFormSelectStringComponent extends FormBase<string> {
   @Input()
   selections: string[];
 }

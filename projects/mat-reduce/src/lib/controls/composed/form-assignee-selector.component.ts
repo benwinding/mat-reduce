@@ -85,17 +85,17 @@ import { GetFirstContact } from './contact-helper';
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => AppFormAssigneeSelectorComponent),
+      useExisting: forwardRef(() => LibFormAssigneeSelectorComponent),
       multi: true
     },
     {
       provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => AppFormAssigneeSelectorComponent),
+      useExisting: forwardRef(() => LibFormAssigneeSelectorComponent),
       multi: true
     }
   ]
 })
-export class AppFormAssigneeSelectorComponent extends FormBase<Assignee>
+export class LibFormAssigneeSelectorComponent extends FormBase<Assignee>
   implements OnInit, OnDestroy {
   @Input()
   currentUser: User;

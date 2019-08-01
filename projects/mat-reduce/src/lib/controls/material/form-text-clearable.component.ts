@@ -46,17 +46,17 @@ import { FormBase } from '../form-base-class';
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => AppFormTextClearableComponent),
+      useExisting: forwardRef(() => LibFormTextClearableComponent),
       multi: true
     },
     {
       provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => AppFormTextClearableComponent),
+      useExisting: forwardRef(() => LibFormTextClearableComponent),
       multi: true
     }
   ]
 })
-export class AppFormTextClearableComponent extends FormBase<string> {
+export class LibFormTextClearableComponent extends FormBase<string> {
 
   @Input()
   locked = true;

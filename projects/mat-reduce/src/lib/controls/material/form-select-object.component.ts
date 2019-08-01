@@ -49,17 +49,17 @@ function compareObject(l1: {}, l2: {}) {
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => AppFormSelectObjectComponent),
+      useExisting: forwardRef(() => LibFormSelectObjectComponent),
       multi: true
     },
     {
       provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => AppFormSelectObjectComponent),
+      useExisting: forwardRef(() => LibFormSelectObjectComponent),
       multi: true
     }
   ]
 })
-export class AppFormSelectObjectComponent extends FormBase<Object> {
+export class LibFormSelectObjectComponent extends FormBase<Object> {
   @Input()
   selectionObjects: Object[];
   @Input()

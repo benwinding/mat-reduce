@@ -32,17 +32,17 @@ import { takeUntil } from 'rxjs/operators';
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => AppFormTextAreaDisabledComponent),
+      useExisting: forwardRef(() => LibFormTextAreaDisabledComponent),
       multi: true
     },
     {
       provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => AppFormTextAreaDisabledComponent),
+      useExisting: forwardRef(() => LibFormTextAreaDisabledComponent),
       multi: true
     }
   ]
 })
-export class AppFormTextAreaDisabledComponent extends FormBase<string>
+export class LibFormTextAreaDisabledComponent extends FormBase<string>
   implements OnInit {
   @Input()
   rows = 4;

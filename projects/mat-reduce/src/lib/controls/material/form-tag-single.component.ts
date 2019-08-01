@@ -101,17 +101,17 @@ import { v1 as uuidv1 } from 'uuid';
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => AppFormTagSingleComponent),
+      useExisting: forwardRef(() => LibFormTagSingleComponent),
       multi: true
     },
     {
       provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => AppFormTagSingleComponent),
+      useExisting: forwardRef(() => LibFormTagSingleComponent),
       multi: true
     }
   ]
 })
-export class AppFormTagSingleComponent extends FormBase<Tag>
+export class LibFormTagSingleComponent extends FormBase<Tag>
   implements OnInit, OnDestroy {
   // EXTERNAL API
   private _choices: Tag[];

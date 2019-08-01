@@ -96,17 +96,17 @@ import { FormBase } from '../form-base-class';
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => AppFormColorComponent),
+      useExisting: forwardRef(() => LibFormColorComponent),
       multi: true
     },
     {
       provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => AppFormColorComponent),
+      useExisting: forwardRef(() => LibFormColorComponent),
       multi: true
     }
   ]
 })
-export class AppFormColorComponent extends FormBase<string> implements OnInit {
+export class LibFormColorComponent extends FormBase<string> implements OnInit {
   @Input()
   defaultColor = '#42d742';
 

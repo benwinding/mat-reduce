@@ -31,17 +31,17 @@ import { takeUntil } from 'rxjs/operators';
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => AppFormTextDisabledComponent),
+      useExisting: forwardRef(() => LibFormTextDisabledComponent),
       multi: true
     },
     {
       provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => AppFormTextDisabledComponent),
+      useExisting: forwardRef(() => LibFormTextDisabledComponent),
       multi: true
     }
   ]
 })
-export class AppFormTextDisabledComponent extends FormBase<string>
+export class LibFormTextDisabledComponent extends FormBase<string>
   implements OnInit {
   disabledControl: FormControlTypeSafe<string>;
 

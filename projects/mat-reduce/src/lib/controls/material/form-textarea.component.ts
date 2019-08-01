@@ -27,17 +27,17 @@ import { FormBase } from '../form-base-class';
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => AppFormTextAreaComponent),
+      useExisting: forwardRef(() => LibFormTextAreaComponent),
       multi: true
     },
     {
       provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => AppFormTextAreaComponent),
+      useExisting: forwardRef(() => LibFormTextAreaComponent),
       multi: true
     }
   ]
 })
-export class AppFormTextAreaComponent extends FormBase<string> {
+export class LibFormTextAreaComponent extends FormBase<string> {
   @Input()
   rows = 4;
 }

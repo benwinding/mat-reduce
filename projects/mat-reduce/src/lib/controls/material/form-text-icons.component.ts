@@ -37,17 +37,17 @@ import { FormBase } from '../form-base-class';
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => AppFormTextIconsComponent),
+      useExisting: forwardRef(() => LibFormTextIconsComponent),
       multi: true
     },
     {
       provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => AppFormTextIconsComponent),
+      useExisting: forwardRef(() => LibFormTextIconsComponent),
       multi: true
     }
   ]
 })
-export class AppFormTextIconsComponent extends FormBase<string> {
+export class LibFormTextIconsComponent extends FormBase<string> {
 
   @Input()
   clearable = true;

@@ -38,17 +38,17 @@ import { FormBase } from '../form-base-class';
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => AppFormToggleReversedComponent),
+      useExisting: forwardRef(() => LibFormToggleReversedComponent),
       multi: true
     },
     {
       provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => AppFormToggleReversedComponent),
+      useExisting: forwardRef(() => LibFormToggleReversedComponent),
       multi: true
     }
   ]
 })
-export class AppFormToggleReversedComponent extends FormBase<boolean> {
+export class LibFormToggleReversedComponent extends FormBase<boolean> {
   @Input()
   yes = 'Yes';
   @Input()

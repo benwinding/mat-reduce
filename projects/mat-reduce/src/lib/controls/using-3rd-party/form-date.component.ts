@@ -25,17 +25,17 @@ import { FormBase } from '../form-base-class';
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => AppFormDateComponent),
+      useExisting: forwardRef(() => LibFormDateComponent),
       multi: true
     },
     {
       provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => AppFormDateComponent),
+      useExisting: forwardRef(() => LibFormDateComponent),
       multi: true
     }
   ]
 })
-export class AppFormDateComponent extends FormBase<Date> implements OnInit {
+export class LibFormDateComponent extends FormBase<Date> implements OnInit {
   @Input()
   placeholder = '';
   @Input()

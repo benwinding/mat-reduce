@@ -30,17 +30,17 @@ import { FormBase } from '../form-base-class';
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => AppFormTextPasswordComponent),
+      useExisting: forwardRef(() => LibFormTextPasswordComponent),
       multi: true
     },
     {
       provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => AppFormTextPasswordComponent),
+      useExisting: forwardRef(() => LibFormTextPasswordComponent),
       multi: true
     }
   ]
 })
-export class AppFormTextPasswordComponent extends FormBase<string>
+export class LibFormTextPasswordComponent extends FormBase<string>
   implements OnInit {
   get inputType() {
     return this.hidePassword ? 'password' : 'text';

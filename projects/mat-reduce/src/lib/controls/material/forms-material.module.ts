@@ -19,36 +19,36 @@ import {
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
-import { AppFormSelectObjectMultipleComponent } from './form-select-object-multiple.component';
-import { AppFormToggleComponent } from './form-toggle.component';
-import { AppFormTextClearableComponent } from './form-text-clearable.component';
-import { AppFormTextDisabledComponent } from './form-text-disabled.component';
-import { AppFormTextIconsComponent } from './form-text-icons.component';
-import { AppFormTextPasswordComponent } from './form-text-password.component';
-import { AppFormTextComponent } from './form-text.component';
-import { AppFormTextAreaDisabledComponent } from './form-textarea-disabled.component';
-import { AppFormTextAreaComponent } from './form-textarea.component';
-import { AppFormToggleReversedComponent } from './form-toggle-reversed.component';
-import { AppFormSelectObjectComponent } from './form-select-object.component';
-import { AppFormSelectStringComponent } from './form-select-string.component';
-import { AppFormTagMultipleComponent } from './form-tag-multiple.component';
-import { AppFormTagSingleComponent } from './form-tag-single.component';
+import { LibFormSelectObjectMultipleComponent } from './form-select-object-multiple.component';
+import { LibFormToggleComponent } from './form-toggle.component';
+import { LibFormTextClearableComponent } from './form-text-clearable.component';
+import { LibFormTextDisabledComponent } from './form-text-disabled.component';
+import { LibFormTextIconsComponent } from './form-text-icons.component';
+import { LibFormTextPasswordComponent } from './form-text-password.component';
+import { LibFormTextComponent } from './form-text.component';
+import { LibFormTextAreaDisabledComponent } from './form-textarea-disabled.component';
+import { LibFormTextAreaComponent } from './form-textarea.component';
+import { LibFormToggleReversedComponent } from './form-toggle-reversed.component';
+import { LibFormSelectObjectComponent } from './form-select-object.component';
+import { LibFormSelectStringComponent } from './form-select-string.component';
+import { LibFormTagMultipleComponent } from './form-tag-multiple.component';
+import { LibFormTagSingleComponent } from './form-tag-single.component';
 
 const exported = [
-  AppFormSelectObjectMultipleComponent,
-  AppFormSelectObjectComponent,
-  AppFormSelectStringComponent,
-  AppFormTagMultipleComponent,
-  AppFormTagSingleComponent,
-  AppFormTextClearableComponent,
-  AppFormTextDisabledComponent,
-  AppFormTextIconsComponent,
-  AppFormTextPasswordComponent,
-  AppFormTextComponent,
-  AppFormTextAreaDisabledComponent,
-  AppFormTextAreaComponent,
-  AppFormToggleReversedComponent,
-  AppFormToggleComponent,
+  LibFormSelectObjectMultipleComponent,
+  LibFormSelectObjectComponent,
+  LibFormSelectStringComponent,
+  LibFormTagMultipleComponent,
+  LibFormTagSingleComponent,
+  LibFormTextClearableComponent,
+  LibFormTextDisabledComponent,
+  LibFormTextIconsComponent,
+  LibFormTextPasswordComponent,
+  LibFormTextComponent,
+  LibFormTextAreaDisabledComponent,
+  LibFormTextAreaComponent,
+  LibFormToggleReversedComponent,
+  LibFormToggleComponent,
 ];
 
 @NgModule({

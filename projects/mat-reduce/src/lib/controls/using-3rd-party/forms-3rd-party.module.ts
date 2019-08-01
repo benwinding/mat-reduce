@@ -7,15 +7,15 @@ import { ColorPickerModule } from 'ngx-color-picker';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule, MatCardModule, MatIconModule, MatDatepickerModule } from '@angular/material';
 
-import { AppFormColorComponent } from './form-color.component';
-import { AppFormDateComponent } from './form-date.component';
-import { AppFormTimeComponent } from './form-time.component';
+import { LibFormColorComponent } from './form-color.component';
+import { LibFormDateComponent } from './form-date.component';
+import { LibFormTimeComponent } from './form-time.component';
 import { CommonModule } from '@angular/common';
 
 const exported = [
-  AppFormColorComponent,
-  AppFormDateComponent,
-  AppFormTimeComponent
+  LibFormColorComponent,
+  LibFormDateComponent,
+  LibFormTimeComponent
 ];
 
 @NgModule({

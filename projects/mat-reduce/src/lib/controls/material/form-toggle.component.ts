@@ -27,17 +27,17 @@ import { FormBase } from '../form-base-class';
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => AppFormToggleComponent),
+      useExisting: forwardRef(() => LibFormToggleComponent),
       multi: true
     },
     {
       provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => AppFormToggleComponent),
+      useExisting: forwardRef(() => LibFormToggleComponent),
       multi: true
     }
   ]
 })
-export class AppFormToggleComponent extends FormBase<string> {
+export class LibFormToggleComponent extends FormBase<string> {
   @Input()
   yes = 'Yes';
   @Input()

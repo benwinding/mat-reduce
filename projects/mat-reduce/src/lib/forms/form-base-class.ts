@@ -1,28 +1,27 @@
-// tslint:disable: variable-name
 import { ControlValueAccessor, FormControl, Validator } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
 import { OnDestroy, OnInit, Input } from '@angular/core';
-
-import {v1 as uuidv1 } from 'uuid';
-import { FormBuilderTypedService, FormControlTypeSafe } from '../services/form-builder-typed.service';
+import { takeUntil, auditTime } from 'rxjs/operators';
+import { ConvertToTitleCase } from '../utils/case-helper';
+import {v4 as uuidv4 } from 'uuid';
 
 export class FormBase<T>
   implements OnInit, OnDestroy, ControlValueAccessor, Validator {
-  internalControl: FormControlTypeSafe<T>;
-  internalControlSubscription: Subscription;
+  internalControl: FormControl = new FormControl();
   autoCompleteObscureName: string;
+  _destroyed = new Subject();
 
   disabled = false;
   validationError: string;
 
+  _value: T;
+
+  @Input()
+  formControlName: string;
   @Input()
   placeholder: string;
 
-  _value: T;
-
   constructor() {
-    const fb = new FormBuilderTypedService();
-    this.internalControl = fb.control<T>();
     // Garrentee that init and destroy are called
     // even if ngOnInit() or ngOnDestroy() are overriden
     const originalOnDestroy = this.ngOnDestroy;
@@ -42,19 +41,26 @@ export class FormBase<T>
   ngOnDestroy() {}
 
   init() {
-    this.autoCompleteObscureName = uuidv1();
-    this.internalControlSubscription = this.internalControl.valueChanges.subscribe(
-      () => {
+    this._destroyed.next();
+    this.autoCompleteObscureName = uuidv4();
+    this.internalControl.valueChanges
+      .pipe(takeUntil(this._destroyed))
+      .pipe(auditTime(100))
+      .subscribe(() => {
         this._value = this.internalControl.value;
         this.onChange(this._value);
         this.onTouched();
         // console.log('form-base-class: valueChanges', {val: this._value});
-      }
-    );
+      });
+
+    if (!this.placeholder) {
+      const nameParsed = ConvertToTitleCase(this.formControlName + '');
+      this.placeholder = nameParsed;
+    }
   }
 
   destroy() {
-    this.internalControlSubscription.unsubscribe();
+    this._destroyed.next();
   }
 
   get value() {
@@ -62,13 +68,12 @@ export class FormBase<T>
   }
 
   set value(val) {
+    this._value = val;
     this.internalControl.setValue(val);
   }
 
   writeValue(value: any): void {
-    if (value) {
-      this.value = value;
-    }
+    this.value = value;
   }
 
   propagateOnChange: any = () => {};
@@ -107,7 +112,7 @@ export class FormBase<T>
   }
 
   private onChange(inputValue) {
-    this.validationError = this.CheckValueIsValid(inputValue);
+    this.validationError = this.CheckValueIsValid();
     if (this.validationError) {
       this.propagateOnChange(this.value);
     } else {
@@ -115,7 +120,7 @@ export class FormBase<T>
     }
   }
 
-  CheckValueIsValid(inputValue: T): string {
+  CheckValueIsValid(): string {
     return null;
   }
 }

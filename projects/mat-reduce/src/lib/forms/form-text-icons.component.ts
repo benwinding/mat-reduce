@@ -57,8 +57,4 @@ export class AppFormTextIconsComponent extends FormBase<string> {
   onClickClear() {
     this.internalControl.reset();
   }
-
-  writeValue(value: any): void {
-    this.value = value;
-  }
 }

@@ -38,13 +38,8 @@ import { FormBase } from './form-base-class';
   ]
 })
 export class AppFormToggleComponent extends FormBase<string> {
-
   @Input()
   yes = 'Yes';
   @Input()
   no = 'No';
-
-  writeValue(value: any): void {
-    this.value = value;
-  }
 }

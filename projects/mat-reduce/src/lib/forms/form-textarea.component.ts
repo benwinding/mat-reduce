@@ -38,7 +38,6 @@ import { FormBase } from './form-base-class';
   ]
 })
 export class AppFormTextAreaComponent extends FormBase<string> {
-
   @Input()
   rows = 4;
 }

@@ -39,24 +39,31 @@ import { AppFormTextComponent } from './forms/form-text.component';
 import { AppFormTextAreaDisabledComponent } from './forms/form-textarea-disabled.component';
 import { AppFormTextAreaComponent } from './forms/form-textarea.component';
 import { AppFormColorComponent } from './forms/form-color.component';
+import { AppFormToggleReversedComponent } from './forms/form-toggle-reversed.component';
 
 const exported = [
-  AppFormTagSingleComponent,
-  AppFormTagMultipleComponent,
-  AppFormSelectStringComponent,
-  AppFormSelectObjectComponent,
-  AppFormToggleComponent,
   AppFormColorComponent,
-
+  AppFormSelectObjectComponent,
+  AppFormSelectStringComponent,
+  AppFormTagMultipleComponent,
+  AppFormTagSingleComponent,
+  AppFormTextAreaComponent,
+  AppFormTextAreaDisabledComponent,
   AppFormTextClearableComponent,
+  AppFormTextComponent,
   AppFormTextDisabledComponent,
   AppFormTextIconsComponent,
   AppFormTextPasswordComponent,
-  AppFormTextComponent,
-  AppFormTextAreaDisabledComponent,
-  AppFormTextAreaComponent,
+  AppFormToggleComponent,
+  AppFormToggleReversedComponent,
 
   AppFormAssigneeSelectorComponent
+];
+
+const exportedModules = [
+  CommonModule,
+  ReactiveFormsModule,
+  FormsModule,
 ];
 
 @NgModule({
@@ -64,9 +71,7 @@ const exported = [
   declarations: [...exported, AppConfirmationDialogComponent],
   exports: [...exported],
   imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    FormsModule,
+    ...exportedModules,
     MatSnackBarModule,
     MatInputModule,
     MatSlideToggleModule,

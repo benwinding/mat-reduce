@@ -175,6 +175,10 @@ export class AppFormTagMultipleComponent extends FormBase<Tag[]>
     this.destroyed.next();
   }
 
+  writeValue(newVal: Tag[]) {
+    this.value = newVal || [];
+  }
+
   private getChoicesMinusSelected(): string[] {
     const alreadySelectedSet = new Set(this.selectedTags.map(t => t.name));
     return this.choicesStrings.filter(

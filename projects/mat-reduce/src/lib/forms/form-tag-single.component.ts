@@ -175,6 +175,10 @@ export class AppFormTagSingleComponent extends FormBase<Tag>
     this.destroyed.next();
   }
 
+  writeValue(newVal: Tag) {
+    this.value = newVal || {} as any;
+  }
+
   private getChoicesMinusSelected(): string[] {
     const selectedTagName = this.selectedTag ? this.selectedTag.name : '';
     const alreadySelectedSet = new Set([selectedTagName]);

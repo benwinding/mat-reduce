@@ -66,4 +66,8 @@ export class AppFormSelectObjectComponent extends FormBase<Object> {
   selectionKey: string;
 
   compareObject = compareObject;
+
+  writeValue(newVal: Object) {
+    this.value = newVal || {};
+  }
 }

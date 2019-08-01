@@ -1,11 +1,11 @@
-import { Component, forwardRef, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { FormBase } from './form-base-class';
-import { Subscription } from 'rxjs';
 import {
   FormControlTypeSafe,
   FormBuilderTypedService
 } from '../services/form-builder-typed.service';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -43,13 +43,11 @@ import {
   ]
 })
 export class AppFormTextAreaDisabledComponent extends FormBase<string>
-  implements OnInit, OnDestroy {
-
+  implements OnInit {
   @Input()
   rows = 4;
 
   disabledControl: FormControlTypeSafe<string>;
-  disabledControlSubscription: Subscription;
 
   constructor(private fb: FormBuilderTypedService) {
     super();
@@ -61,14 +59,10 @@ export class AppFormTextAreaDisabledComponent extends FormBase<string>
 
   ngOnInit() {
     this.disabledControl.setValue(this.internalControl.value);
-    this.disabledControlSubscription = this.internalControl.valueChanges.subscribe(
-      () => {
+    this.internalControl.valueChanges
+      .pipe(takeUntil(this._destroyed))
+      .subscribe(() => {
         this.disabledControl.setValue(this.internalControl.value);
-      }
-    );
-  }
-
-  ngOnDestroy() {
-    this.disabledControlSubscription.unsubscribe();
+      });
   }
 }

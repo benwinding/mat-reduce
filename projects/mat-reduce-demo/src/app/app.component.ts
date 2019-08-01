@@ -8,8 +8,6 @@ import { ActivatedRoute, Router, Event, RouterEvent, NavigationEnd } from '@angu
     <div style="text-align:center">
       <h1><a routerLink="/">Welcome to {{ title }}!</a></h1>
     </div>
-    <app-back-btn>
-    </app-back-btn>
     <ul *ngIf="currentUrl == '/'">
       <li><a routerLink="test-text">test-text</a></li>
       <li><a routerLink="test-select">test-select</a></li>

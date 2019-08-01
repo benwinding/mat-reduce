@@ -114,7 +114,7 @@ import { v1 as uuidv1 } from 'uuid';
 export class LibFormTagMultipleComponent extends FormBase<Tag[]>
   implements OnInit, OnDestroy {
   // EXTERNAL API
-  private _choices: Tag[];
+  private _choices: Tag[] = [];
   @Input()
   set choices(newChoices) {
     if (!newChoices) {
@@ -160,8 +160,6 @@ export class LibFormTagMultipleComponent extends FormBase<Tag[]>
   }
 
   ngOnInit() {
-    this.checkExists(this.choices, 'this.selectChoices$');
-
     this.filteredTagNames = this.inputTextControl.valueChanges.pipe(
       startWith(null),
       map((tagName: string | null) =>

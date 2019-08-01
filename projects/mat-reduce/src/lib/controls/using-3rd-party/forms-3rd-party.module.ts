@@ -5,7 +5,7 @@ import {
 } from '@mat-datetimepicker/core';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule, MatCardModule, MatIconModule, MatDatepickerModule } from '@angular/material';
+import { MatInputModule, MatCardModule, MatIconModule, MatDatepickerModule, MatButtonModule } from '@angular/material';
 
 import { LibFormColorComponent } from './form-color.component';
 import { LibFormDateComponent } from './form-date.component';
@@ -26,6 +26,7 @@ const exported = [
     MatInputModule,
     MatCardModule,
     MatIconModule,
+    MatButtonModule,
     MatDatepickerModule,
     MatNativeDatetimeModule,
     MatDatetimepickerModule,

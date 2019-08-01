@@ -19,8 +19,7 @@ import {
 } from '@angular/material';
 import { FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
-import { map, startWith, takeUntil } from 'rxjs/operators';
-import { ConfirmationService } from '../../dialogs/app-confirmation.component';
+import { map, startWith } from 'rxjs/operators';
 import { FormBase } from '../form-base-class';
 import { Tag } from './Tag';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
@@ -153,7 +152,6 @@ export class LibFormTagMultipleComponent extends FormBase<Tag[]>
   destroyed = new Subject<void>();
 
   constructor(
-    private confirm: ConfirmationService,
     private snack: MatSnackBar
   ) {
     super();
@@ -228,20 +226,12 @@ export class LibFormTagMultipleComponent extends FormBase<Tag[]>
       return;
     }
     this.resetTextInput();
-    const confirmed = await this.confirm.AskConfirm(
-      `Are you sure you want to add: "${inputTrimmed}" to the global list?`
-    );
-    if (!confirmed) {
-      this.log('addFromTextInput() not confirmed, nothing changed...');
-      this.notify('Nothing added globally');
-      return;
-    }
     const newTag = await this.makeNewTag(inputTrimmed);
     this.addedNewTag.emit(newTag);
     this.choices.push(newTag);
     this.addedTagToInternalValue(newTag);
     this.notify(`Adding "${newTag.name}" to the global list...`);
-    this.log('addFromTextInput() added new tag', { newTag, confirmed });
+    this.log('addFromTextInput() added new tag', { newTag });
   }
 
   resetTextInput() {

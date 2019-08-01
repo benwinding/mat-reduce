@@ -75,7 +75,9 @@ export class AppConfirmationDialogComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.okButton.focus();
+    if (this.okButton && this.okButton.focus) {
+      this.okButton.focus();
+    }
   }
 
   onClickCancel(e): void {

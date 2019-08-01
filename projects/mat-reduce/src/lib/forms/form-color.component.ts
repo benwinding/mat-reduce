@@ -18,8 +18,9 @@ import { FormBase } from './form-base-class';
         autocomplete="dontcompleteme"
       />
       <mat-card
+        *ngIf="!disabled"
         [cpOutputFormat]="'hex'"
-        class="box"
+        class="box has-pointer"
         [style.background]="value"
         [(colorPicker)]="value"
         [cpPosition]="'top'"
@@ -41,6 +42,19 @@ import { FormBase } from './form-base-class';
           </button>
         </div>
       </mat-card>
+      <mat-card
+        *ngIf="disabled"
+        class="box"
+        [style.background]="value"
+      >
+        <div class="flex-space-between">
+          <span>
+            {{ value ? value : 'click to pick color' }}
+          </span>
+          <span>
+          </span>
+        </div>
+      </mat-card>
     </mat-form-field>
   `,
   styles: [
@@ -55,7 +69,7 @@ import { FormBase } from './form-base-class';
         margin-top: -20px;
       }
       .bg-white {
-        background-color: white !important
+        background-color: white !important;
       }
       .txt-black {
         color: black;
@@ -68,6 +82,8 @@ import { FormBase } from './form-base-class';
       }
       .box {
         max-width: 200px;
+      }
+      .has-pointer {
         cursor: pointer;
       }
       .flex-space-between {

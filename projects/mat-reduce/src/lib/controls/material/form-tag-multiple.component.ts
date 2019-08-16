@@ -8,7 +8,8 @@ import {
   OnInit,
   Output,
   ViewChild,
-  ElementRef
+  ElementRef,
+  ViewEncapsulation
 } from '@angular/core';
 import {
   MatAutocomplete,
@@ -30,7 +31,10 @@ import { v1 as uuidv1 } from 'uuid';
   // tslint:disable-next-line:component-selector
   selector: 'form-tag-multiple',
   template: `
-    <mat-form-field class="full-width">
+    <mat-form-field
+      class="tag-full-width"
+      [class.form-tag-control-invalid]="hasRed()"
+    >
       <mat-chip-list #chipList aria-label="Fruit selection">
         <mat-chip
           *ngFor="let tag of selectedTags"
@@ -58,8 +62,8 @@ import { v1 as uuidv1 } from 'uuid';
           (keydown)="focusOnEnter($event)"
         />
         <mat-icon
-          class="is-grey r15"
-          matTooltip="Add a single tag here, you can manage all your tags using the tag list editor in the settings menu"
+          class="tag-icon"
+          matTooltip="Add tags here..."
           matBadge="∞"
           matSuffix
           >local_offer</mat-icon
@@ -80,23 +84,25 @@ import { v1 as uuidv1 } from 'uuid';
   `,
   styles: [
     `
-      .full-width {
+      .tag-full-width {
         width: 100%;
       }
-      .is-grey {
+      .tag-icon {
         color: grey;
-      }
-      .r15 {
         right: 15px;
       }
-      mat-icon span {
+      .tag-icon span {
         background-color: #afc5b000;
         right: 1px !important;
         top: 3px !important;
         color: white;
       }
+      .form-tag-control-invalid .mat-form-field-label {
+        color: #ff4f4f !important;
+      }
     `
   ],
+  encapsulation: ViewEncapsulation.None,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -151,9 +157,7 @@ export class LibFormTagMultipleComponent extends FormBase<Tag[]>
 
   destroyed = new Subject<void>();
 
-  constructor(
-    private snack: MatSnackBar
-  ) {
+  constructor(private snack: MatSnackBar) {
     super();
   }
 
@@ -292,6 +296,12 @@ export class LibFormTagMultipleComponent extends FormBase<Tag[]>
       this.inputTextControl.enable();
     }
     super.setDisabledState(isDisabled);
+  }
+
+  hasRed() {
+    const isDirty = this.inputTextControl.touched;
+    const isInValid = this.internalControl.invalid;
+    return isDirty && isInValid;
   }
 
   notify(message: string) {

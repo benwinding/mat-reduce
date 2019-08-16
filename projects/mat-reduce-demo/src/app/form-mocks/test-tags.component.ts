@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { of, Observable } from 'rxjs';
 
 import { v1 as uuidv1 } from 'uuid';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { Tag } from 'projects/mat-reduce/src/lib/controls/material/Tag';
 
 function makeTag(name): Tag {
@@ -63,6 +63,17 @@ const friendArray = [makeTag('Frank'), makeTag('Albert'), makeTag('John')];
       {{ tagControlMultiple.value | json }}
     </pre
     >
+
+    <h1>Multiple Required</h1>
+
+    <form-tag-multiple
+      [customValues]="formControlCustomValues.value"
+      [removable]="formControlRemovable.value"
+      [formControl]="tagControlMultipleRequired"
+      [choices]="selectChoices$ | async"
+      placeholder="* Select Many Friends"
+    >
+    </form-tag-multiple>
   `
 })
 export class TestTagsComponent {
@@ -72,17 +83,23 @@ export class TestTagsComponent {
 
   tagControlSingle = new FormControl(friendArray[0]);
   tagControlMultiple = new FormControl([friendArray[1]]);
+  tagControlMultipleRequired = new FormControl([], Validators.required);
 
   selectChoices$: Observable<Tag[]> = of(friendArray);
 
   constructor() {
+    console.log({
+      tagControlMultipleRequired: this.tagControlMultipleRequired
+    });
     this.formControlEnabled.valueChanges.subscribe(isEnabled => {
       if (isEnabled) {
         this.tagControlSingle.enable();
         this.tagControlMultiple.enable();
+        this.tagControlMultipleRequired.enable();
       } else {
         this.tagControlSingle.disable();
         this.tagControlMultiple.disable();
+        this.tagControlMultipleRequired.disable();
       }
     });
   }

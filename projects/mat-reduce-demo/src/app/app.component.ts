@@ -12,6 +12,7 @@ import { ActivatedRoute, Router, Event, RouterEvent, NavigationEnd } from '@angu
       <li><a routerLink="test-text">test-text</a></li>
       <li><a routerLink="test-select">test-select</a></li>
       <li><a routerLink="test-tags">test-tags</a></li>
+      <li><a routerLink="test-formgroup">test-formgroup</a></li>
       <li><a routerLink="test-color">test-color</a></li>
       <li><a routerLink="test-assignee">test-assignee</a></li>
     </ul>

@@ -5,6 +5,7 @@ import { TestTagsComponent } from './form-mocks/test-tags.component';
 import { TestAssigneeComponent } from './form-mocks/test-assignee-selector.component';
 import { TestTextComponent } from './form-mocks/test-text.component';
 import { TestColorComponent } from './form-mocks/test-color.component';
+import { TestFormGroupComponent } from './form-mocks/test-formgroup.component';
 
 
 const allRoutes: Routes = [
@@ -19,6 +20,10 @@ const allRoutes: Routes = [
   {
     path: 'test-tags',
     component: TestTagsComponent
+  },
+  {
+    path: 'test-formgroup',
+    component: TestFormGroupComponent
   },
   {
     path: 'test-assignee',

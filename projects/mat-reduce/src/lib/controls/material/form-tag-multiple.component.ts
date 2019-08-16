@@ -18,7 +18,7 @@ import {
   MatSnackBar,
   MatAutocompleteTrigger
 } from '@angular/material';
-import { FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, AbstractControl } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { FormBase } from '../form-base-class';
@@ -60,6 +60,7 @@ import { v1 as uuidv1 } from 'uuid';
           [matChipInputAddOnBlur]="addOnBlur"
           (matChipInputTokenEnd)="addFromTextInput($event)"
           (keydown)="focusOnEnter($event)"
+          (blur)="onBlur()"
         />
         <mat-icon
           class="tag-icon"
@@ -91,11 +92,11 @@ import { v1 as uuidv1 } from 'uuid';
         color: grey;
         right: 15px;
       }
-      .tag-icon span {
-        background-color: #afc5b000;
+      .tag-icon .mat-badge-content {
+        background-color: #afc5b000 !important;
         right: 1px !important;
         top: 3px !important;
-        color: white;
+        color: white !important;
       }
       .form-tag-control-invalid .mat-form-field-label {
         color: #ff4f4f !important;
@@ -192,10 +193,8 @@ export class LibFormTagMultipleComponent extends FormBase<Tag[]>
     );
   }
 
-  checkExists(val, name) {
-    if (val == null) {
-      throw new Error(name + ' has not been defined');
-    }
+  onBlur() {
+    this.CheckValueIsValid();
   }
 
   removeTagChip(tagToRemove: Tag) {
@@ -203,6 +202,7 @@ export class LibFormTagMultipleComponent extends FormBase<Tag[]>
     this.matAutocompleteTrigger.closePanel();
     this.value = this.value.filter(t => t.id !== tagToRemove.id);
     this.inputTextControl.setValue(null);
+    this.inputTextControl.markAsTouched();
   }
 
   async addFromTextInput(event: MatChipInputEvent): Promise<void> {
@@ -299,8 +299,9 @@ export class LibFormTagMultipleComponent extends FormBase<Tag[]>
   }
 
   hasRed() {
-    const isDirty = this.inputTextControl.touched;
+    const isDirty = this.inputTextControl.touched || this.inputTextControl.dirty;
     const isInValid = this.internalControl.invalid;
+    this.log('has Red:', {isDirty, isInValid, value: this.value, thisControl: this });
     return isDirty && isInValid;
   }
 
@@ -324,5 +325,23 @@ export class LibFormTagMultipleComponent extends FormBase<Tag[]>
       return console.log('form-tag-multiple: ', msg);
     }
     console.warn('form-tag-multiple: ', msg, obj);
+  }
+
+  CheckValueIsValid() {
+    if (!this.internalControl || !this.internalControl.validator) {
+      return;
+    }
+    const validator = this.internalControl.validator({} as AbstractControl);
+    const isRequired = validator && validator.required;
+    if (!isRequired) {
+      return null;
+    }
+    if (!Array.isArray(this.value)) {
+      return 'form value is not an array';
+    }
+    if (!this.value.length) {
+      return 'form value is required but has no value';
+    }
+    return null;
   }
 }

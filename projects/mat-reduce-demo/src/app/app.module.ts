@@ -14,11 +14,13 @@ import { AppBtnBackComponent } from './extra/btn-back.component';
 import { AppRoutingModule } from './app.routing';
 import { TestTextComponent } from './form-mocks/test-text.component';
 import { TestColorComponent } from './form-mocks/test-color.component';
+import { TestFormGroupComponent } from './form-mocks/test-formgroup.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TestTagsComponent,
+    TestFormGroupComponent,
     TestSelectComponent,
     TestAssigneeComponent,
     TestTextComponent,

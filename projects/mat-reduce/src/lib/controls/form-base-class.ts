@@ -1,4 +1,4 @@
-import { ControlValueAccessor, FormControl, Validator } from '@angular/forms';
+import { ControlValueAccessor, FormControl, Validator, ValidatorFn, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { OnDestroy, OnInit, Input } from '@angular/core';
 import { takeUntil, auditTime } from 'rxjs/operators';
@@ -13,6 +13,7 @@ export class FormBase<T>
 
   disabled = false;
   validationError: string;
+  _validators: ValidatorFn;
 
   _value: T;
 

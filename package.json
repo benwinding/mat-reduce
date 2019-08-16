@@ -26,6 +26,7 @@
     "@angular/router": "^7.0.0",
     "@ctrl/ngx-csv": "^1.1.4",
     "@mat-datetimepicker/core": "^2.0.1",
+    "angular2-signaturepad": "^2.9.0",
     "core-js": "^2.5.4",
     "ngx-color-picker": "^8.0.1",
     "rxjs": "^6.3.3",

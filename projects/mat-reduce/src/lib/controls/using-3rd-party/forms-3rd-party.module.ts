@@ -11,11 +11,14 @@ import { LibFormColorComponent } from './form-color.component';
 import { LibFormDateComponent } from './form-date.component';
 import { LibFormTimeComponent } from './form-time.component';
 import { CommonModule } from '@angular/common';
+import { SignaturePadModule } from 'angular2-signaturepad';
+import { LibFormSignatureComponent } from './form-signature.component';
 
 const exported = [
   LibFormColorComponent,
   LibFormDateComponent,
-  LibFormTimeComponent
+  LibFormTimeComponent,
+  LibFormSignatureComponent
 ];
 
 @NgModule({
@@ -30,6 +33,7 @@ const exported = [
     MatDatepickerModule,
     MatNativeDatetimeModule,
     MatDatetimepickerModule,
+    SignaturePadModule,
     ColorPickerModule
   ],
   exports: [...exported],

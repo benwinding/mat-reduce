@@ -1,6 +1,6 @@
 {
   "name": "mat-reduce",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "peerDependencies": {
     "@angular/common": "^7.2.0",
     "@angular/core": "^7.2.0"
@@ -8,6 +8,7 @@
   "dependencies": {
     "ngx-color-picker": "^8.x",
     "@ctrl/ngx-csv": "^1.x",
-    "@mat-datetimepicker/core": "^2.x"
+    "@mat-datetimepicker/core": "^2.x",
+    "angular2-signaturepad": "^2.x"
   }
 }

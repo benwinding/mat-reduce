@@ -745,6 +745,13 @@ amdefine@>=0.0.4:
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
   integrity sha1-SlKCrBZHKek2Gbz9OtFR+BfOkfU=
 
+angular2-signaturepad@^2.9.0:
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/angular2-signaturepad/-/angular2-signaturepad-2.9.0.tgz#7e1b5705bbf95ea28833de2f2fcaab8161f09b97"
+  integrity sha512-D9bimgevNtuYbvz/TjhgjIWjqLleYBlDRIbRxkdgp5OAJ+8FOio17kZN1pDFJ+Dhy8c2Qc+b2WlHGQvNDG9vEg==
+  dependencies:
+    signature_pad "2.3.2"
+
 ansi-align@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/ansi-align/-/ansi-align-3.0.0.tgz#b536b371cf687caaef236c18d3e21fe3797467cb"
@@ -6777,6 +6784,11 @@ signal-exit@^3.0.0, signal-exit@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
   integrity sha1-tf3AjxKH6hF4Yo5BXiUTK3NkbG0=
+
+signature_pad@2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/signature_pad/-/signature_pad-2.3.2.tgz#ca7230021c89cedeead27b33d8d16ff254e5f04a"
+  integrity sha512-peYXLxOsIY6MES2TrRLDiNg2T++8gGbpP2yaC+6Ohtxr+a2dzoaqWosWDY9sWqTAAk6E/TyQO+LJw9zQwyu5kA==
 
 slash@^1.0.0:
   version "1.0.0"

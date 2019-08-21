@@ -34,6 +34,27 @@ import { LibFormSelectStringComponent } from './form-select-string.component';
 import { LibFormTagMultipleComponent } from './form-tag-multiple.component';
 import { LibFormTagSingleComponent } from './form-tag-single.component';
 
+const exportedModules = [
+  CommonModule,
+  FormsModule,
+  ReactiveFormsModule,
+  MatSnackBarModule,
+  MatInputModule,
+  MatSlideToggleModule,
+  MatChipsModule,
+  MatCardModule,
+  MatButtonModule,
+  MatBadgeModule,
+  MatDialogModule,
+  MatAutocompleteModule,
+  MatFormFieldModule,
+  MatIconModule,
+  MatSelectModule,
+  MatCheckboxModule,
+  MatTooltipModule,
+  MatProgressSpinnerModule
+];
+
 const exported = [
   LibFormSelectObjectMultipleComponent,
   LibFormSelectObjectComponent,
@@ -48,31 +69,12 @@ const exported = [
   LibFormTextAreaDisabledComponent,
   LibFormTextAreaComponent,
   LibFormToggleReversedComponent,
-  LibFormToggleComponent,
+  LibFormToggleComponent
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatSnackBarModule,
-    MatInputModule,
-    MatSlideToggleModule,
-    MatChipsModule,
-    MatCardModule,
-    MatButtonModule,
-    MatBadgeModule,
-    MatDialogModule,
-    MatAutocompleteModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatSelectModule,
-    MatCheckboxModule,
-    MatTooltipModule,
-    MatProgressSpinnerModule
-  ],
-  exports: [...exported],
+  imports: [...exportedModules],
+  exports: [...exported, ...exportedModules],
   declarations: [...exported],
   providers: []
 })

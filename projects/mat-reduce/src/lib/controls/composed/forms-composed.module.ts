@@ -6,20 +6,20 @@ import { MatCardModule, MatIconModule } from '@angular/material';
 import { MatReduceFormsUsingMaterialModule } from '../material/forms-material.module';
 import { LibFormAssigneeSelectorComponent } from './form-assignee-selector.component';
 
-const exported = [
-  LibFormAssigneeSelectorComponent
+const exportedModules = [
+  CommonModule,
+  FormsModule,
+  ReactiveFormsModule,
+  MatIconModule,
+  MatCardModule,
+  MatReduceFormsUsingMaterialModule
 ];
 
+const exported = [LibFormAssigneeSelectorComponent];
+
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatIconModule,
-    MatCardModule,
-    MatReduceFormsUsingMaterialModule,
-  ],
-  exports: [...exported],
+  imports: [...exportedModules],
+  exports: [...exported, ...exportedModules],
   declarations: [...exported],
   providers: []
 })

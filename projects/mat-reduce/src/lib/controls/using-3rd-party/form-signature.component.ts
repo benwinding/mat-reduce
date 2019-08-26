@@ -4,12 +4,14 @@ import {
   ElementRef,
   Input,
   OnInit,
-  ViewChild
+  ViewChild,
+  forwardRef
 } from '@angular/core';
 import { SignaturePad } from 'angular2-signaturepad/signature-pad';
 import { FormBase } from '../form-base-class';
 
 import { v1 as uuidv1 } from 'uuid';
+import { NG_VALUE_ACCESSOR, NG_VALIDATORS } from '@angular/forms';
 
 @Component({
   selector: 'form-signature',
@@ -46,11 +48,22 @@ import { v1 as uuidv1 } from 'uuid';
         width: 100%;
       }
     `
+  ],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => LibFormSignatureComponent),
+      multi: true
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => LibFormSignatureComponent),
+      multi: true
+    }
   ]
 })
 export class LibFormSignatureComponent extends FormBase<string>
   implements OnInit, AfterViewInit {
-
   @Input()
   placeholder = 'Sign Here';
 
@@ -73,6 +86,9 @@ export class LibFormSignatureComponent extends FormBase<string>
   writeValue(value: any): void {
     this.value = value;
     // Set current signature from control
+    if (!this.signaturePad) {
+      return;
+    }
     const currentSignature = this.value;
     this.signaturePad.fromDataURL(currentSignature);
   }

@@ -18,12 +18,19 @@ import { FormControl } from '@angular/forms';
       [formControl]="testControl"
     >
     </form-text>
+
+    <form-signature
+      placeholder="Sign here!"
+      [formControl]="testSignControl"
+    >
+    </form-signature>
   `
 })
 export class TestTextComponent {
   formControlEnabled = new FormControl(true);
 
   testControl = new FormControl();
+  testSignControl = new FormControl();
 
   constructor() {
     this.formControlEnabled.valueChanges.subscribe(isEnabled => {

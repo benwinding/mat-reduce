@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { of, Observable } from 'rxjs';
+import { of, Observable, Subject } from 'rxjs';
 
 import { v1 as uuidv1 } from 'uuid';
 import { FormControl, Validators } from '@angular/forms';
@@ -64,6 +64,23 @@ const friendArray = [makeTag('Frank'), makeTag('Albert'), makeTag('John')];
     </pre
     >
 
+    <h1>Single Delayed</h1>
+
+    <form-tag-single
+      [customValues]="formControlCustomValues.value"
+      [removable]="formControlRemovable.value"
+      [formControl]="tagControlSingleDelayed"
+      [choices]="selectChoicesDelayed$ | async"
+      placeholder="Select One Friend"
+    >
+    </form-tag-single>
+
+    <h3>Form Value</h3>
+    <pre>
+      {{ tagControlSingleDelayed.value | json }}
+    </pre
+    >
+
     <h1>Multiple</h1>
 
     <form-tag-multiple
@@ -99,11 +116,13 @@ export class TestTagsComponent {
   formControlEnabled = new FormControl(true);
 
   tagControlSingle = new FormControl(friendArray[0]);
+  tagControlSingleDelayed = new FormControl(null);
   tagControlSingleNull = new FormControl(null);
   tagControlMultiple = new FormControl([friendArray[1]]);
   tagControlMultipleRequired = new FormControl([], Validators.required);
 
   selectChoices$: Observable<Tag[]> = of(friendArray);
+  selectChoicesDelayed$: Observable<Tag[]>;
 
   constructor() {
     console.log({
@@ -120,5 +139,15 @@ export class TestTagsComponent {
         this.tagControlMultipleRequired.disable();
       }
     });
+
+    const delayedChoices = new Subject<Tag[]>();
+    this.selectChoicesDelayed$ = delayedChoices.asObservable();
+    setTimeout(() => {
+      delayedChoices.next([
+        makeTag('Frank2'),
+        makeTag('Albert2'),
+        makeTag('John')
+      ]);
+    }, 1000);
   }
 }

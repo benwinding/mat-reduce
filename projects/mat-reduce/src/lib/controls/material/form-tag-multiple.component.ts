@@ -53,6 +53,8 @@ import { v1 as uuidv1 } from 'uuid';
         <input
           [placeholder]="placeholder"
           #textInput
+          [name]="autoCompleteObscureName"
+          autocomplete="dontcompleteme"
           [formControl]="inputTextControl"
           [matAutocomplete]="auto"
           [matChipInputFor]="chipList"
@@ -75,7 +77,7 @@ import { v1 as uuidv1 } from 'uuid';
         (optionSelected)="optionSelectedFromList($event)"
       >
         <mat-option
-          *ngFor="let choiceName of filteredTagNames | async"
+          *ngFor="let choiceName of filteredTagNames$ | async"
           [value]="choiceName"
         >
           {{ choiceName }}
@@ -127,6 +129,7 @@ export class LibFormTagMultipleComponent extends FormBase<Tag[]>
       newChoices = [];
     }
     this._choices = newChoices;
+    this.inputTextControl.patchValue(this.inputTextControl.value);
   }
   get choices() {
     return this._choices;
@@ -148,7 +151,7 @@ export class LibFormTagMultipleComponent extends FormBase<Tag[]>
   addOnBlur = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
   inputTextControl = new FormControl();
-  filteredTagNames: Observable<string[]>;
+  filteredTagNames$: Observable<string[]>;
 
   @ViewChild('textInput', {} as any) textInput: ElementRef<HTMLInputElement>;
   @ViewChild('textInput', { read: MatAutocompleteTrigger } as any)
@@ -163,7 +166,7 @@ export class LibFormTagMultipleComponent extends FormBase<Tag[]>
   }
 
   ngOnInit() {
-    this.filteredTagNames = this.inputTextControl.valueChanges.pipe(
+    this.filteredTagNames$ = this.inputTextControl.valueChanges.pipe(
       startWith(null),
       map((tagName: string | null) =>
         tagName ? this._filter(tagName) : this.getChoicesMinusSelected()

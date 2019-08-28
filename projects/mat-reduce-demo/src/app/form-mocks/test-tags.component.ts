@@ -47,6 +47,23 @@ const friendArray = [makeTag('Frank'), makeTag('Albert'), makeTag('John')];
     </pre
     >
 
+    <h1>Single Null</h1>
+
+    <form-tag-single
+      [customValues]="formControlCustomValues.value"
+      [removable]="formControlRemovable.value"
+      [formControl]="tagControlSingleNull"
+      [choices]="selectChoices$ | async"
+      placeholder="Select One Friend"
+    >
+    </form-tag-single>
+
+    <h3>Form Value</h3>
+    <pre>
+      {{ tagControlSingleNull.value | json }}
+    </pre
+    >
+
     <h1>Multiple</h1>
 
     <form-tag-multiple
@@ -82,6 +99,7 @@ export class TestTagsComponent {
   formControlEnabled = new FormControl(true);
 
   tagControlSingle = new FormControl(friendArray[0]);
+  tagControlSingleNull = new FormControl(null);
   tagControlMultiple = new FormControl([friendArray[1]]);
   tagControlMultipleRequired = new FormControl([], Validators.required);
 

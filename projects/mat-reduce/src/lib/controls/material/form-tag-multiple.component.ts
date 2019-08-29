@@ -136,6 +136,7 @@ export class LibFormTagMultipleComponent extends FormBase<Tag[]>
   }
   @Input() customValues: boolean;
   @Input() removable = true;
+  @Input() filterStrategy: 'all' | 'beginning' = 'all';
   @Output() addedNewTag = new EventEmitter<Tag>();
 
   // INTERNAL
@@ -190,10 +191,24 @@ export class LibFormTagMultipleComponent extends FormBase<Tag[]>
   }
 
   private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    return this.getChoicesMinusSelected().filter(
-      choice => choice.toLowerCase().indexOf(filterValue) === 0
-    );
+    const choices = this.getChoicesMinusSelected();
+    if (this.filterStrategy === 'all') {
+      return _filterAll();
+    } else {
+      return _filterBeginning();
+    }
+    function _filterAll(): string[] {
+      const filterValue = value.toLowerCase();
+      return choices.filter(choice =>
+        (choice + '').toLowerCase().includes(filterValue)
+      );
+    }
+    function _filterBeginning(): string[] {
+      const filterValue = value.toLowerCase();
+      return choices.filter(
+        choice => (choice + '').toLowerCase().indexOf(filterValue) === 0
+      );
+    }
   }
 
   onBlur() {

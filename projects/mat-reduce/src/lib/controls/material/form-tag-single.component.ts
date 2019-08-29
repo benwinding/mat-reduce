@@ -129,6 +129,7 @@ export class LibFormTagSingleComponent extends FormBase<Tag>
     return this._choices;
   }
   @Input() customValues: boolean;
+  @Input() filterStrategy: 'all' | 'beginning' = 'all';
   @Input() removable = true;
   @Output() addedNewTag = new EventEmitter<Tag>();
 
@@ -190,10 +191,24 @@ export class LibFormTagSingleComponent extends FormBase<Tag>
   }
 
   private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    return this.getChoicesMinusSelected().filter(
-      choice => choice.toLowerCase().indexOf(filterValue) === 0
-    );
+    const choices = this.getChoicesMinusSelected();
+    if (this.filterStrategy === 'all') {
+      return _filterAll();
+    } else {
+      return _filterBeginning();
+    }
+    function _filterAll(): string[] {
+      const filterValue = value.toLowerCase();
+      return choices.filter(choice =>
+        (choice + '').toLowerCase().includes(filterValue)
+      );
+    }
+    function _filterBeginning(): string[] {
+      const filterValue = value.toLowerCase();
+      return choices.filter(
+        choice => (choice + '').toLowerCase().indexOf(filterValue) === 0
+      );
+    }
   }
 
   checkExists(val, name) {

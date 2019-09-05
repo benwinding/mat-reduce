@@ -15,6 +15,7 @@ import { ActivatedRoute, Router, Event, RouterEvent, NavigationEnd } from '@angu
       <li><a routerLink="test-formgroup">test-formgroup</a></li>
       <li><a routerLink="test-color">test-color</a></li>
       <li><a routerLink="test-assignee">test-assignee</a></li>
+      <li><a routerLink="test-time">test-time</a></li>
     </ul>
     <router-outlet>
     </router-outlet>

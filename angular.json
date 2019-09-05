@@ -61,6 +61,7 @@
               "projects/mat-reduce-demo/src/styles.css"
             ],
             "scripts": [],
+            "preserveSymlinks": true,
             "es5BrowserSupport": true
           },
           "configurations": {

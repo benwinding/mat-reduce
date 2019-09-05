@@ -29,6 +29,7 @@
     "angular2-signaturepad": "^2.9.0",
     "core-js": "^2.5.4",
     "ngx-color-picker": "^8.0.1",
+    "ngx-material-timepicker": "3.3.1",
     "rxjs": "^6.3.3",
     "tslib": "^1.9.0",
     "uuid": "^3.3.2",

@@ -15,6 +15,7 @@ import { AppRoutingModule } from './app.routing';
 import { TestTextComponent } from './form-mocks/test-text.component';
 import { TestColorComponent } from './form-mocks/test-color.component';
 import { TestFormGroupComponent } from './form-mocks/test-formgroup.component';
+import { TestTimeComponent } from './form-mocks/test-time.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { TestFormGroupComponent } from './form-mocks/test-formgroup.component';
     TestAssigneeComponent,
     TestTextComponent,
     TestColorComponent,
+    TestTimeComponent,
 
     AppBtnBackComponent
   ],

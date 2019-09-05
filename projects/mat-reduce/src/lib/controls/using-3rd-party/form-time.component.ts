@@ -10,14 +10,16 @@ import { FormBase } from '../form-base-class';
       <input
         matInput
         required
-        type="time"
         [formControl]="internalControl"
+        [ngxTimepicker]="picker"
+        [placeholder]="placeholder"
         [name]="autoCompleteObscureName"
         autocomplete="false"
       />
-      <mat-icon matSuffix>
+      <mat-icon matSuffix [class.is-grey]="disabled" (click)="picker.open()" >
         access_time
       </mat-icon>
+      <ngx-material-timepicker #picker></ngx-material-timepicker>
     </mat-form-field>
   `,
   providers: [
@@ -31,6 +33,13 @@ import { FormBase } from '../form-base-class';
       useExisting: forwardRef(() => LibFormTimeComponent),
       multi: true
     }
+  ],
+  styles: [
+    `
+      .is-grey {
+        color: #aaa;
+      }
+    `
   ]
 })
 export class LibFormTimeComponent extends FormBase<string> implements OnInit {

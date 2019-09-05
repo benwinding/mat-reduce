@@ -72,6 +72,7 @@
                   "with": "projects/mat-reduce-demo/src/environments/environment.prod.ts"
                 }
               ],
+              "baseHref": "/mat-reduced/",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,

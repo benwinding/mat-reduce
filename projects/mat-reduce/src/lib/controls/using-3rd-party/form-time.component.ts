@@ -14,12 +14,25 @@ import { FormBase } from '../form-base-class';
         [ngxTimepicker]="picker"
         [placeholder]="placeholder"
         [name]="autoCompleteObscureName"
+        [format]="format"
+        [min]="min"
+        [max]="max"
         autocomplete="false"
       />
-      <mat-icon matSuffix [class.is-grey]="disabled" (click)="picker.open()" >
+      <mat-icon
+        matSuffix
+        class="has-pointer"
+        [class.is-grey]="disabled"
+        (click)="picker.open()"
+      >
         access_time
       </mat-icon>
-      <ngx-material-timepicker #picker></ngx-material-timepicker>
+      <ngx-material-timepicker
+        #picker
+        [defaultTime]="defaultTime"
+        [minutesGap]="minutesGap"
+        ESC="true"
+      ></ngx-material-timepicker>
     </mat-form-field>
   `,
   providers: [
@@ -39,10 +52,23 @@ import { FormBase } from '../form-base-class';
       .is-grey {
         color: #aaa;
       }
+      .has-pointer {
+        cursor: pointer;
+      }
     `
   ]
 })
 export class LibFormTimeComponent extends FormBase<string> implements OnInit {
   @Input()
   placeholder = '';
+  @Input()
+  format: number; // 12 or 24
+  @Input()
+  min: string; // 12:00 AM
+  @Input()
+  max: string; // 12:00 AM
+  @Input()
+  defaultTime: string; // 12:00 AM
+  @Input()
+  minutesGap: number; // 1 -> 60
 }

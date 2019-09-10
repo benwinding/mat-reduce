@@ -33,6 +33,7 @@ import { LibFormSelectObjectComponent } from './form-select-object.component';
 import { LibFormSelectStringComponent } from './form-select-string.component';
 import { LibFormTagMultipleComponent } from './form-tag-multiple.component';
 import { LibFormTagSingleComponent } from './form-tag-single.component';
+import { LibFormNumberComponent } from './form-number.component';
 
 const exportedModules = [
   CommonModule,
@@ -69,7 +70,8 @@ const exported = [
   LibFormTextAreaDisabledComponent,
   LibFormTextAreaComponent,
   LibFormToggleReversedComponent,
-  LibFormToggleComponent
+  LibFormToggleComponent,
+  LibFormNumberComponent,
 ];
 
 @NgModule({

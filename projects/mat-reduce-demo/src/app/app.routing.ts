@@ -7,6 +7,7 @@ import { TestTextComponent } from './form-mocks/test-text.component';
 import { TestColorComponent } from './form-mocks/test-color.component';
 import { TestFormGroupComponent } from './form-mocks/test-formgroup.component';
 import { TestTimeComponent } from './form-mocks/test-time.component';
+import { TestNumberComponent } from './form-mocks/test-number.component';
 
 
 const allRoutes: Routes = [
@@ -37,6 +38,10 @@ const allRoutes: Routes = [
   {
     path: 'test-time',
     component: TestTimeComponent
+  },
+  {
+    path: 'test-number',
+    component: TestNumberComponent
   },
 ];
 

@@ -16,6 +16,7 @@ import { TestTextComponent } from './form-mocks/test-text.component';
 import { TestColorComponent } from './form-mocks/test-color.component';
 import { TestFormGroupComponent } from './form-mocks/test-formgroup.component';
 import { TestTimeComponent } from './form-mocks/test-time.component';
+import { TestNumberComponent } from './form-mocks/test-number.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { TestTimeComponent } from './form-mocks/test-time.component';
     TestTextComponent,
     TestColorComponent,
     TestTimeComponent,
+    TestNumberComponent,
 
     AppBtnBackComponent
   ],

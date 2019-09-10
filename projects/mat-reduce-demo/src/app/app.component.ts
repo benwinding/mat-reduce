@@ -10,6 +10,7 @@ import { ActivatedRoute, Router, Event, RouterEvent, NavigationEnd } from '@angu
     </div>
     <ul *ngIf="currentUrl == '/'">
       <li><a routerLink="test-text">test-text</a></li>
+      <li><a routerLink="test-number">test-number</a></li>
       <li><a routerLink="test-select">test-select</a></li>
       <li><a routerLink="test-tags">test-tags</a></li>
       <li><a routerLink="test-formgroup">test-formgroup</a></li>

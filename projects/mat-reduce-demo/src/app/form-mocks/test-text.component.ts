@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { of, Observable } from 'rxjs';
 
 import { FormControl } from '@angular/forms';
 
@@ -19,17 +18,33 @@ import { FormControl } from '@angular/forms';
     >
     </form-text>
 
+    <h5>Value</h5>
+    <pre>{{testControl.value}}</pre>
+
     <form-signature
       placeholder="Sign here!"
       [formControl]="testSignControl"
     >
     </form-signature>
+
+    <h5>Value</h5>
+    <pre>{{testSignControl.value}}</pre>
+
+    <form-quill-editor
+      placeholder="Type some HTML friend!"
+      [formControl]="testHtmlEditorControl"
+    >
+    </form-quill-editor>
+
+    <h5>Value</h5>
+    <pre>{{testHtmlEditorControl.value}}</pre>
   `
 })
 export class TestTextComponent {
   formControlEnabled = new FormControl(true);
 
   testControl = new FormControl();
+  testHtmlEditorControl = new FormControl();
   testSignControl = new FormControl();
 
   constructor() {

@@ -31,9 +31,7 @@
               "projects/mat-reduce/tsconfig.lib.json",
               "projects/mat-reduce/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
@@ -57,10 +55,8 @@
               "projects/mat-reduce-demo/src/favicon.ico",
               "projects/mat-reduce-demo/src/assets"
             ],
-            "styles": [
-              "projects/mat-reduce-demo/src/styles.css"
-            ],
-            "scripts": [],
+            "styles": ["projects/mat-reduce-demo/src/styles.css"],
+            "scripts": ["node_modules/quill/dist/quill.min.js"],
             "preserveSymlinks": true,
             "es5BrowserSupport": true
           },
@@ -116,9 +112,7 @@
             "polyfills": "projects/mat-reduce-demo/src/polyfills.ts",
             "tsConfig": "projects/mat-reduce-demo/tsconfig.spec.json",
             "karmaConfig": "projects/mat-reduce-demo/karma.conf.js",
-            "styles": [
-              "projects/mat-reduce-demo/src/styles.css"
-            ],
+            "styles": ["projects/mat-reduce-demo/src/styles.css"],
             "scripts": [],
             "assets": [
               "projects/mat-reduce-demo/src/favicon.ico",
@@ -133,9 +127,7 @@
               "projects/mat-reduce-demo/tsconfig.app.json",
               "projects/mat-reduce-demo/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }

@@ -1,6 +1,6 @@
 {
   "name": "mat-reduce",
-  "version": "0.0.23",
+  "version": "0.1.0",
   "peerDependencies": {
     "@angular/common": "^7.x",
     "@angular/core": "^7.x",
@@ -11,6 +11,11 @@
     "@ctrl/ngx-csv": "^1.x",
     "@mat-datetimepicker/core": "^2.x",
     "ngx-material-timepicker": "3.3.1",
+    "ngx-quill": "^5.x",
+    "quill": "^1.x",
+    "quill-image-compress": "^1.x",
+    "quill-image-drop-module": "^1.x",
+    "quill-image-resize-module": "^3.x",
     "angular2-signaturepad": "^2.x"
   }
 }

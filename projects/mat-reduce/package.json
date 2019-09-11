@@ -1,6 +1,6 @@
 {
   "name": "mat-reduce",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "peerDependencies": {
     "@angular/common": "^7.x",
     "@angular/core": "^7.x",

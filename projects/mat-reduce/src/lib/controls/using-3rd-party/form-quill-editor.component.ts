@@ -18,6 +18,9 @@ import Counter, { QuillCounterConfig } from './editor-modules/counter';
 import { ImageDrop } from 'quill-image-drop-module';
 import ImageCompress from 'quill-image-compress';
 import ImageResize from 'quill-image-resize-module';
+import { AddQuillInlineStyles } from './editor-modules/add-quill-inline-styles';
+
+AddQuillInlineStyles(Quill);
 
 Quill.register('modules/counter', Counter);
 Quill.register('modules/counterChars', Counter);

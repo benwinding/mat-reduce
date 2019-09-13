@@ -1,4 +1,4 @@
-# mat-reduced
+# mat-reduce
 
 A _less_ verbose angular material.
 

@@ -20,6 +20,17 @@ import { FormControl } from '@angular/forms';
     <h5>Value</h5>
     <pre>{{testControl.value}}</pre>
 
+    <h5>Password (maxlength=8)</h5>
+    <form-text-password
+      placeholder="Password please"
+      [formControl]="testControl"
+      maxlength="8"
+    >
+    </form-text-password>
+
+    <h5>Value</h5>
+    <pre>{{testControl.value}}</pre>
+
     <form-signature
       placeholder="Sign here!"
       [formControl]="testSignControl"

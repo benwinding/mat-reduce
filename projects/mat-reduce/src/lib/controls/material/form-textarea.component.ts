@@ -11,6 +11,7 @@ import { FormBase } from '../form-base-class';
         matInput
         [rows]="rows"
         [placeholder]="placeholder"
+        [maxlength]="maxlength"
         [formControl]="internalControl"
         [name]="autoCompleteObscureName"
         autocomplete="dontcompleteme"
@@ -40,4 +41,6 @@ import { FormBase } from '../form-base-class';
 export class LibFormTextAreaComponent extends FormBase<string> {
   @Input()
   rows = 4;
+  @Input()
+  maxlength: number;
 }

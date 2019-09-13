@@ -13,6 +13,7 @@ import { FormBase } from '../form-base-class';
       <input
         matInput
         [formControl]="internalControl"
+        [maxlength]="maxlength"
         [placeholder]="placeholder"
         [name]="autoCompleteObscureName"
         autocomplete="dontcompleteme"
@@ -48,7 +49,8 @@ import { FormBase } from '../form-base-class';
   ]
 })
 export class LibFormTextIconsComponent extends FormBase<string> {
-
+  @Input()
+  maxlength: number;
   @Input()
   clearable = true;
   @Input()

@@ -13,6 +13,7 @@ import { FormBase } from '../form-base-class';
         [placeholder]="placeholder"
         [formControl]="internalControl"
         [name]="autoCompleteObscureName"
+        [maxlength]="maxlength"
         autocomplete="dontcompleteme"
       />
       <input
@@ -60,6 +61,8 @@ export class LibFormTextClearableComponent extends FormBase<string> {
 
   @Input()
   locked = true;
+  @Input()
+  maxlength: number;
 
   onClickEditLock() {
     this.locked = !this.locked;

@@ -10,6 +10,7 @@ import { FormBase } from '../form-base-class';
       <input
         matInput
         [placeholder]="placeholder"
+        [maxlength]="maxlength"
         [formControl]="internalControl"
         [name]="autoCompleteObscureName"
         autocomplete="dontcompleteme"
@@ -42,6 +43,9 @@ import { FormBase } from '../form-base-class';
 })
 export class LibFormTextPasswordComponent extends FormBase<string>
   implements OnInit {
+  @Input()
+  maxlength: number;
+
   get inputType() {
     return this.hidePassword ? 'password' : 'text';
   }

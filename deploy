@@ -8,6 +8,8 @@ case "$1" in
       popd
       ;;
   demo)
+      yarn build-demo
+      cp dist/mat-reduce-demo/index.html dist/mat-reduce-demo/404.html
       yarn deploy-demo
       ;;
   *)

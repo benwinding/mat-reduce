@@ -1,40 +1,29 @@
 import { Component } from '@angular/core';
-
 import { FormControl } from '@angular/forms';
 
 @Component({
   template: `
-    <h1>form-text Testing</h1>
+    <h1>form-quill-editor Testing</h1>
 
     <form-toggle
       [formControl]="formControlEnabled"
       placeholder="Form Enabled"
     ></form-toggle>
 
-    <form-text
-      placeholder="Type something friend!"
+    <form-quill-editor
+      placeholder="Type some HTML friend!"
       [formControl]="testControl"
     >
-    </form-text>
+    </form-quill-editor>
 
     <h5>Value</h5>
     <pre>{{testControl.value}}</pre>
-
-    <form-signature
-      placeholder="Sign here!"
-      [formControl]="testSignControl"
-    >
-    </form-signature>
-
-    <h5>Value</h5>
-    <pre>{{testSignControl.value}}</pre>
   `
 })
-export class TestTextComponent {
+export class TestEditorComponent {
   formControlEnabled = new FormControl(true);
 
   testControl = new FormControl();
-  testSignControl = new FormControl();
 
   constructor() {
     this.formControlEnabled.valueChanges.subscribe(isEnabled => {

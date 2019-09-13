@@ -1,19 +1,25 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TestSelectComponent } from './form-mocks/test-select.component';
-import { TestTagsComponent } from './form-mocks/test-tags.component';
-import { TestAssigneeComponent } from './form-mocks/test-assignee-selector.component';
-import { TestTextComponent } from './form-mocks/test-text.component';
-import { TestColorComponent } from './form-mocks/test-color.component';
-import { TestFormGroupComponent } from './form-mocks/test-formgroup.component';
-import { TestTimeComponent } from './form-mocks/test-time.component';
-import { TestNumberComponent } from './form-mocks/test-number.component';
-
+import {
+  TestTextComponent,
+  TestEditorComponent,
+  TestSelectComponent,
+  TestTagsComponent,
+  TestFormGroupComponent,
+  TestAssigneeComponent,
+  TestColorComponent,
+  TestTimeComponent,
+  TestNumberComponent
+} from './form-mocks';
 
 const allRoutes: Routes = [
   {
     path: 'test-text',
     component: TestTextComponent
+  },
+  {
+    path: 'test-editor',
+    component: TestEditorComponent
   },
   {
     path: 'test-select',
@@ -42,14 +48,11 @@ const allRoutes: Routes = [
   {
     path: 'test-number',
     component: TestNumberComponent
-  },
+  }
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forRoot(allRoutes)
-  ],
+  imports: [RouterModule.forRoot(allRoutes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {
-}
+export class AppRoutingModule {}

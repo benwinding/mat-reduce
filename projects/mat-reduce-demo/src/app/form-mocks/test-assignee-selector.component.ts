@@ -62,7 +62,6 @@ const currentUser: User = {
 };
 
 @Component({
-  selector: 'app-test-assignee-selector',
   template: `
     <form-toggle
       [formControl]="formControlEnabled"

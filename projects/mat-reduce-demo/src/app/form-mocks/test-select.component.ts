@@ -14,7 +14,6 @@ const friendArray = [
 ];
 
 @Component({
-  selector: 'app-test-select',
   template: `
     <h1>form-select Testing</h1>
 

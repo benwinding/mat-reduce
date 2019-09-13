@@ -15,7 +15,6 @@ function makeTag(name): Tag {
 const friendArray = [makeTag('Frank'), makeTag('Albert'), makeTag('John')];
 
 @Component({
-  selector: 'app-test-tags',
   template: `
     <form-toggle
       [formControl]="formControlEnabled"

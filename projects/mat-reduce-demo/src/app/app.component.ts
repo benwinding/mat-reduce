@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router, Event, RouterEvent, NavigationEnd } from '@angular/router';
+import { Router, Event, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +17,7 @@ import { ActivatedRoute, Router, Event, RouterEvent, NavigationEnd } from '@angu
       <li><a routerLink="test-color">test-color</a></li>
       <li><a routerLink="test-assignee">test-assignee</a></li>
       <li><a routerLink="test-time">test-time</a></li>
+      <li><a routerLink="test-editor">test-editor</a></li>
     </ul>
     <router-outlet>
     </router-outlet>

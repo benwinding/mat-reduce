@@ -1,5 +1,5 @@
 {
-  "name": "mat-wrapped",
+  "name": "mat-reduce",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -7,7 +7,7 @@
     "build-lib": "ng build --project=mat-reduce",
     "watch-lib": "ng build --project=mat-reduce --watch",
     "build-demo": "ng build --project=mat-reduce-demo --prod",
-    "deploy-demo": "npm run build-demo && gh-pages -d dist/mat-reduce-demo",
+    "deploy-demo": "gh-pages -d dist/mat-reduce-demo",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",

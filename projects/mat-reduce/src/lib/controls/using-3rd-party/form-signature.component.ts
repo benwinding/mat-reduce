@@ -12,7 +12,6 @@ import { FormBase } from '../form-base-class';
 
 import { v1 as uuidv1 } from 'uuid';
 import { NG_VALUE_ACCESSOR, NG_VALIDATORS } from '@angular/forms';
-import { filter, takeUntil, auditTime } from 'rxjs/operators';
 
 @Component({
   selector: 'form-signature',
@@ -85,14 +84,6 @@ export class LibFormSignatureComponent extends FormBase<string>
 
   ngOnInit() {
     this.autoCompleteObscureName = uuidv1();
-    const disabledChangeTap$ = this.internalControl.statusChanges.pipe(
-      takeUntil(this._destroyed),
-      filter(status => status === 'DISABLED')
-    );
-    disabledChangeTap$.pipe(auditTime(500)).subscribe(isValid => {
-      console.log({ isValid });
-      // this.setSignatureToPad();
-    });
   }
 
   ngAfterViewInit() {
@@ -105,10 +96,14 @@ export class LibFormSignatureComponent extends FormBase<string>
   }
 
   updateWidthToParent() {
+    const pad = this.signaturePad.nativeElement;
+    if (!pad) {
+      return;
+    }
     const containerWidth = this.container.nativeElement.clientWidth;
     if (containerWidth < 600) {
       const marginLeftAndRight = 20 * 2;
-      this.signaturePad.nativeElement.set(
+      pad.set(
         'canvasWidth',
         containerWidth - marginLeftAndRight - 10
       );

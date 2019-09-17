@@ -21,11 +21,12 @@ import { filter, takeUntil, auditTime } from 'rxjs/operators';
     <div #container class="signature-container">
       <div class="signature-border" [class.disabled-border]="disabled">
         <signature-pad
-          *ngIf="!disabled"
+          #signaturePad
+          [hidden]="disabled"
           [options]="signaturePadOptions"
-          (onEndEvent)="drawComplete()"
+          (onEndEvent)="drawComplete(signaturePad)"
         ></signature-pad>
-        <img *ngIf="disabled" [src]="this.value || blankImageSrc" />
+        <img [hidden]="!disabled" [src]="this.value || blankImageSrc" />
       </div>
     </div>
   `,
@@ -50,7 +51,6 @@ import { filter, takeUntil, auditTime } from 'rxjs/operators';
       }
       img {
         height: 100%;
-        margin: 0 174px;
       }
     `
   ],
@@ -72,30 +72,27 @@ export class LibFormSignatureComponent extends FormBase<string>
   @Input()
   placeholder = 'Sign Here';
 
-  blankImageSrc = 'https://i.imgur.com/j01JeeA.png';
+  blankImageSrc = 'https://i.imgur.com/4StmpUT.png';
 
   signaturePadOptions = {
     minWidth: 2,
     canvasWidth: 400,
     canvasHeight: 200
   };
-  @ViewChild(SignaturePad, { static: false } as any) signaturePad: SignaturePad;
+  @ViewChild('signaturePad', { static: false } as any)
+  signaturePad: ElementRef<SignaturePad>;
   @ViewChild('container') container: ElementRef<HTMLDivElement>;
 
   ngOnInit() {
     this.autoCompleteObscureName = uuidv1();
     const disabledChangeTap$ = this.internalControl.statusChanges.pipe(
-      filter(status => status === 'VALID')
+      takeUntil(this._destroyed),
+      filter(status => status === 'DISABLED')
     );
-    disabledChangeTap$
-      .pipe(
-        takeUntil(this._destroyed),
-        auditTime(500)
-      )
-      .subscribe(isValid => {
-        console.log({ isValid });
-        this.setSignatureToPad();
-      });
+    disabledChangeTap$.pipe(auditTime(500)).subscribe(isValid => {
+      console.log({ isValid });
+      // this.setSignatureToPad();
+    });
   }
 
   ngAfterViewInit() {
@@ -111,7 +108,7 @@ export class LibFormSignatureComponent extends FormBase<string>
     const containerWidth = this.container.nativeElement.clientWidth;
     if (containerWidth < 600) {
       const marginLeftAndRight = 20 * 2;
-      this.signaturePad.set(
+      this.signaturePad.nativeElement.set(
         'canvasWidth',
         containerWidth - marginLeftAndRight - 10
       );
@@ -120,15 +117,16 @@ export class LibFormSignatureComponent extends FormBase<string>
 
   setSignatureToPad() {
     // Set current signature from control
-    if (!this.signaturePad || !this.signaturePad.fromDataURL) {
+    const currentSignature = this.value;
+    if (!this.signaturePad || !currentSignature) {
       return;
     }
-    const currentSignature = this.value;
-    this.signaturePad.fromDataURL(currentSignature);
+    const pad = this.signaturePad.nativeElement;
+    pad.fromDataURL(currentSignature);
   }
 
-  drawComplete() {
-    const imgData = this.signaturePad.toDataURL();
+  drawComplete(e) {
+    const imgData = e.toDataURL();
     this.value = imgData;
   }
 }

@@ -121,6 +121,9 @@ export class LibFormSignatureComponent extends FormBase<string>
   }
 
   drawComplete(e) {
+    if (!e) {
+      return;
+    }
     const imgData = e.toDataURL();
     this.value = imgData;
   }

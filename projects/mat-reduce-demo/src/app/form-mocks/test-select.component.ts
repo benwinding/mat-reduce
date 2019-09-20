@@ -28,12 +28,20 @@ const friendArray = [
       [selections]="selectChoices$ | async"
     >
     </form-select-string>
+
+    <form-select-string-multiple
+      placeholder="Select a friend!"
+      [formControl]="testControlMultiple"
+      [selections]="selectChoices$ | async"
+    >
+    </form-select-string-multiple>
   `
 })
 export class TestSelectComponent {
   formControlEnabled = new FormControl(true);
 
   testControl = new FormControl(friendArray[0]);
+  testControlMultiple = new FormControl(friendArray.slice(0, 2));
 
   selectChoices$: Observable<string[]> = of(friendArray);
 

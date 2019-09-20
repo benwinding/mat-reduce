@@ -34,6 +34,7 @@ import { LibFormSelectStringComponent } from './form-select-string.component';
 import { LibFormTagMultipleComponent } from './form-tag-multiple.component';
 import { LibFormTagSingleComponent } from './form-tag-single.component';
 import { LibFormNumberComponent } from './form-number.component';
+import { LibFormSelectStringMultipleComponent } from './form-select-string-multiple.component';
 
 const exportedModules = [
   CommonModule,
@@ -57,21 +58,22 @@ const exportedModules = [
 ];
 
 const exported = [
-  LibFormSelectObjectMultipleComponent,
+  LibFormNumberComponent,
   LibFormSelectObjectComponent,
+  LibFormSelectObjectMultipleComponent,
   LibFormSelectStringComponent,
+  LibFormSelectStringMultipleComponent,
   LibFormTagMultipleComponent,
   LibFormTagSingleComponent,
+  LibFormTextAreaComponent,
+  LibFormTextAreaDisabledComponent,
   LibFormTextClearableComponent,
+  LibFormTextComponent,
   LibFormTextDisabledComponent,
   LibFormTextIconsComponent,
   LibFormTextPasswordComponent,
-  LibFormTextComponent,
-  LibFormTextAreaDisabledComponent,
-  LibFormTextAreaComponent,
-  LibFormToggleReversedComponent,
   LibFormToggleComponent,
-  LibFormNumberComponent,
+  LibFormToggleReversedComponent,
 ];
 
 @NgModule({

@@ -397,15 +397,6 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
-"@taoqf/quill-image-resize-module@^3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@taoqf/quill-image-resize-module/-/quill-image-resize-module-3.0.1.tgz#477b13bf4401383b9a71824c0d5b32bae3d3e745"
-  integrity sha512-thZLAF4mKubKSQ9eOGPXvJtCq15CZbuPn6FbGoV86pa8hnirH8sim9DKlH15ztPeFqGUpV6Pz4AJmFuJa3Se/g==
-  dependencies:
-    lodash "^4.17.4"
-    quill "^1.2.2"
-    raw-loader "^0.5.1"
-
 "@types/estree@0.0.39":
   version "0.0.39"
   resolved "https://registry.yarnpkg.com/@types/estree/-/estree-0.0.39.tgz#e177e699ee1b8c22d23174caaa7422644389509f"
@@ -6312,28 +6303,10 @@ quill-image-drop-module@^1.0.3:
   dependencies:
     quill "^1.2.2"
 
-quill-image-resize-module-withfix@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/quill-image-resize-module-withfix/-/quill-image-resize-module-withfix-4.0.1.tgz#36fd33390c3a5455c81a9288b2b9dfa5cde4ce26"
-  integrity sha512-dFBhYJBdfVlcGbzhF9EuUvCOqQx3M45nbgXam2I7dMv0471zv9yvrz0zTDkSGoxvvkTHwshhS5mJyUbhdqCGJQ==
-  dependencies:
-    lodash "^4.17.4"
-    quill "^1.2.2"
-    raw-loader "^0.5.1"
-
 quill-image-resize-module@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/quill-image-resize-module/-/quill-image-resize-module-3.0.0.tgz#0fd93746a837336d95b2f536140416a623c71771"
   integrity sha1-D9k3Rqg3M22VsvU2FAQWpiPHF3E=
-  dependencies:
-    lodash "^4.17.4"
-    quill "^1.2.2"
-    raw-loader "^0.5.1"
-
-quill-image-resize@^3.0.9:
-  version "3.0.9"
-  resolved "https://registry.yarnpkg.com/quill-image-resize/-/quill-image-resize-3.0.9.tgz#5677fb6257560bff951153ddbdb836758e49f804"
-  integrity sha512-5Dk0nixhbFsCwSWtPU9qqqtfM2gURfaP+pbBhQvAoMJoF4p99xbAibfAI3gsZJkbWUodoK2iAPf1V5oTSpv9ww==
   dependencies:
     lodash "^4.17.4"
     quill "^1.2.2"

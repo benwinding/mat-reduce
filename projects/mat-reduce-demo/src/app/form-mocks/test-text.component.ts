@@ -51,8 +51,10 @@ export class TestTextComponent {
     this.formControlEnabled.valueChanges.subscribe(isEnabled => {
       if (isEnabled) {
         this.testControl.enable();
+        this.testSignControl.enable();
       } else {
         this.testControl.disable();
+        this.testSignControl.disable();
       }
     });
   }

@@ -18,13 +18,14 @@ import { NG_VALUE_ACCESSOR, NG_VALIDATORS } from '@angular/forms';
   template: `
     <h3>{{ placeholder }}</h3>
     <div #container class="signature-container">
-      <div class="signature-border">
+      <div class="signature-border" [class.disabled-border]="disabled">
         <signature-pad
-          *ngIf="!disabled"
+          #signaturePad
+          [hidden]="disabled"
           [options]="signaturePadOptions"
-          (onEndEvent)="drawComplete()"
+          (onEndEvent)="drawComplete(signaturePad)"
         ></signature-pad>
-        <img *ngIf="disabled" [src]="this.value" />
+        <img [hidden]="!disabled" [src]="this.value || blankImageSrc" />
       </div>
     </div>
   `,
@@ -44,8 +45,11 @@ import { NG_VALUE_ACCESSOR, NG_VALIDATORS } from '@angular/forms';
         margin: 20px;
         height: 200px;
       }
+      .disabled-border {
+        border: 2px #aaa dotted;
+      }
       img {
-        width: 100%;
+        height: 100%;
       }
     `
   ],
@@ -67,12 +71,15 @@ export class LibFormSignatureComponent extends FormBase<string>
   @Input()
   placeholder = 'Sign Here';
 
+  blankImageSrc = 'https://i.imgur.com/4StmpUT.png';
+
   signaturePadOptions = {
     minWidth: 2,
     canvasWidth: 400,
     canvasHeight: 200
   };
-  @ViewChild(SignaturePad) signaturePad: SignaturePad;
+  @ViewChild('signaturePad', { static: false } as any)
+  signaturePad: ElementRef<SignaturePad>;
   @ViewChild('container') container: ElementRef<HTMLDivElement>;
 
   ngOnInit() {
@@ -85,27 +92,39 @@ export class LibFormSignatureComponent extends FormBase<string>
 
   writeValue(value: any): void {
     this.value = value;
-    // Set current signature from control
-    if (!this.signaturePad) {
-      return;
-    }
-    const currentSignature = this.value;
-    this.signaturePad.fromDataURL(currentSignature);
+    this.setSignatureToPad();
   }
 
   updateWidthToParent() {
+    const pad = this.signaturePad.nativeElement;
+    if (!pad) {
+      return;
+    }
     const containerWidth = this.container.nativeElement.clientWidth;
     if (containerWidth < 600) {
       const marginLeftAndRight = 20 * 2;
-      this.signaturePad.set(
+      pad.set(
         'canvasWidth',
         containerWidth - marginLeftAndRight - 10
       );
     }
   }
 
-  drawComplete() {
-    const imgData = this.signaturePad.toDataURL();
+  setSignatureToPad() {
+    // Set current signature from control
+    const currentSignature = this.value;
+    if (!this.signaturePad || !currentSignature) {
+      return;
+    }
+    const pad = this.signaturePad.nativeElement;
+    pad.fromDataURL(currentSignature);
+  }
+
+  drawComplete(e) {
+    if (!e) {
+      return;
+    }
+    const imgData = e.toDataURL();
     this.value = imgData;
   }
 }

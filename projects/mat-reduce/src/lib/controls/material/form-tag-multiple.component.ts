@@ -319,7 +319,6 @@ export class LibFormTagMultipleComponent extends FormBase<Tag[]>
   hasRed() {
     const isDirty = this.inputTextControl.touched || this.inputTextControl.dirty;
     const isInValid = this.internalControl.invalid;
-    this.log('has Red:', {isDirty, isInValid, value: this.value, thisControl: this });
     return isDirty && isInValid;
   }
 

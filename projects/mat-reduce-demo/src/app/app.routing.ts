@@ -9,13 +9,18 @@ import {
   TestAssigneeComponent,
   TestColorComponent,
   TestTimeComponent,
-  TestNumberComponent
+  TestNumberComponent,
+  TestTogglesComponent
 } from './form-mocks';
 
 const allRoutes: Routes = [
   {
     path: 'test-text',
     component: TestTextComponent
+  },
+  {
+    path: 'test-toggles',
+    component: TestTogglesComponent
   },
   {
     path: 'test-editor',

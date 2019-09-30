@@ -22,7 +22,8 @@ import {
   TestColorComponent,
   TestTimeComponent,
   TestNumberComponent,
-  TestEditorComponent
+  TestEditorComponent,
+  TestTogglesComponent
 } from './form-mocks';
 
 @NgModule({
@@ -37,6 +38,7 @@ import {
     TestTimeComponent,
     TestNumberComponent,
     TestEditorComponent,
+    TestTogglesComponent,
 
     AppBtnBackComponent
   ],

@@ -1,5 +1,6 @@
-import { Component, forwardRef, Input } from '@angular/core';
-import { NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import { NG_VALIDATORS, NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
+import { takeUntil, debounceTime, tap, delay } from 'rxjs/operators';
 import { FormBase } from '../form-base-class';
 
 @Component({
@@ -8,7 +9,7 @@ import { FormBase } from '../form-base-class';
   template: `
     <div class="full-width">
       <mat-slide-toggle
-        [(ngModel)]="valueReveresed"
+        [formControl]="reversedControl"
         [name]="autoCompleteObscureName"
         autocomplete="dontcompleteme"
       >
@@ -48,16 +49,44 @@ import { FormBase } from '../form-base-class';
     }
   ]
 })
-export class LibFormToggleReversedComponent extends FormBase<boolean> {
+export class LibFormToggleReversedComponent extends FormBase<boolean>
+  implements OnInit {
   @Input()
   yes = 'Yes';
   @Input()
   no = 'No';
 
-  get valueReveresed() {
-    return !this.value;
-  }
-  set valueReveresed(reversedValue) {
-    this.value = !reversedValue;
+  reversedControl = new FormControl();
+
+  private lockControl: boolean;
+
+  ngOnInit() {
+    console.log('reversedControl.constructor');
+    this.reversedControl.valueChanges
+      .pipe(
+        takeUntil(this._destroyed),
+        debounceTime(100)
+      )
+      .subscribe(value => {
+        if (this.lockControl) {
+          return;
+        }
+        this.value = !value;
+        // console.log('reversedControl.valueChanges', { thisValue: this.value });
+      });
+
+    this.internalControl.valueChanges
+      .pipe(
+        takeUntil(this._destroyed),
+        debounceTime(100),
+        tap(() => (this.lockControl = true)),
+        delay(100),
+        tap(value => this.reversedControl.setValue(!value)),
+        delay(100),
+        tap(() => (this.lockControl = false))
+      )
+      .subscribe(() => {
+        // console.log('reversedControl.valueChanges', { thisValue: this.value });
+      });
   }
 }

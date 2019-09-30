@@ -6,7 +6,9 @@ import { Router, Event, NavigationEnd } from '@angular/router';
   template: `
     <!--The content below is only a placeholder and can be replaced.-->
     <div style="text-align:center">
-      <h1><a routerLink="/">Welcome to {{ title }}!</a></h1>
+      <h1>
+        <a routerLink="/">Welcome to {{ title }}!</a>
+      </h1>
     </div>
     <ul *ngIf="currentUrl == '/'">
       <li><a routerLink="test-text">test-text</a></li>
@@ -18,9 +20,9 @@ import { Router, Event, NavigationEnd } from '@angular/router';
       <li><a routerLink="test-assignee">test-assignee</a></li>
       <li><a routerLink="test-time">test-time</a></li>
       <li><a routerLink="test-editor">test-editor</a></li>
+      <li><a routerLink="test-toggles">test-toggles</a></li>
     </ul>
-    <router-outlet>
-    </router-outlet>
+    <router-outlet> </router-outlet>
   `
 })
 export class AppComponent {
@@ -33,6 +35,6 @@ export class AppComponent {
         return;
       }
       this.currentUrl = e.url;
-    })
+    });
   }
 }

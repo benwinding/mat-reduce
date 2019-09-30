@@ -6,4 +6,5 @@ export * from './test-number.component';
 export * from './test-select.component';
 export * from './test-tags.component';
 export * from './test-text.component';
+export * from './test-toggles.component';
 export * from './test-time.component';

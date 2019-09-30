@@ -46,61 +46,64 @@ const quillModules = {
 @Component({
   selector: 'form-quill-editor',
   template: `
-    <quill-editor
-      (onContentChanged)="onContentChanged.next($event)"
-      [ngModel]="value"
-      [modules]="quillModules"
-      placeholder="Input header text here!"
-    >
-      <div quill-editor-toolbar>
-        <span class="ql-formats">
-          <select class="ql-font">
-            <option selected></option>
-            <option value="serif"></option>
-            <option value="monospace"></option>
-          </select>
-          <select class="ql-size">
-            <option value="small"></option>
-            <option selected></option>
-            <option value="large"></option>
-            <option value="huge"></option>
-          </select>
-        </span>
-        <span class="ql-formats">
-          <button class="ql-bold"></button>
-          <button class="ql-italic"></button>
-          <button class="ql-underline"></button>
-          <button class="ql-strike"></button>
-        </span>
-        <span class="ql-formats">
-          <select class="ql-color"></select>
-          <select class="ql-background"></select>
-        </span>
-        <span class="ql-formats">
-          <button class="ql-list" value="ordered"></button>
-          <button class="ql-list" value="bullet"></button>
-          <select class="ql-align">
-            <option selected></option>
-            <option value="center"></option>
-            <option value="right"></option>
-            <option value="justify"></option>
-          </select>
-        </span>
-        <span class="ql-formats">
-          <button class="ql-link"></button>
-          <button class="ql-image"></button>
-        </span>
-        <span class="ql-formats font12px">
-          <div id="counter"></div>
-        </span>
-        <span class="ql-formats font12px">
-          <div id="counterChars"></div>
-        </span>
-        <span class="ql-formats font12px">
-          <div id="counterKiloBytes"></div>
-        </span>
-      </div>
-    </quill-editor>
+    <div [class.editor-disabled]="disabled">
+      <quill-editor
+        (onContentChanged)="onContentChanged.next($event)"
+        [ngModel]="value"
+        [modules]="quillModules"
+        [disabled]="disabled"
+        placeholder="Input header text here!"
+      >
+        <div quill-editor-toolbar>
+          <span class="ql-formats">
+            <select class="ql-font">
+              <option selected></option>
+              <option value="serif"></option>
+              <option value="monospace"></option>
+            </select>
+            <select class="ql-size">
+              <option value="small"></option>
+              <option selected></option>
+              <option value="large"></option>
+              <option value="huge"></option>
+            </select>
+          </span>
+          <span class="ql-formats">
+            <button class="ql-bold"></button>
+            <button class="ql-italic"></button>
+            <button class="ql-underline"></button>
+            <button class="ql-strike"></button>
+          </span>
+          <span class="ql-formats">
+            <select class="ql-color"></select>
+            <select class="ql-background"></select>
+          </span>
+          <span class="ql-formats">
+            <button class="ql-list" value="ordered"></button>
+            <button class="ql-list" value="bullet"></button>
+            <select class="ql-align">
+              <option selected></option>
+              <option value="center"></option>
+              <option value="right"></option>
+              <option value="justify"></option>
+            </select>
+          </span>
+          <span class="ql-formats">
+            <button class="ql-link"></button>
+            <button class="ql-image"></button>
+          </span>
+          <span class="ql-formats font12px">
+            <div id="counter"></div>
+          </span>
+          <span class="ql-formats font12px">
+            <div id="counterChars"></div>
+          </span>
+          <span class="ql-formats font12px">
+            <div id="counterKiloBytes"></div>
+          </span>
+        </div>
+      </quill-editor>
+    </div>
   `,
   providers: [
     {
@@ -118,6 +121,9 @@ const quillModules = {
     `
       .font12px {
         font-size: 12px;
+      }
+      .editor-disabled {
+        filter: brightness(2.5);
       }
     `
   ],

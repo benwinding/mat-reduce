@@ -61,7 +61,6 @@ export class LibFormToggleReversedComponent extends FormBase<boolean>
   private lockControl: boolean;
 
   ngOnInit() {
-    console.log('reversedControl.constructor');
     this.reversedControl.valueChanges
       .pipe(
         takeUntil(this._destroyed),
@@ -87,6 +86,16 @@ export class LibFormToggleReversedComponent extends FormBase<boolean>
       )
       .subscribe(() => {
         // console.log('reversedControl.valueChanges', { thisValue: this.value });
+      });
+
+    this.internalControl.statusChanges
+      .pipe(takeUntil(this._destroyed))
+      .subscribe(() => {
+        if (this.disabled) {
+          this.reversedControl.disable();
+        } else {
+          this.reversedControl.enable();
+        }
       });
   }
 }

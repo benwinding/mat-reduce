@@ -49,8 +49,10 @@ export class TestSelectComponent {
     this.formControlEnabled.valueChanges.subscribe(isEnabled => {
       if (isEnabled) {
         this.testControl.enable();
+        this.testControlMultiple.enable();
       } else {
         this.testControl.disable();
+        this.testControlMultiple.disable();
       }
     });
   }

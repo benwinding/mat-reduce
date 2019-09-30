@@ -130,10 +130,14 @@ export class TestTagsComponent {
     this.formControlEnabled.valueChanges.subscribe(isEnabled => {
       if (isEnabled) {
         this.tagControlSingle.enable();
+        this.tagControlSingleDelayed.enable();
+        this.tagControlSingleNull.enable();
         this.tagControlMultiple.enable();
         this.tagControlMultipleRequired.enable();
       } else {
         this.tagControlSingle.disable();
+        this.tagControlSingleDelayed.disable();
+        this.tagControlSingleNull.disable();
         this.tagControlMultiple.disable();
         this.tagControlMultipleRequired.disable();
       }

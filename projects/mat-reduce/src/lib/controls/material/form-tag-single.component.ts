@@ -32,18 +32,18 @@ import { v1 as uuidv1 } from 'uuid';
   selector: 'form-tag-single',
   template: `
     <mat-form-field class="full-width">
-      <mat-chip-list #chipList>
+      <mat-chip-list #chipList [disabled]="disabled">
         <mat-chip
           *ngIf="selectedTag as tag"
           [selectable]="selectable"
           [removable]="removable"
           (removed)="removeTagChip(tag)"
-          [disabled]="this.internalControl.disabled"
+          [disabled]="disabled"
         >
           {{ tag.name }}
           <mat-icon
             matChipRemove
-            *ngIf="removable && this.internalControl.enabled"
+            *ngIf="removable && !disabled"
             >cancel</mat-icon
           >
         </mat-chip>

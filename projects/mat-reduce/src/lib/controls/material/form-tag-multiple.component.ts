@@ -35,7 +35,7 @@ import { v1 as uuidv1 } from 'uuid';
       class="tag-full-width"
       [class.form-tag-control-invalid]="hasRed()"
     >
-      <mat-chip-list #chipList aria-label="Fruit selection">
+      <mat-chip-list #chipList [disabled]="disabled">
         <mat-chip
           *ngFor="let tag of selectedTags"
           [selectable]="selectable"

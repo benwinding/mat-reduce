@@ -18,6 +18,8 @@ export class FormBase<T>
   _value: T;
 
   @Input()
+  allowAutoComplete: boolean;
+  @Input()
   formControlName: string;
   @Input()
   placeholder: string;
@@ -43,7 +45,9 @@ export class FormBase<T>
 
   init() {
     this._destroyed.next();
-    this.autoCompleteObscureName = uuidv4();
+    if (!this.allowAutoComplete) {
+      this.autoCompleteObscureName = uuidv4();
+    }
     this.internalControl.valueChanges
       .pipe(takeUntil(this._destroyed))
       .pipe(auditTime(100))

@@ -9,7 +9,7 @@ import {
 import { NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { FormBase } from '../form-base-class';
 import { Subject } from 'rxjs';
-import { debounceTime, takeUntil } from 'rxjs/operators';
+import { debounceTime, takeUntil, distinctUntilChanged } from 'rxjs/operators';
 
 import * as QuillNamespace from 'quill';
 const Quill: any = QuillNamespace;
@@ -61,11 +61,14 @@ const quillModules = {
               <option value="serif"></option>
               <option value="monospace"></option>
             </select>
-            <select class="ql-size">
-              <option value="small"></option>
+            <select class="ql-header">
+              <option value="1"></option>
+              <option value="2"></option>
+              <option value="3"></option>
+              <option value="4"></option>
+              <option value="5"></option>
+              <option value="6"></option>
               <option selected></option>
-              <option value="large"></option>
-              <option value="huge"></option>
             </select>
           </span>
           <span class="ql-formats">
@@ -123,7 +126,7 @@ const quillModules = {
         font-size: 12px;
       }
       .editor-disabled {
-        filter: brightness(2.5);
+        filter: contrast(0.4) brightness(1.5);
       }
     `
   ],
@@ -146,7 +149,8 @@ export class LibFormQuillEditorComponent extends FormBase<string>
     this.onContentChanged
       .pipe(
         debounceTime(1000),
-        takeUntil(this.destroyed)
+        takeUntil(this.destroyed),
+        distinctUntilChanged()
       )
       .subscribe((event: any) => {
         const htmlValue = event.html || '<p></p>';

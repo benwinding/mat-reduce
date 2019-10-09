@@ -50,6 +50,7 @@
     "@angular/language-service": "^7.0.0",
     "@types/jasmine": "^2.8.8",
     "@types/jasminewd2": "^2.0.3",
+    "@types/quill": "^2.0.3",
     "codelyzer": "^4.5.0",
     "gh-pages": "^2.1.1",
     "hammerjs": "^2.0.8",

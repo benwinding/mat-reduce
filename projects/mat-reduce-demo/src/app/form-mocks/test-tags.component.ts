@@ -12,7 +12,14 @@ function makeTag(name): Tag {
   };
 }
 
-const friendArray = [makeTag('Frank'), makeTag('Albert'), makeTag('John')];
+const friendArray = [
+  makeTag('Frank'),
+  makeTag('Rosie'),
+  makeTag('Cindy'),
+  makeTag('Albert'),
+  makeTag('Franklin'),
+  makeTag('John')
+];
 
 @Component({
   template: `
@@ -32,6 +39,7 @@ const friendArray = [makeTag('Frank'), makeTag('Albert'), makeTag('John')];
     <h1>Single</h1>
 
     <form-tag-single
+      [debug]="true"
       [customValues]="formControlCustomValues.value"
       [removable]="formControlRemovable.value"
       [formControl]="tagControlSingle"
@@ -49,6 +57,7 @@ const friendArray = [makeTag('Frank'), makeTag('Albert'), makeTag('John')];
     <h1>Single Null</h1>
 
     <form-tag-single
+      [debug]="true"
       [customValues]="formControlCustomValues.value"
       [removable]="formControlRemovable.value"
       [formControl]="tagControlSingleNull"
@@ -66,6 +75,7 @@ const friendArray = [makeTag('Frank'), makeTag('Albert'), makeTag('John')];
     <h1>Single Delayed</h1>
 
     <form-tag-single
+      [debug]="true"
       [customValues]="formControlCustomValues.value"
       [removable]="formControlRemovable.value"
       [formControl]="tagControlSingleDelayed"

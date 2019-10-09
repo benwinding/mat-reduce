@@ -233,8 +233,15 @@ export class LibFormTagMultipleComponent extends FormBase<Tag[]>
     this.log('addFromTextInput', { value: event.value });
     // Add fruit only when MatAutocomplete is not open
     // To make sure this does not conflict with OptionSelected Event
-    if (this.matAutocomplete.isOpen) {
+    const found = this.choices.find(c => c.name === inputTrimmed);
+    if (found) {
+      this.log('addFromTextInput() found match, adding that instead of making new tag');
+      this.addedTagToInternalValue(found);
       this.resetTextInput();
+      return;
+    }
+    if (!this.customValues && this.matAutocomplete.isOpen) {
+      // this.resetTextInput();
       return;
     }
     if (!this.customValues) {

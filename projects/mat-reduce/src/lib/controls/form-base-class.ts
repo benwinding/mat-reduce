@@ -23,6 +23,8 @@ export class FormBase<T>
   formControlName: string;
   @Input()
   placeholder: string;
+  @Input()
+  debug = false;
 
   constructor() {
     // Garrentee that init and destroy are called

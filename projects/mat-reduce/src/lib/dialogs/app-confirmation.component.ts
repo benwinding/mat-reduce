@@ -107,7 +107,7 @@ export class ConfirmationService {
     const dialogRef = this.dialog.open(AppConfirmationDialogComponent, {
       width: '300px',
       hasBackdrop: true,
-      disableClose: true,
+      disableClose: false,
       data: data
     });
 

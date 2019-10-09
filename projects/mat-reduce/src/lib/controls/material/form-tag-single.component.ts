@@ -26,6 +26,7 @@ import { Tag } from './Tag';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 
 import { v1 as uuidv1 } from 'uuid';
+import { SimpleLog } from '../../utils/logger';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -41,9 +42,7 @@ import { v1 as uuidv1 } from 'uuid';
           [disabled]="disabled"
         >
           {{ tag.name }}
-          <mat-icon
-            matChipRemove
-            *ngIf="removable && !disabled"
+          <mat-icon matChipRemove *ngIf="removable && !disabled"
             >cancel</mat-icon
           >
         </mat-chip>
@@ -155,6 +154,7 @@ export class LibFormTagSingleComponent extends FormBase<Tag>
   matAutocomplete: MatAutocomplete;
 
   destroyed = new Subject<void>();
+  logger: SimpleLog;
 
   constructor(
     private confirm: ConfirmationService,
@@ -165,6 +165,7 @@ export class LibFormTagSingleComponent extends FormBase<Tag>
 
   ngOnInit() {
     this.checkExists(this.choices, 'this.selectChoices$');
+    this.logger = new SimpleLog(this.debug);
 
     this.filteredTagNames$ = this.inputTextControl.valueChanges.pipe(
       startWith(null),
@@ -218,7 +219,7 @@ export class LibFormTagSingleComponent extends FormBase<Tag>
   }
 
   removeTagChip(tagToRemove: Tag) {
-    this.log('removeTagChip', { tagToRemove });
+    this.logger.log('removeTagChip', { tagToRemove });
     this.matAutocompleteTrigger.closePanel();
     this.value = null;
     this.inputTextControl.setValue(null);
@@ -231,11 +232,18 @@ export class LibFormTagSingleComponent extends FormBase<Tag>
       this.resetTextInput();
       return;
     }
-    this.log('addFromTextInput', { value: event.value });
+    this.logger.log('addFromTextInput', { value: event.value });
     // Add fruit only when MatAutocomplete is not open
     // To make sure this does not conflict with OptionSelected Event
-    if (this.matAutocomplete.isOpen) {
+    const found = this.choices.find(c => c.name === inputTrimmed);
+    if (found) {
+      this.logger.log('addFromTextInput() found match, adding that instead of making new tag');
+      this.addedTagToInternalValue(found);
       this.resetTextInput();
+      return;
+    }
+    if (!this.customValues && this.matAutocomplete.isOpen) {
+      // this.resetTextInput();
       return;
     }
     if (!this.customValues) {
@@ -245,7 +253,7 @@ export class LibFormTagSingleComponent extends FormBase<Tag>
         horizontalPosition: 'center',
         verticalPosition: 'bottom'
       });
-      this.log('addFromTextInput() unable to add custom values...');
+      this.logger.log('addFromTextInput() unable to add custom values...');
       return;
     }
     this.resetTextInput();
@@ -253,7 +261,7 @@ export class LibFormTagSingleComponent extends FormBase<Tag>
       `Are you sure you want to add: "${inputTrimmed}" to the global list?`
     );
     if (!confirmed) {
-      this.log('addFromTextInput() not confirmed, nothing changed...');
+      this.logger.log('addFromTextInput() not confirmed, nothing changed...');
       this.notify('Nothing added globally');
       return;
     }
@@ -262,7 +270,7 @@ export class LibFormTagSingleComponent extends FormBase<Tag>
     this.choices.push(newTag);
     this.addedTagToInternalValue(newTag);
     this.notify(`Adding "${newTag.name}" to the global list...`);
-    this.log('addFromTextInput() added new tag', { newTag, confirmed });
+    this.logger.log('addFromTextInput() added new tag', { newTag, confirmed });
   }
 
   resetTextInput() {
@@ -272,7 +280,7 @@ export class LibFormTagSingleComponent extends FormBase<Tag>
   }
 
   optionSelectedFromList(event: MatAutocompleteSelectedEvent): void {
-    this.log('optionSelectedFromList()', {
+    this.logger.log('optionSelectedFromList()', {
       event,
       value: event.option.viewValue
     });
@@ -281,7 +289,7 @@ export class LibFormTagSingleComponent extends FormBase<Tag>
       .filter(tag => tag.name === autoCompleteValue)
       .pop();
     if (!selectedTag) {
-      this.warn(
+      this.logger.warn(
         'optionSelectedFromList() not sure how autocomplete selected something not in the list...'
       );
       return;
@@ -307,7 +315,7 @@ export class LibFormTagSingleComponent extends FormBase<Tag>
 
   focusOnEnter(e: KeyboardEvent) {
     if (e.keyCode === 13) {
-      this.log('enter key pressed', { key: e.key, code: e.keyCode });
+      this.logger.log('enter key pressed', { key: e.key, code: e.keyCode });
       setTimeout(() => {
         this.textInput.nativeElement.focus();
       });
@@ -329,19 +337,5 @@ export class LibFormTagSingleComponent extends FormBase<Tag>
       horizontalPosition: 'center',
       verticalPosition: 'bottom'
     });
-  }
-
-  log(msg: string, obj?: any) {
-    if (!obj) {
-      return console.log('form-tag-single: ', msg);
-    }
-    console.log('form-tag-single: ', msg, obj);
-  }
-
-  warn(msg: string, obj?: any) {
-    if (!obj) {
-      return console.log('form-tag-single: ', msg);
-    }
-    console.warn('form-tag-single: ', msg, obj);
   }
 }

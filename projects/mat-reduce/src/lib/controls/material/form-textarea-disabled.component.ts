@@ -11,7 +11,7 @@ import { takeUntil } from 'rxjs/operators';
   // tslint:disable-next-line:component-selector
   selector: 'form-textarea-disabled',
   template: `
-    <mat-form-field class="full-width">
+    <mat-form-field [appearance]="appearance" class="full-width">
       <textarea
         matInput
         [rows]="rows"

@@ -18,6 +18,8 @@ export class FormBase<T>
   _value: T;
 
   @Input()
+  appearance: 'outline' | 'fill' | 'standard';
+  @Input()
   allowAutoComplete: boolean;
   @Input()
   formControlName: string;

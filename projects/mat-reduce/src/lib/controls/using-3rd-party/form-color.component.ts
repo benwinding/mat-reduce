@@ -6,7 +6,7 @@ import { FormBase } from '../form-base-class';
   // tslint:disable-next-line:component-selector
   selector: 'form-color',
   template: `
-    <mat-form-field class="full-width m-top">
+    <mat-form-field [appearance]="appearance" class="full-width m-top">
       <span [class.txt-grey]="disabled">
         {{ placeholder }}
       </span>

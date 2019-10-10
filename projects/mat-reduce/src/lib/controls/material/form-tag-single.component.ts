@@ -32,7 +32,7 @@ import { SimpleLog } from '../../utils/logger';
   // tslint:disable-next-line:component-selector
   selector: 'form-tag-single',
   template: `
-    <mat-form-field class="full-width">
+    <mat-form-field [appearance]="appearance" class="full-width">
       <mat-chip-list #chipList [disabled]="disabled">
         <mat-chip
           *ngIf="selectedTag as tag"

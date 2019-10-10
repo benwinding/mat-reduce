@@ -32,6 +32,7 @@ import { v1 as uuidv1 } from 'uuid';
   selector: 'form-tag-multiple',
   template: `
     <mat-form-field
+      [appearance]="appearance"
       class="tag-full-width"
       [class.form-tag-control-invalid]="hasRed()"
     >

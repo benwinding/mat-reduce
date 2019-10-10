@@ -6,7 +6,7 @@ import { FormBase } from '../form-base-class';
   // tslint:disable-next-line:component-selector
   selector: 'form-date',
   template: `
-    <mat-form-field class="full-width">
+    <mat-form-field [appearance]="appearance" class="full-width">
       <input
         matInput
         (focus)="picker.open()"

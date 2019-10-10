@@ -23,7 +23,7 @@ function compareObject(l1: {}, l2: {}) {
   // tslint:disable-next-line:component-selector
   selector: 'form-select-object-multiple',
   template: `
-    <mat-form-field class="full-width">
+    <mat-form-field [appearance]="appearance" class="full-width">
       <mat-select
         [formControl]="this.internalControl"
         [placeholder]="placeholder"

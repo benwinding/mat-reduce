@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { map } from 'rxjs/operators';
 
 @Component({
   template: `
@@ -17,7 +20,10 @@ import { FormControl } from '@angular/forms';
     </form-quill-editor>
 
     <h5>Value</h5>
-    <pre>{{testControl.value}}</pre>
+    <pre>{{ testControl.value }}</pre>
+
+    <h5>HTML RENDERED</h5>
+    <p [innerHTML]="testControl.value"></p>
   `
 })
 export class TestEditorComponent {
@@ -25,7 +31,9 @@ export class TestEditorComponent {
 
   testControl = new FormControl();
 
-  constructor() {
+  trustedHTML: Observable<SafeHtml>;
+
+  constructor(private ds: DomSanitizer) {
     this.formControlEnabled.valueChanges.subscribe(isEnabled => {
       if (isEnabled) {
         this.testControl.enable();
@@ -33,5 +41,9 @@ export class TestEditorComponent {
         this.testControl.disable();
       }
     });
+
+    this.trustedHTML = this.formControlEnabled.valueChanges.pipe(
+      // map(value => this.ds.bypassSecurityTrustHtml(value))
+    );
   }
 }

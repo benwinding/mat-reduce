@@ -52,7 +52,7 @@ const quillModules = {
         [ngModel]="value"
         [modules]="quillModules"
         [disabled]="disabled"
-        placeholder="Input header text here!"
+        [placeholder]="placeholder"
       >
         <div quill-editor-toolbar>
           <span class="ql-formats">
@@ -139,6 +139,8 @@ export class LibFormQuillEditorComponent extends FormBase<string>
   quillModules: any = {};
   @Input()
   maxImageWidth = 2000;
+  @Input()
+  placeholder = 'Input content here...';
 
   onContentChanged = new Subject();
   destroyed = new Subject();

@@ -6316,6 +6316,13 @@ quill-delta@^4.0.1:
     extend "^3.0.2"
     fast-diff "1.2.0"
 
+quill-html-edit-button@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/quill-html-edit-button/-/quill-html-edit-button-0.0.2.tgz#9cd78ca01f1e938fa02e6687a26df023ae0fa31a"
+  integrity sha512-Ql8VBIRD0tJWPCkcAiWwt555P4jFUz9EXzjyp5/YS0Fo/lcVH921UPsCoTEbLom+B+Og3gE+8ISjfC45hNLHww==
+  dependencies:
+    quill "^1.x"
+
 quill-image-compress@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/quill-image-compress/-/quill-image-compress-1.0.1.tgz#8317a39e9403514df53e6cf40dc62c712f816628"

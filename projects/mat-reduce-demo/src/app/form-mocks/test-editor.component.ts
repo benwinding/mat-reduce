@@ -16,6 +16,7 @@ import { map } from 'rxjs/operators';
     <form-quill-editor
       placeholder="Type some HTML friend!"
       [formControl]="testControl"
+      [quillModules]="{ htmlEditButton: {} }"
     >
     </form-quill-editor>
 
@@ -42,8 +43,9 @@ export class TestEditorComponent {
       }
     });
 
-    this.trustedHTML = this.formControlEnabled.valueChanges.pipe(
+    this.trustedHTML = this.formControlEnabled.valueChanges
+      .pipe
       // map(value => this.ds.bypassSecurityTrustHtml(value))
-    );
+      ();
   }
 }

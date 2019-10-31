@@ -17,11 +17,13 @@ import Counter, { QuillCounterConfig } from './editor-modules/counter';
 
 import { ImageDrop } from 'quill-image-drop-module';
 import ImageCompress from 'quill-image-compress';
+import htmlEditButton from 'quill-html-edit-button';
 import ImageResize from 'quill-image-resize-module';
 import { AddQuillInlineStyles } from './editor-modules/add-quill-inline-styles';
 
 AddQuillInlineStyles(Quill);
 
+Quill.register('modules/htmlEditButton', htmlEditButton);
 Quill.register('modules/counter', Counter);
 Quill.register('modules/counterChars', Counter);
 Quill.register('modules/counterKiloBytes', Counter);
@@ -30,18 +32,6 @@ Quill.register('modules/imageCompress', ImageCompress);
 Quill.register('modules/imageResize', ImageResize);
 
 type conf = QuillCounterConfig;
-const quillModules = {
-  toolbar: '#toolbar',
-  counter: { container: '#counter', units: 'words' } as conf,
-  counterChars: { container: '#counterChars', units: 'chars' } as conf,
-  counterKiloBytes: { container: '#counterKiloBytes', units: 'kb' } as conf,
-  imageDrop: true,
-  imageCompress: {
-    quality: 0.7,
-    maxWidth: 1200
-  },
-  imageResize: true
-};
 
 @Component({
   selector: 'form-quill-editor',
@@ -50,7 +40,7 @@ const quillModules = {
       <quill-editor
         (onContentChanged)="onContentChanged.next($event)"
         [ngModel]="value"
-        [modules]="quillModules"
+        [modules]="quillModulesUsed"
         [disabled]="disabled"
         [placeholder]="placeholder"
       >
@@ -142,11 +132,28 @@ export class LibFormQuillEditorComponent extends FormBase<string>
   @Input()
   placeholder = 'Input content here...';
 
+  quillModulesUsed: any = {};
+
   onContentChanged = new Subject();
   destroyed = new Subject();
 
   ngOnInit() {
-    this.quillModules = quillModules;
+    const quillModulesDefaults = {
+      toolbar: '#toolbar',
+      counter: { container: '#counter', units: 'words' } as conf,
+      counterChars: { container: '#counterChars', units: 'chars' } as conf,
+      counterKiloBytes: { container: '#counterKiloBytes', units: 'kb' } as conf,
+      imageDrop: true,
+      imageCompress: {
+        quality: 0.7,
+        maxWidth: 1200
+      },
+      imageResize: true
+    };
+    this.quillModulesUsed = {
+      ...quillModulesDefaults,
+      ...this.quillModules
+    };
 
     this.onContentChanged
       .pipe(

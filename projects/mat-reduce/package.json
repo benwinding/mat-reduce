@@ -1,6 +1,6 @@
 {
   "name": "mat-reduce",
-  "version": "0.1.21",
+  "version": "0.1.22",
   "peerDependencies": {
     "@angular/common": "^7.x",
     "@angular/core": "^7.x",
@@ -13,6 +13,7 @@
     "ngx-material-timepicker": "3.3.1",
     "ngx-quill": "^5.x",
     "quill": "^1.x",
+    "quill-html-edit-button": "^0.0.2",
     "quill-image-compress": "^1.x",
     "quill-image-drop-module": "^1.x",
     "quill-image-resize-module": "^3.x",

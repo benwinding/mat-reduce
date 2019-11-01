@@ -148,6 +148,9 @@ export class LibFormQuillEditorComponent extends FormBase<string>
         quality: 0.7,
         maxWidth: 1200
       },
+      clipboard: {
+        matchVisual: false
+      },
       imageResize: true
     };
     this.quillModulesUsed = {

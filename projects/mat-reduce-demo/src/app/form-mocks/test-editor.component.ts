@@ -30,7 +30,7 @@ import { map } from 'rxjs/operators';
 export class TestEditorComponent {
   formControlEnabled = new FormControl(true);
 
-  testControl = new FormControl();
+  testControl = new FormControl('<strong>HELLO</strong> werld');
 
   trustedHTML: Observable<SafeHtml>;
 

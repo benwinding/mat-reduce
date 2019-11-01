@@ -17,8 +17,8 @@ import Counter, { QuillCounterConfig } from './editor-modules/counter';
 
 import { ImageDrop } from 'quill-image-drop-module';
 import ImageCompress from 'quill-image-compress';
-import htmlEditButton from 'quill-html-edit-button';
 import ImageResize from 'quill-image-resize-module';
+import { htmlEditButton } from 'quill-html-edit-button';
 import { AddQuillInlineStyles } from './editor-modules/add-quill-inline-styles';
 
 AddQuillInlineStyles(Quill);

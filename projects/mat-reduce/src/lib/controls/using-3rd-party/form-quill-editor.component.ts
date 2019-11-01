@@ -20,6 +20,7 @@ import ImageCompress from 'quill-image-compress';
 import ImageResize from 'quill-image-resize-module';
 import { htmlEditButton } from 'quill-html-edit-button';
 import { AddQuillInlineStyles } from './editor-modules/add-quill-inline-styles';
+import { SimpleLog } from '../../utils/logger';
 
 AddQuillInlineStyles(Quill);
 
@@ -137,7 +138,10 @@ export class LibFormQuillEditorComponent extends FormBase<string>
   onContentChanged = new Subject();
   destroyed = new Subject();
 
+  logger: SimpleLog;
+
   ngOnInit() {
+    this.logger = new SimpleLog(this.debug);
     const quillModulesDefaults = {
       toolbar: '#toolbar',
       counter: { container: '#counter', units: 'words' } as conf,
@@ -166,7 +170,7 @@ export class LibFormQuillEditorComponent extends FormBase<string>
       )
       .subscribe((event: any) => {
         const htmlValue = event.html || '<p></p>';
-        // console.log('LibFormQuillEditorComponent:', { htmlValue, event });
+        this.logger.log('LibFormQuillEditorComponent:', { htmlValue, event });
         this.writeValue(htmlValue);
       });
   }

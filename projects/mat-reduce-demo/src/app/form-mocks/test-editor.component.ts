@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { map } from 'rxjs/operators';
+import { map, debounceTime, takeUntil } from 'rxjs/operators';
 
 @Component({
   template: `
@@ -13,10 +13,17 @@ import { map } from 'rxjs/operators';
       placeholder="Form Enabled"
     ></form-toggle>
 
+    <form-text
+      [formControl]="inputTextControl"
+      placeholder="Input text to send to editor"
+    >
+    </form-text>
+
     <form-quill-editor
       placeholder="Type some HTML friend!"
       [formControl]="testControl"
       [quillModules]="{ htmlEditButton: {} }"
+      [debug]="true"
     >
     </form-quill-editor>
 
@@ -27,12 +34,17 @@ import { map } from 'rxjs/operators';
     <p [innerHTML]="testControl.value"></p>
   `
 })
-export class TestEditorComponent {
+export class TestEditorComponent implements OnDestroy {
   formControlEnabled = new FormControl(true);
 
-  testControl = new FormControl('<strong>HELLO</strong> werld');
+  inputTextControl = new FormControl(
+    '<strong>HELLO               </strong> werld'
+  );
+  testControl = new FormControl();
 
   trustedHTML: Observable<SafeHtml>;
+
+  destroyed = new Subject();
 
   constructor(private ds: DomSanitizer) {
     this.formControlEnabled.valueChanges.subscribe(isEnabled => {
@@ -43,9 +55,20 @@ export class TestEditorComponent {
       }
     });
 
+    this.inputTextControl.valueChanges
+      .pipe(
+        debounceTime(500),
+        takeUntil(this.destroyed)
+      )
+      .subscribe(val => this.testControl.setValue(val));
+
     this.trustedHTML = this.formControlEnabled.valueChanges
       .pipe
       // map(value => this.ds.bypassSecurityTrustHtml(value))
       ();
+  }
+
+  ngOnDestroy() {
+    this.destroyed.next();
   }
 }

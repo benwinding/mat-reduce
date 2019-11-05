@@ -1,11 +1,13 @@
 {
   "name": "mat-reduce",
-  "version": "0.1.25",
+  "version": "0.1.26",
   "peerDependencies": {
     "@angular/common": "^7.x",
     "@angular/core": "^7.x",
     "hammerjs": "^2.x"
   },
+  "homepage": "https://github.com/benwinding/mat-reduce",
+  "description": "A _less_ verbose angular material library",
   "dependencies": {
     "ngx-color-picker": "^8.x",
     "@ctrl/ngx-csv": "^1.x",
@@ -18,5 +20,24 @@
     "quill-image-drop-module": "^1.x",
     "quill-image-resize-module": "^3.x",
     "angular2-signaturepad": "^2.x"
-  }
+  },
+  "author": "hello@benwinding.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/benwinding/mat-reduce/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benwinding/mat-reduce.git"
+  },
+  "keywords": [
+    "angular",
+    "material",
+    "components",
+    "form",
+    "controls",
+    "ngx",
+    "low-code"
+  ]
+
 }

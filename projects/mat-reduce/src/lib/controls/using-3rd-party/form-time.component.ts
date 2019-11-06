@@ -9,14 +9,13 @@ import { FormBase } from '../form-base-class';
     <mat-form-field [appearance]="appearance" class="full-width">
       <input
         matInput
-        required
         [formControl]="internalControl"
         [ngxTimepicker]="picker"
         [placeholder]="placeholder"
-        [name]="autoCompleteObscureName"
         [format]="format"
         [min]="min"
         [max]="max"
+        [name]="autoCompleteObscureName"
         autocomplete="false"
       />
       <mat-icon
@@ -55,6 +54,9 @@ import { FormBase } from '../form-base-class';
       .has-pointer {
         cursor: pointer;
       }
+      .full-width {
+        width: 100%;
+      }
     `
   ]
 })
@@ -71,4 +73,6 @@ export class LibFormTimeComponent extends FormBase<string> implements OnInit {
   defaultTime: string; // 12:00 AM
   @Input()
   minutesGap: number; // 1 -> 60
+  @Input()
+  required: boolean;
 }

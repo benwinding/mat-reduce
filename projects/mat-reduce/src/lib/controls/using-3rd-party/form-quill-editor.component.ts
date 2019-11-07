@@ -119,6 +119,9 @@ type conf = QuillCounterConfig;
       .editor-disabled {
         filter: contrast(0.4) brightness(1.5);
       }
+      .ql-editor {
+        white-space: normal !important;
+      }
     `
   ],
   styleUrls: ['./quill-css/quill.snow.css', './quill-css/quill.bubble.css'],

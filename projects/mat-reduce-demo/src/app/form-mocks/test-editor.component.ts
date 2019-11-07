@@ -14,6 +14,7 @@ import { map, debounceTime, takeUntil } from 'rxjs/operators';
     ></form-toggle>
 
     <form-text
+      appearance="outline"
       [formControl]="inputTextControl"
       placeholder="Input text to send to editor"
     >

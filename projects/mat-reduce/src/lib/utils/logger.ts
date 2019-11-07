@@ -7,7 +7,7 @@ export class SimpleLog {
     }
     const boundLogFn: (...any) => void = console.log.bind(
       console,
-      'form-tag-single:: '
+      'mat-reduce:: '
     );
     return boundLogFn;
   }
@@ -18,7 +18,7 @@ export class SimpleLog {
     }
     const boundLogFn: (...any) => void = console.warn.bind(
       console,
-      'form-tag-single:: '
+      'mat-reduce:: '
     );
     return boundLogFn;
   }

@@ -14,6 +14,7 @@ import {
 import { AppBtnBackComponent } from './extra/btn-back.component';
 import { AppRoutingModule } from './app.routing';
 import {
+  TestDateComponent,
   TestTagsComponent,
   TestFormGroupComponent,
   TestSelectComponent,
@@ -29,6 +30,7 @@ import {
 @NgModule({
   declarations: [
     AppComponent,
+    TestDateComponent,
     TestTagsComponent,
     TestFormGroupComponent,
     TestSelectComponent,

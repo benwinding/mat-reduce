@@ -8,3 +8,4 @@ export * from './test-tags.component';
 export * from './test-text.component';
 export * from './test-toggles.component';
 export * from './test-time.component';
+export * from './test-date.component';

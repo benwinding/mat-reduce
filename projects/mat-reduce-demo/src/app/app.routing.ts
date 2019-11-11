@@ -10,7 +10,8 @@ import {
   TestColorComponent,
   TestTimeComponent,
   TestNumberComponent,
-  TestTogglesComponent
+  TestTogglesComponent,
+  TestDateComponent
 } from './form-mocks';
 
 const allRoutes: Routes = [
@@ -53,6 +54,10 @@ const allRoutes: Routes = [
   {
     path: 'test-number',
     component: TestNumberComponent
+  },
+  {
+    path: 'test-date',
+    component: TestDateComponent
   }
 ];
 

@@ -43,9 +43,7 @@ export class LibFormDateComponent extends FormBase<Date> implements OnInit {
   @Input()
   AfterDate: Date;
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 
   get minDate() {
     if (this.AfterDate) {
@@ -62,20 +60,20 @@ export class LibFormDateComponent extends FormBase<Date> implements OnInit {
     //   newValue,
     //   currentValue: this.value
     // });
-    const newValue = this.value;
-    let newDate = newValue;
-    if (typeof newValue === 'string' || !newValue) {
-      newDate = new Date(newValue);
+    const formValue = this.value;
+    let formDate = formValue;
+    if (typeof formValue === 'string' || !formValue) {
+      formDate = new Date(formValue);
     }
     if (this.isAfterToday) {
-      const today = new Date();
-      const isAfterToday = this.isNewDateAfterThis(newDate, today);
+      const todaysDate = new Date();
+      const isAfterToday = this.isNewDateAfterThis(formDate, todaysDate);
       if (!isAfterToday) {
         return 'Date must be after today\'s date';
       }
     }
     if (this.AfterDate) {
-      const isAfterDate = this.isNewDateAfterThis(newDate, this.AfterDate);
+      const isAfterDate = this.isNewDateAfterThis(formDate, this.AfterDate);
       if (!isAfterDate) {
         return 'Date must be after date: ' + this.AfterDate.toDateString();
       }
@@ -83,10 +81,18 @@ export class LibFormDateComponent extends FormBase<Date> implements OnInit {
     return null;
   }
 
-  private isNewDateAfterThis(newDate: Date, thisDate: Date) {
-    const thisSeconds = thisDate.getTime();
-    const newSeconds = newDate.getTime();
-    const isAfter = thisSeconds < newSeconds;
+  private isNewDateAfterThis(formDate: Date, afterDate: Date) {
+    if (!formDate || typeof formDate.getTime !== 'function') {
+      console.error('the form control value is not a valid Date', { formDate });
+      throw new Error();
+    }
+    if (!afterDate || typeof afterDate.getTime !== 'function') {
+      console.error('AfterDate is not a valid Date', { afterDate });
+      throw new Error();
+    }
+    const afterSeconds = afterDate.getTime();
+    const formSeconds = formDate.getTime();
+    const isAfter = afterSeconds < formSeconds;
     return isAfter;
   }
 }

@@ -11,15 +11,16 @@ import { Router, Event, NavigationEnd } from '@angular/router';
       </h1>
     </div>
     <ul *ngIf="currentUrl == '/'">
-      <li><a routerLink="test-text">test-text</a></li>
+      <li><a routerLink="test-assignee">test-assignee</a></li>
+      <li><a routerLink="test-color">test-color</a></li>
+      <li><a routerLink="test-date">test-date</a></li>
+      <li><a routerLink="test-editor">test-editor</a></li>
+      <li><a routerLink="test-formgroup">test-formgroup</a></li>
       <li><a routerLink="test-number">test-number</a></li>
       <li><a routerLink="test-select">test-select</a></li>
       <li><a routerLink="test-tags">test-tags</a></li>
-      <li><a routerLink="test-formgroup">test-formgroup</a></li>
-      <li><a routerLink="test-color">test-color</a></li>
-      <li><a routerLink="test-assignee">test-assignee</a></li>
+      <li><a routerLink="test-text">test-text</a></li>
       <li><a routerLink="test-time">test-time</a></li>
-      <li><a routerLink="test-editor">test-editor</a></li>
       <li><a routerLink="test-toggles">test-toggles</a></li>
     </ul>
     <router-outlet> </router-outlet>

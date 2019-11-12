@@ -13,12 +13,14 @@ import { FormControl, Validators } from '@angular/forms';
 
     <form-date
       *ngIf="loaded"
+      debug="true"
       [formControl]="AfterDateControl"
       placeholder="AfterDate"
     >
     </form-date>
     <form-date
       *ngIf="loaded"
+      debug="true"
       [formControl]="testControl"
       [AfterDate]="AfterDateControl?.value"
       placeholder="Must be after [AfterDate]!"
@@ -32,6 +34,7 @@ import { FormControl, Validators } from '@angular/forms';
     >
     <div style="width: 400px;">
       <form-date
+        debug="true"
         *ngIf="loaded"
         [formControl]="testControlRequired"
         placeholder="Select date! (Required)"

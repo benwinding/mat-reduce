@@ -1,6 +1,7 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { FormBase } from '../form-base-class';
+import { SimpleLog } from '../../utils/logger';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -43,7 +44,11 @@ export class LibFormDateComponent extends FormBase<Date> implements OnInit {
   @Input()
   AfterDate: Date;
 
-  ngOnInit() {}
+  logger: SimpleLog;
+
+  ngOnInit() {
+    this.logger = new SimpleLog(this.debug);
+  }
 
   get minDate() {
     if (this.AfterDate) {
@@ -56,15 +61,17 @@ export class LibFormDateComponent extends FormBase<Date> implements OnInit {
   }
 
   CheckValueIsValid(): string {
-    // console.log('form-date: CheckValueIsValid()', {
-    //   newValue,
-    //   currentValue: this.value
-    // });
     const formValue = this.value;
     let formDate = formValue;
     if (typeof formValue === 'string' || !formValue) {
       formDate = new Date(formValue);
     }
+    this.logger.log('form-date: CheckValueIsValid()', {
+      formValue,
+      formDate,
+      isAfterToday: this.isAfterToday,
+      isAfterDate: this.AfterDate
+    });
     if (this.isAfterToday) {
       const todaysDate = new Date();
       const isAfterToday = this.isNewDateAfterThis(formDate, todaysDate);
@@ -82,6 +89,10 @@ export class LibFormDateComponent extends FormBase<Date> implements OnInit {
   }
 
   private isNewDateAfterThis(formDate: Date, afterDate: Date) {
+    this.logger.log('form-date: isNewDateAfterThis()', {
+      formDate,
+      afterDate
+    });
     if (!formDate || typeof formDate.getTime !== 'function') {
       console.error('the form control value is not a valid Date', { formDate });
       throw new Error();
@@ -93,6 +104,11 @@ export class LibFormDateComponent extends FormBase<Date> implements OnInit {
     const afterSeconds = afterDate.getTime();
     const formSeconds = formDate.getTime();
     const isAfter = afterSeconds < formSeconds;
+    this.logger.log('form-date: isNewDateAfterThis()', {
+      afterSeconds,
+      formSeconds,
+      isAfter
+    });
     return isAfter;
   }
 }

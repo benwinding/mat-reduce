@@ -44,6 +44,7 @@ type conf = QuillCounterConfig;
         [modules]="quillModulesUsed"
         [disabled]="disabled"
         [placeholder]="placeholder"
+        [preserveWhitespace]="true"
       >
         <div quill-editor-toolbar>
           <span class="ql-formats">
@@ -119,9 +120,6 @@ type conf = QuillCounterConfig;
       .editor-disabled {
         filter: contrast(0.4) brightness(1.5);
       }
-      .ql-editor {
-        white-space: normal !important;
-      }
     `
   ],
   styleUrls: ['./quill-css/quill.snow.css', './quill-css/quill.bubble.css'],
@@ -154,9 +152,6 @@ export class LibFormQuillEditorComponent extends FormBase<string>
       imageCompress: {
         quality: 0.7,
         maxWidth: 1200
-      },
-      clipboard: {
-        matchVisual: false
       },
       imageResize: true
     };

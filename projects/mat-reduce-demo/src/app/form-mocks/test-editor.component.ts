@@ -32,7 +32,7 @@ import { map, debounceTime, takeUntil } from 'rxjs/operators';
     <pre>{{ testControl.value }}</pre>
 
     <h5>HTML RENDERED</h5>
-    <p [innerHTML]="testControl.value"></p>
+    <p style="white-space: pre;"  [innerHTML]="testControl.value"></p>
   `
 })
 export class TestEditorComponent implements OnDestroy {

@@ -6,10 +6,10 @@ import {
   OnInit,
   ViewEncapsulation
 } from '@angular/core';
-import { NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { NG_VALIDATORS, NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
 import { FormBase } from '../form-base-class';
 import { Subject } from 'rxjs';
-import { debounceTime, takeUntil, distinctUntilChanged } from 'rxjs/operators';
+import { debounceTime, takeUntil } from 'rxjs/operators';
 
 import * as QuillNamespace from 'quill';
 const Quill: any = QuillNamespace;
@@ -39,10 +39,8 @@ type conf = QuillCounterConfig;
   template: `
     <div [class.editor-disabled]="disabled">
       <quill-editor
-        (onContentChanged)="onContentChanged.next($event)"
-        [ngModel]="value"
+        [formControl]="quillControl"
         [modules]="quillModulesUsed"
-        [disabled]="disabled"
         [placeholder]="placeholder"
         [preserveWhitespace]="true"
       >
@@ -136,7 +134,8 @@ export class LibFormQuillEditorComponent extends FormBase<string>
 
   quillModulesUsed: any = {};
 
-  onContentChanged = new Subject();
+  quillControl = new FormControl();
+
   destroyed = new Subject();
 
   logger: SimpleLog;
@@ -160,20 +159,41 @@ export class LibFormQuillEditorComponent extends FormBase<string>
       ...this.quillModules
     };
 
-    this.onContentChanged
-      .pipe(
-        debounceTime(1000),
-        takeUntil(this.destroyed),
-        distinctUntilChanged()
-      )
-      .subscribe((event: any) => {
-        const htmlValue = event.html || '<p></p>';
-        this.logger.log('LibFormQuillEditorComponent:', { htmlValue, event });
-        this.writeValue(htmlValue);
+    this.quillControl.valueChanges
+      .pipe(takeUntil(this._destroyed))
+      .pipe(debounceTime(1000))
+      .subscribe(newValue => {
+        this._value = this.wrapValue(newValue);
+        this.onChange(this._value);
+        this.onTouched();
       });
   }
 
   ngOnDestroy() {
     this.destroyed.next();
+  }
+
+  setDisabledState?(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+    setTimeout(() => {
+      if (isDisabled) {
+        this.quillControl.disable();
+      } else {
+        this.quillControl.enable();
+      }
+    });
+  }
+
+  writeValue(value: string) {
+    this.value = this.wrapValue(value);
+    this.quillControl.setValue(value);
+    this.logger.log('form-quill-editor: writeValue', {
+      value,
+      thisValue: this.value
+    });
+  }
+
+  wrapValue(value: string) {
+    return `<div style="white-space: pre;" >${value}</div>`;
   }
 }

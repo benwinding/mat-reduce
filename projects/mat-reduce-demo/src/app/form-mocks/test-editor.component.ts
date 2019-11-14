@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -32,7 +32,7 @@ import { map, debounceTime, takeUntil } from 'rxjs/operators';
     <pre>{{ testControl.value }}</pre>
 
     <h5>HTML RENDERED</h5>
-    <p style="white-space: pre;"  [innerHTML]="testControl.value"></p>
+    <div [innerHTML]="ds.bypassSecurityTrustHtml(testControl.value)"></div>
   `
 })
 export class TestEditorComponent implements OnDestroy {
@@ -43,11 +43,9 @@ export class TestEditorComponent implements OnDestroy {
   );
   testControl = new FormControl();
 
-  trustedHTML: Observable<SafeHtml>;
-
   destroyed = new Subject();
 
-  constructor(private ds: DomSanitizer) {
+  constructor(public ds: DomSanitizer) {
     this.formControlEnabled.valueChanges.subscribe(isEnabled => {
       if (isEnabled) {
         this.testControl.enable();
@@ -57,16 +55,8 @@ export class TestEditorComponent implements OnDestroy {
     });
 
     this.inputTextControl.valueChanges
-      .pipe(
-        debounceTime(500),
-        takeUntil(this.destroyed)
-      )
+      .pipe(debounceTime(500), takeUntil(this.destroyed))
       .subscribe(val => this.testControl.setValue(val));
-
-    this.trustedHTML = this.formControlEnabled.valueChanges
-      .pipe
-      // map(value => this.ds.bypassSecurityTrustHtml(value))
-      ();
   }
 
   ngOnDestroy() {

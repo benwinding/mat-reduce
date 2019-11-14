@@ -1,9 +1,14 @@
-import { ControlValueAccessor, FormControl, Validator, ValidatorFn, Validators } from '@angular/forms';
+import {
+  ControlValueAccessor,
+  FormControl,
+  Validator,
+  ValidatorFn
+} from '@angular/forms';
 import { Subject } from 'rxjs';
 import { OnDestroy, OnInit, Input } from '@angular/core';
 import { takeUntil, auditTime } from 'rxjs/operators';
 import { ConvertToTitleCase } from '../utils/case-helper';
-import {v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 export class FormBase<T>
   implements OnInit, OnDestroy, ControlValueAccessor, Validator {
@@ -120,7 +125,7 @@ export class FormBase<T>
         };
   }
 
-  private onChange(inputValue) {
+  onChange(inputValue) {
     this.validationError = this.CheckValueIsValid();
     if (this.validationError) {
       this.propagateOnChange(this.value);

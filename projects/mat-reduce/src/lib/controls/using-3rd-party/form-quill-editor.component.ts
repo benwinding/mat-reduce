@@ -18,6 +18,7 @@ import Counter, { QuillCounterConfig } from './editor-modules/counter';
 import { ImageDrop } from 'quill-image-drop-module';
 import ImageCompress from 'quill-image-compress';
 import ImageResize from 'quill-image-resize-module';
+import ImageRotate from 'quill-image-rotate-module';
 import { htmlEditButton } from 'quill-html-edit-button';
 import { AddQuillInlineStyles } from './editor-modules/add-quill-inline-styles';
 import { SimpleLog } from '../../utils/logger';
@@ -30,7 +31,8 @@ Quill.register('modules/counterChars', Counter);
 Quill.register('modules/counterKiloBytes', Counter);
 Quill.register('modules/imageDrop', ImageDrop);
 Quill.register('modules/imageCompress', ImageCompress);
-Quill.register('modules/imageResize', ImageResize);
+Quill.register('modules/image1Rotate', ImageRotate);
+Quill.register('modules/image2Resize', ImageResize);
 
 type conf = QuillCounterConfig;
 
@@ -152,7 +154,8 @@ export class LibFormQuillEditorComponent extends FormBase<string>
         quality: 0.7,
         maxWidth: 1200
       },
-      imageResize: true
+      image1Rotate: true,
+      image2Resize: true
     };
     this.quillModulesUsed = {
       ...quillModulesDefaults,

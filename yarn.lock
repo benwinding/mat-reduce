@@ -6323,10 +6323,10 @@ quill-html-edit-button@^0.1.4:
   dependencies:
     quill "^1.x"
 
-quill-image-compress@^1.2.0:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/quill-image-compress/-/quill-image-compress-1.2.1.tgz#849e72463b1ccf5798536b48ae95d2acfadee4ff"
-  integrity sha512-5Ljhxmrf+lruX52j+hxKvocD4mvxDOPGQjd4wC9vMco0evy6Z13e2HIWaXSTn4e+7X/2ZGQsQA2swZecv3HVMg==
+quill-image-compress@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/quill-image-compress/-/quill-image-compress-1.2.3.tgz#68b7e48d1d582b6bcd95966dbc7e0dfa11d7ce55"
+  integrity sha512-fL+x+Tqre8uMcP1vKmObiKKjtj7b3yYWK0dfYWnf8napdGl3/xMEAm8/HxhiccfnkBeHxHOKXex0WQCL5C1t3g==
   dependencies:
     quill "^1.x"
 
@@ -6337,10 +6337,19 @@ quill-image-drop-module@^1.0.3:
   dependencies:
     quill "^1.2.2"
 
-quill-image-resize-module@^3.0.0:
+quill-image-resize-module@3.x:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/quill-image-resize-module/-/quill-image-resize-module-3.0.0.tgz#0fd93746a837336d95b2f536140416a623c71771"
   integrity sha1-D9k3Rqg3M22VsvU2FAQWpiPHF3E=
+  dependencies:
+    lodash "^4.17.4"
+    quill "^1.2.2"
+    raw-loader "^0.5.1"
+
+quill-image-rotate-module@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/quill-image-rotate-module/-/quill-image-rotate-module-0.0.2.tgz#adf90b67bb5f54b86b9af96ac6dd6cd3bedc5905"
+  integrity sha512-TjVEUS2len1GhCyHAnhjMhT3Es8XcjdeR3eEdG34ynBV4pxQ3MEdjxKivY3gUnWhuHUzNLL6PbD2WLmAbpro8A==
   dependencies:
     lodash "^4.17.4"
     quill "^1.2.2"

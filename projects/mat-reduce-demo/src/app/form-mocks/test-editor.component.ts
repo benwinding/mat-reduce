@@ -39,7 +39,10 @@ export class TestEditorComponent implements OnDestroy {
   formControlEnabled = new FormControl(true);
 
   inputTextControl = new FormControl(
-    '<strong>HELLO               </strong> werld'
+    `<p>____________Above</p>
+    <p>Before<img src="https://i.imgur.com/iqFbSfr.png" />After</p>
+    <p>____________Below</p>
+    `
   );
   testControl = new FormControl();
 

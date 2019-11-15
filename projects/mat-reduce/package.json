@@ -1,6 +1,6 @@
 {
   "name": "mat-reduce",
-  "version": "0.1.32",
+  "version": "0.1.33",
   "peerDependencies": {
     "@angular/common": "^7.x",
     "@angular/core": "^7.x",
@@ -19,6 +19,7 @@
     "quill-image-compress": "^1.2.3",
     "quill-image-drop-module": "^1.0.3",
     "quill-image-resize-module": "^3.0.0",
+    "quill-image-rotate-module": "^0.0.2",
     "angular2-signaturepad": "^2.x"
   },
   "author": "hello@benwinding.com",

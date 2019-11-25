@@ -6316,10 +6316,10 @@ quill-delta@^4.0.1:
     extend "^3.0.2"
     fast-diff "1.2.0"
 
-quill-html-edit-button@^0.1.4:
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/quill-html-edit-button/-/quill-html-edit-button-0.1.4.tgz#a5bc6dd0b060e07bd839ea07902badbd2222be1e"
-  integrity sha512-o5J4Q7CuZu9pWvz0KBSAedxKtf5t1pb3YRhJs2L4aGwdSLClVANIEuPnbjtdVqazeCCXnh85AJmHQyNbzkpCsQ==
+quill-html-edit-button@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/quill-html-edit-button/-/quill-html-edit-button-1.0.5.tgz#a3d05a4b361472ae854c72aaa073572e75af11d5"
+  integrity sha512-8VWSwPBZ4FdLVUnKaVWKcro934MicWa0iF9uVrjXE0aL5mDTwwFv4hT4cpjQCYRsML/Y4xL1+kJy4V40wGN9Qg==
   dependencies:
     quill "^1.x"
 

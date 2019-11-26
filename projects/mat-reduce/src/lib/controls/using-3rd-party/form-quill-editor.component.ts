@@ -197,6 +197,6 @@ export class LibFormQuillEditorComponent extends FormBase<string>
   }
 
   wrapValue(value: string) {
-    return `<div style="white-space: pre-line; word-break: break-all;" >${value}</div>`;
+    return `<div style="white-space: pre-line; word-break: break-word;" >${value}</div>`;
   }
 }

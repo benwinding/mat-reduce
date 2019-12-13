@@ -11,7 +11,8 @@ import {
   TestTimeComponent,
   TestNumberComponent,
   TestTogglesComponent,
-  TestDateComponent
+  TestDateComponent,
+  TestSelectObjectComponent
 } from './form-mocks';
 
 const allRoutes: Routes = [
@@ -30,6 +31,10 @@ const allRoutes: Routes = [
   {
     path: 'test-select',
     component: TestSelectComponent
+  },
+  {
+    path: 'test-select-object',
+    component: TestSelectObjectComponent
   },
   {
     path: 'test-tags',

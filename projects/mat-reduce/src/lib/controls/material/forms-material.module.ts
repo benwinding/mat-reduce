@@ -35,6 +35,9 @@ import { LibFormTagMultipleComponent } from './form-tag-multiple.component';
 import { LibFormTagSingleComponent } from './form-tag-single.component';
 import { LibFormNumberComponent } from './form-number.component';
 import { LibFormSelectStringMultipleComponent } from './form-select-string-multiple.component';
+import { LibFormSelectObjectAutoCompleteComponent } from './form-select-object-autocomplete.component';
+import { LibFormSelectStringAutoCompleteComponent } from './form-select-string-autocomplete.component';
+import { ExtMatAutocompleteTriggerEnforceSelectionDirective } from './appExtMatAutocompleteTriggerEnforceSelection';
 
 const exportedModules = [
   CommonModule,
@@ -59,8 +62,10 @@ const exportedModules = [
 
 const exported = [
   LibFormNumberComponent,
+  LibFormSelectObjectAutoCompleteComponent,
   LibFormSelectObjectComponent,
   LibFormSelectObjectMultipleComponent,
+  LibFormSelectStringAutoCompleteComponent,
   LibFormSelectStringComponent,
   LibFormSelectStringMultipleComponent,
   LibFormTagMultipleComponent,
@@ -79,7 +84,7 @@ const exported = [
 @NgModule({
   imports: [...exportedModules],
   exports: [...exported, ...exportedModules],
-  declarations: [...exported],
+  declarations: [...exported, ExtMatAutocompleteTriggerEnforceSelectionDirective],
   providers: []
 })
 export class MatReduceFormsUsingMaterialModule {}

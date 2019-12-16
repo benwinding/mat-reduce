@@ -74,11 +74,19 @@ const currentUser: User = {
       [currentUser]="currentUser$ | async"
     >
     </form-assignee-selector>
+    <h1>form-contact</h1>
+    <form-contact [formControl]="formContact"> </form-contact>
+    <h5>Value</h5>
+    <pre>{{ formContact?.value | json }}</pre>
   `
 })
 export class TestAssigneeComponent {
   formControlEnabled = new FormControl(false);
   assigneeSelectorControl = new FormControl();
+
+  formContact = new FormControl({
+    email: 'something@ascasc.ca'
+  });
 
   contractorsList$: Observable<Tag[]> = of(contractorsList);
   staffList$: Observable<Tag[]> = of(staffList);

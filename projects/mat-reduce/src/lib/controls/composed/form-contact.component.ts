@@ -1,0 +1,72 @@
+import { Component, Input, forwardRef, OnInit } from '@angular/core';
+import { FormGroupTypeSafe } from 'mat-reduce';
+import { Contact } from './form-assignee.models';
+import { FormBase } from '../form-base-class';
+import { FormControl, NG_VALUE_ACCESSOR, NG_VALIDATORS } from '@angular/forms';
+import { takeUntil } from 'rxjs/operators';
+import { FormBuilderTypedService } from '../../services/form-builder-typed.service';
+
+@Component({
+  selector: 'form-contact',
+  template: `
+    <form [formGroup]="contactGroup">
+      <form-text placeholder="Name *" formControlName="name"> </form-text>
+      <form-text
+        *ngIf="!emailRequired"
+        placeholder="Email"
+        formControlName="email"
+      >
+      </form-text>
+      <form-text
+        *ngIf="emailRequired"
+        placeholder="Email *"
+        formControlName="email"
+      >
+      </form-text>
+      <form-text placeholder="Business Phone" formControlName="phone">
+      </form-text>
+    </form>
+  `,
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => LibFormGroupContactComponent),
+      multi: true
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => LibFormGroupContactComponent),
+      multi: true
+    }
+  ]
+})
+export class LibFormGroupContactComponent extends FormBase<Contact> implements OnInit {
+  contactGroup: FormGroupTypeSafe<Contact>;
+
+  @Input()
+  emailRequired = true;
+
+  constructor(private fb: FormBuilderTypedService) {
+    super();
+  }
+
+  ngOnInit() {
+    this.contactGroup = this.fb.group<Contact>({
+      id: new FormControl(),
+      name: new FormControl(),
+      email: new FormControl(),
+      phone: new FormControl()
+    });
+    this.contactGroup.valueChanges
+      .pipe(takeUntil(this._destroyed))
+      .subscribe(c => {
+        console.log('changed value', { c });
+        this.value = c;
+      });
+  }
+
+  writeValue(value: Contact): void {
+    this.value = value;
+    this.contactGroup.patchValue(value);
+  }
+}

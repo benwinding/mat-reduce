@@ -5,6 +5,7 @@ import { MatCardModule, MatIconModule } from '@angular/material';
 
 import { MatReduceFormsUsingMaterialModule } from '../material/forms-material.module';
 import { LibFormAssigneeSelectorComponent } from './form-assignee-selector.component';
+import { LibFormGroupContactComponent } from './form-contact.component';
 
 const exportedModules = [
   CommonModule,
@@ -15,7 +16,7 @@ const exportedModules = [
   MatReduceFormsUsingMaterialModule
 ];
 
-const exported = [LibFormAssigneeSelectorComponent];
+const exported = [LibFormAssigneeSelectorComponent, LibFormGroupContactComponent];
 
 @NgModule({
   imports: [...exportedModules],

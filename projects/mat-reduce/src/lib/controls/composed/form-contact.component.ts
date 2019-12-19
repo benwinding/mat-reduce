@@ -1,10 +1,9 @@
 import { Component, Input, forwardRef, OnInit } from '@angular/core';
-import { FormGroupTypeSafe } from 'mat-reduce';
 import { Contact } from './form-assignee.models';
 import { FormBase } from '../form-base-class';
 import { FormControl, NG_VALUE_ACCESSOR, NG_VALIDATORS } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
-import { FormBuilderTypedService } from '../../services/form-builder-typed.service';
+import { FormBuilderTypedService, FormGroupTypeSafe } from '../../services/form-builder-typed.service';
 
 @Component({
   selector: 'form-contact',

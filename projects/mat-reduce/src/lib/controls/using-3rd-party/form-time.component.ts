@@ -22,7 +22,7 @@ import { FormBase } from '../form-base-class';
         matSuffix
         class="has-pointer"
         [class.is-grey]="disabled"
-        (click)="picker.open()"
+        (click)="disabled ? null : picker.open()"
       >
         access_time
       </mat-icon>

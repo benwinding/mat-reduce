@@ -13,7 +13,6 @@ import {
   MatButtonModule
 } from '@angular/material';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
-import { QuillModule } from 'ngx-quill';
 
 import { LibFormColorComponent } from './form-color.component';
 import { LibFormDateComponent } from './form-date.component';
@@ -48,7 +47,6 @@ const exported = [
     CommonModule,
     SignaturePadModule,
     ColorPickerModule,
-    QuillModule,
     NgxMaterialTimepickerModule
   ],
   exports: [...exported, ...exportedModules],

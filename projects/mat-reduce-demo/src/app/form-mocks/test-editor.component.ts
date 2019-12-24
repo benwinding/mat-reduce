@@ -20,6 +20,7 @@ import { map, debounceTime, takeUntil } from 'rxjs/operators';
     >
     </form-text>
 
+<!--
     <form-quill-editor
       placeholder="Type some HTML friend!"
       [formControl]="testControl"
@@ -27,7 +28,7 @@ import { map, debounceTime, takeUntil } from 'rxjs/operators';
       [debug]="true"
     >
     </form-quill-editor>
-
+-->
     <h5>Value</h5>
     <pre>{{ testControl.value }}</pre>
 

@@ -3,7 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { MatReduceModule } from 'projects/mat-reduce/src/public-api';
+import { MatReduceNoQuillModule } from 'projects/mat-reduce/src/lib/mat-reduce-no-quill.module';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import {
@@ -56,7 +56,7 @@ import {
     MatTabsModule,
     MatButtonModule,
     MatIconModule,
-    MatReduceModule,
+    MatReduceNoQuillModule,
 
     AppRoutingModule
   ],

@@ -56,7 +56,6 @@
               "projects/mat-reduce-demo/src/assets"
             ],
             "styles": ["projects/mat-reduce-demo/src/styles.css"],
-            "scripts": ["node_modules/quill/dist/quill.min.js"],
             "preserveSymlinks": true,
             "es5BrowserSupport": true
           },

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { of, Observable } from 'rxjs';
 
 import { FormControl } from '@angular/forms';
-import { Tag } from 'projects/mat-reduce/src/public-api';
+import { Tag } from 'projects/mat-reduce/src/core/public_api';
 
 function makeFriend(name: string): Tag {
   return {

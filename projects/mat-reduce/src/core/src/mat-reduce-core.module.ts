@@ -10,7 +10,7 @@ import { FormBuilderTypedService } from './services/form-builder-typed.service';
 import { MatReduceFormsUsing3rdPartyModule } from './controls/using-3rd-party/forms-3rd-party.module';
 import { MatReduceFormsUsingMaterialModule } from './controls/material/forms-material.module';
 import { MatReduceFormsComposedModule } from './controls/composed/forms-composed.module';
-import { MatIconModule } from '@angular/material';
+import { MatIconModule } from '@angular/material/icon';
 
 const exportedModules = [
   MatReduceFormsUsing3rdPartyModule,
@@ -28,4 +28,4 @@ const exportedModules = [
   imports: [MatIconModule, ...exportedModules],
   providers: [ConfirmationService, FormBuilderTypedService]
 })
-export class MatReduceNoQuillModule {}
+export class MatReduceCoreModule {}

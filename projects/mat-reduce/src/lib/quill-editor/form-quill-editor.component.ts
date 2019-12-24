@@ -7,10 +7,11 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { NG_VALIDATORS, NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
-import { FormBase } from '../form-base-class';
+import { SimpleLog, FormBase } from '../from-no-quill';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 
+// import 'quill/dist/quill.min.js';
 import * as QuillNamespace from 'quill';
 const Quill: any = QuillNamespace;
 import Counter, { QuillCounterConfig } from './editor-modules/counter';
@@ -21,7 +22,6 @@ import ImageResize from 'quill-image-resize-module';
 import ImageRotate from 'quill-image-rotate-module';
 import { htmlEditButton } from 'quill-html-edit-button';
 import { AddQuillInlineStyles } from './editor-modules/add-quill-inline-styles';
-import { SimpleLog } from '../../utils/logger';
 
 AddQuillInlineStyles(Quill);
 

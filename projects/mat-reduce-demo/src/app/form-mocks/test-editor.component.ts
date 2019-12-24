@@ -1,8 +1,8 @@
-import { Component, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Observable, Subject } from 'rxjs';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { map, debounceTime, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { DomSanitizer } from '@angular/platform-browser';
+import { debounceTime, takeUntil } from 'rxjs/operators';
 
 @Component({
   template: `
@@ -20,7 +20,6 @@ import { map, debounceTime, takeUntil } from 'rxjs/operators';
     >
     </form-text>
 
-<!--
     <form-quill-editor
       placeholder="Type some HTML friend!"
       [formControl]="testControl"
@@ -28,7 +27,7 @@ import { map, debounceTime, takeUntil } from 'rxjs/operators';
       [debug]="true"
     >
     </form-quill-editor>
--->
+
     <h5>Value</h5>
     <pre>{{ testControl.value }}</pre>
 

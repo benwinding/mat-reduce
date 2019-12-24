@@ -11,13 +11,9 @@ import {
   ElementRef,
   ViewEncapsulation
 } from '@angular/core';
-import {
-  MatAutocomplete,
-  MatAutocompleteSelectedEvent,
-  MatChipInputEvent,
-  MatSnackBar,
-  MatAutocompleteTrigger
-} from '@angular/material';
+import { MatAutocomplete, MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, AbstractControl } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';

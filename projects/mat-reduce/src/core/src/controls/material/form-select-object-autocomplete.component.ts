@@ -3,7 +3,7 @@ import { NG_VALIDATORS, NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
 import { FormBase } from '../form-base-class';
 import { Observable } from 'rxjs';
 import { takeUntil, startWith, map, filter } from 'rxjs/operators';
-import { MatAutocomplete } from '@angular/material';
+import { MatAutocomplete } from '@angular/material/autocomplete';
 
 @Component({
   // tslint:disable-next-line:component-selector

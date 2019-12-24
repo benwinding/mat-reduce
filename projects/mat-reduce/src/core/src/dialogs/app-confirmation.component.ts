@@ -5,12 +5,8 @@ import {
   OnInit,
   ViewChild
 } from '@angular/core';
-import {
-  MAT_DIALOG_DATA,
-  MatButton,
-  MatDialog,
-  MatDialogRef
-} from '@angular/material';
+import { MatButton } from '@angular/material/button';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { take } from 'rxjs/operators';
 
 interface ConfirmationDialogData {

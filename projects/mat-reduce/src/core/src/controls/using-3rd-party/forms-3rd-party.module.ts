@@ -5,13 +5,11 @@ import {
 } from '@mat-datetimepicker/core';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {
-  MatInputModule,
-  MatCardModule,
-  MatIconModule,
-  MatDatepickerModule,
-  MatButtonModule
-} from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 import { LibFormColorComponent } from './form-color.component';

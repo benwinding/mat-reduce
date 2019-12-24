@@ -80,7 +80,9 @@ export class LibFormSignatureComponent extends FormBase<string>
   };
   @ViewChild('signaturePad', { static: false } as any)
   signaturePad: ElementRef<SignaturePad>;
-  @ViewChild('container') container: ElementRef<HTMLDivElement>;
+  @ViewChild('container', { static: true }) container: ElementRef<
+    HTMLDivElement
+  >;
 
   ngOnInit() {
     this.autoCompleteObscureName = uuidv1();
@@ -103,10 +105,7 @@ export class LibFormSignatureComponent extends FormBase<string>
     const containerWidth = this.container.nativeElement.clientWidth;
     if (containerWidth < 600) {
       const marginLeftAndRight = 20 * 2;
-      pad.set(
-        'canvasWidth',
-        containerWidth - marginLeftAndRight - 10
-      );
+      pad.set('canvasWidth', containerWidth - marginLeftAndRight - 10);
     }
   }
 

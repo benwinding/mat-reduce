@@ -5,3 +5,4 @@ export * from './src/controls/form-base-class';
 export * from './src/controls/composed/contact-helper';
 export * from './src/controls/composed/form-assignee.models';
 export * from './src/utils/logger';
+export * from './src/services/form-builder-typed.service';

@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve --port 4567",
     "build-lib": "ng-packagr -p projects/mat-reduce/",
+    "build-core": "ng-packagr -p projects/mat-reduce-core/",
     "watch-lib": "ng-packagr -p projects/mat-reduce/ --watch",
     "build-demo": "ng build --project=mat-reduce-demo --prod",
     "deploy-demo": "gh-pages -d dist/mat-reduce-demo",
@@ -44,8 +45,8 @@
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.803.21",
-    "@angular-devkit/build-ng-packagr": "~0.803.21",
+    "@angular-devkit/build-angular": "^0.803.8",
+    "@angular-devkit/build-ng-packagr": "^0.803.17",
     "@angular/cli": "^8.3.21",
     "@angular/compiler-cli": "^8.2.14",
     "@angular/language-service": "^8.2.14",

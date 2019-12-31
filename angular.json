@@ -98,6 +98,36 @@
           }
         }
       }
+    },
+    "mat-reduce-core": {
+      "projectType": "library",
+      "root": "projects/mat-reduce-core",
+      "sourceRoot": "projects/mat-reduce-core/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/mat-reduce-core/tsconfig.lib.json",
+            "project": "projects/mat-reduce-core/ng-package.json"
+          }
+        }
+      }
+    },
+    "mat-reduce": {
+      "projectType": "library",
+      "root": "projects/mat-reduce",
+      "sourceRoot": "projects/mat-reduce/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/mat-reduce/tsconfig.lib.json",
+            "project": "projects/mat-reduce/ng-package.json"
+          }
+        }
+      }
     }
   },
   "defaultProject": "mat-reduce-demo"

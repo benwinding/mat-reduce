@@ -1,0 +1,26 @@
+{
+  "name": "mat-reduce-core",
+  "version": "0.3.0",
+  "peerDependencies": {
+    "@angular/common": "^8.x",
+    "@angular/core": "^8.x",
+    "hammerjs": "^2.x"
+  },
+  "dependencies": {
+    "ngx-color-picker": "^8.x",
+    "@ctrl/ngx-csv": "^1.x",
+    "@mat-datetimepicker/core": "^2.x",
+    "ngx-material-timepicker": "3.3.1",
+    "angular2-signaturepad": "^2.x"
+  },
+  "homepage": "https://github.com/benwinding/mat-reduce",
+  "author": "hello@benwinding.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/benwinding/mat-reduce/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benwinding/mat-reduce.git"
+  }
+}

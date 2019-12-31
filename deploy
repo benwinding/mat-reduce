@@ -1,9 +1,17 @@
 #!/usr/bin/env bash
 case "$1" in
   lib)
+      yarn build-core
       yarn build-lib
       cp README.md dist/mat-reduce
       pushd dist/mat-reduce
+      npm publish
+      popd
+      ;;
+  core)
+      yarn build-core
+      cp README.md dist/mat-reduce-core
+      pushd dist/mat-reduce-core
       npm publish
       popd
       ;;

@@ -7,7 +7,6 @@ import {
   ViewChild,
   forwardRef
 } from '@angular/core';
-import { SignaturePad } from 'angular2-signaturepad/signature-pad';
 import { FormBase } from '../form-base-class';
 
 import { v1 as uuidv1 } from 'uuid';
@@ -79,7 +78,7 @@ export class LibFormSignatureComponent extends FormBase<string>
     canvasHeight: 200
   };
   @ViewChild('signaturePad', { static: false } as any)
-  signaturePad: ElementRef<SignaturePad>;
+  signaturePad: ElementRef<any>;
   @ViewChild('container', { static: true }) container: ElementRef<
     HTMLDivElement
   >;

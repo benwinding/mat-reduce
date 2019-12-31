@@ -17,7 +17,7 @@ import { LibFormDateComponent } from './form-date.component';
 import { LibFormTimeComponent } from './form-time.component';
 import { CommonModule } from '@angular/common';
 import { SignaturePadModule } from 'angular2-signaturepad';
-// import { LibFormSignatureComponent } from './form-signature.component';
+import { LibFormSignatureComponent } from './form-signature.component';
 
 const exportedModules = [
   CommonModule,
@@ -36,7 +36,7 @@ const exported = [
   LibFormColorComponent,
   LibFormDateComponent,
   LibFormTimeComponent,
-  // LibFormSignatureComponent
+  LibFormSignatureComponent
 ];
 
 @NgModule({

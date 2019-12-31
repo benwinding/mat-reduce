@@ -12,6 +12,13 @@
 // import { FormBase } from 'mat-reduce-core/lib/controls/form-base-class';
 
 // import { FormBase, MatReduceCoreModule, SimpleLog } from '../../../mat-reduce-core/src/public_api';
+
 import { FormBase, MatReduceCoreModule, SimpleLog } from 'mat-reduce-core';
 
-export { MatReduceCoreModule, SimpleLog, FormBase };
+// import { MatReduceCoreModule } from 'mat-reduce-core';
+// import { FormBase, SimpleLog } from 'mat-reduce-core';
+
+export { SimpleLog, MatReduceCoreModule, FormBase };
+
+// import { FormBase, SimpleLog } from 'mat-reduce-core';
+// export { SimpleLog, FormBase };

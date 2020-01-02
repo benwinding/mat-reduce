@@ -26,7 +26,6 @@
     "@angular/platform-browser": "^8.2.14",
     "@angular/platform-browser-dynamic": "^8.2.14",
     "@angular/router": "^8.2.14",
-    "@ctrl/ngx-csv": "^2.1.0",
     "@mat-datetimepicker/core": "^2.0.1",
     "angular2-signaturepad": "^2.9.0",
     "core-js": "^3.6.1",

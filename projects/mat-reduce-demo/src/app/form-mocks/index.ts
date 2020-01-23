@@ -4,6 +4,7 @@ export * from './test-date.component';
 export * from './test-editor.component';
 export * from './test-formgroup.component';
 export * from './test-number.component';
+export * from './test-phone-number.component';
 export * from './test-select-object.component';
 export * from './test-select.component';
 export * from './test-tags.component';

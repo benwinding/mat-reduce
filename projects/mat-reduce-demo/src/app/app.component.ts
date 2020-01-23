@@ -11,18 +11,27 @@ import { Router, Event, NavigationEnd } from '@angular/router';
       </h1>
     </div>
     <ul *ngIf="currentUrl == '/'">
-      <li><a routerLink="test-assignee">test-assignee</a></li>
-      <li><a routerLink="test-color">test-color</a></li>
-      <li><a routerLink="test-date">test-date</a></li>
-      <li><a routerLink="test-editor">test-editor</a></li>
-      <li><a routerLink="test-formgroup">test-formgroup</a></li>
-      <li><a routerLink="test-number">test-number</a></li>
-      <li><a routerLink="test-select-object">test-select-object</a></li>
-      <li><a routerLink="test-select">test-select</a></li>
-      <li><a routerLink="test-tags">test-tags</a></li>
-      <li><a routerLink="test-text">test-text</a></li>
-      <li><a routerLink="test-time">test-time</a></li>
-      <li><a routerLink="test-toggles">test-toggles</a></li>
+      <li>CORE
+        <ul>
+          <li><a routerLink="test-date">form-date</a></li>
+          <li><a routerLink="test-formgroup">form-formgroup</a></li>
+          <li><a routerLink="test-number">form-number</a></li>
+          <li><a routerLink="test-select-object">form-select-object</a></li>
+          <li><a routerLink="test-select">form-select</a></li>
+          <li><a routerLink="test-tags">form-tags</a></li>
+          <li><a routerLink="test-text">form-text</a></li>
+          <li><a routerLink="test-toggles">form-toggles</a></li>
+        </ul>
+      </li>
+      <li>3rd Party
+        <ul>
+          <li><a routerLink="test-assignee">form-assignee</a></li>
+          <li><a routerLink="test-color">form-color</a></li>
+          <li><a routerLink="test-editor">form-editor</a></li>
+          <li><a routerLink="test-phone-number">form-phone-number</a></li>
+          <li><a routerLink="test-time">form-time</a></li>
+        </ul>
+      </li>
     </ul>
     <router-outlet> </router-outlet>
   `

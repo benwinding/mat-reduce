@@ -3,8 +3,8 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
-// import { MatReduceModule } from '../../../../dist/mat-reduce';
-import { MatReduceCoreModule } from '../../../mat-reduce/src/public_api';
+import { MatReduceModule } from './from-mat-reduce';
+// import { MatReduceCoreModule } from './from-mat-reduce-core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -24,7 +24,8 @@ import {
   TestTimeComponent,
   TestNumberComponent,
   TestEditorComponent,
-  TestTogglesComponent
+  TestTogglesComponent,
+  TestPhoneNumberComponent
 } from './form-mocks';
 
 @NgModule({
@@ -42,6 +43,7 @@ import {
     TestNumberComponent,
     TestEditorComponent,
     TestTogglesComponent,
+    TestPhoneNumberComponent,
 
     AppBtnBackComponent
   ],
@@ -55,8 +57,8 @@ import {
     MatTabsModule,
     MatButtonModule,
     MatIconModule,
-    // MatReduceModule,
-    MatReduceCoreModule,
+    MatReduceModule,
+    // MatReduceCoreModule,
 
     AppRoutingModule
   ],

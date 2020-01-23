@@ -7,10 +7,12 @@
     "hammerjs": "^2.x"
   },
   "dependencies": {
-    "ngx-color-picker": "^8.x",
     "@mat-datetimepicker/core": "^2.x",
-    "ngx-material-timepicker": "3.3.1",
-    "angular2-signaturepad": "^2.x"
+    "angular2-signaturepad": "^2.x",
+    "cleave.js": "1.5.3",
+    "ngx-cleave-directive": "1.1.3",
+    "ngx-color-picker": "^8.x",
+    "ngx-material-timepicker": "3.3.1"
   },
   "homepage": "https://github.com/benwinding/mat-reduce",
   "author": "hello@benwinding.com",

@@ -15,7 +15,7 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
-import { map, startWith, takeUntil } from 'rxjs/operators';
+import { map, startWith } from 'rxjs/operators';
 import { ConfirmationService } from '../../dialogs/app-confirmation.component';
 import { FormBase } from '../form-base-class';
 import { Tag } from './Tag';

@@ -1,9 +1,8 @@
-import { Component, forwardRef, Input, OnInit, ViewChild } from '@angular/core';
-import { NG_VALIDATORS, NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
+import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import { NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { FormBase } from '../form-base-class';
 import { Observable } from 'rxjs';
 import { takeUntil, startWith, map, filter } from 'rxjs/operators';
-import { MatAutocomplete } from '@angular/material/autocomplete';
 
 @Component({
   // tslint:disable-next-line:component-selector

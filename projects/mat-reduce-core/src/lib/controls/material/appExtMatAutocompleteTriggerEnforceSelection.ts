@@ -14,6 +14,8 @@ import { NgControl } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
+// Taken from this answer: https://github.com/angular/components/issues/3334#issuecomment-469718514
+
 @Directive({
   // tslint:disable-next-line: directive-selector
   selector: '[appExtMatAutocompleteTriggerEnforceSelection]'

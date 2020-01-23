@@ -5,7 +5,7 @@ import {
   FormBuilderTypedService,
   Tag,
   TagObject
-} from 'mat-reduce-core';
+} from './lib/from-core';
 
 /*
  * Public API Surface of mat-reduce

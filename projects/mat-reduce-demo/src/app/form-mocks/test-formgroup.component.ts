@@ -3,7 +3,7 @@ import { of, Observable } from 'rxjs';
 
 import { v1 as uuidv1 } from 'uuid';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
-import { Tag } from 'projects/mat-reduce-core/src/core/public_api';
+import { Tag } from '../from-mat-reduce-core';
 
 function makeTag(name): Tag {
   return {

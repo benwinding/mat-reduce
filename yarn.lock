@@ -886,10 +886,10 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@mat-datetimepicker/core@^2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@mat-datetimepicker/core/-/core-2.0.1.tgz#e0db1db5d4cf7ba56b724ec040817cb68b5775f2"
-  integrity sha1-4NsdtdTPe6Vrck7AQIF8totXdfI=
+"@mat-datetimepicker/core@3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@mat-datetimepicker/core/-/core-3.0.1.tgz#27a98b21f7cd4409181cac61d6e4a453a422d3eb"
+  integrity sha512-f2kOwJEVZWcZsv7inOtUrk7V72AwuLzd8IZOe8zDYWUCjFPr96tkpehyI8f2hFSPB+Q/jN1cLbNpQEDxof0cPA==
   dependencies:
     tslib "^1.9.0"
 

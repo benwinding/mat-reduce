@@ -1,13 +1,13 @@
 {
   "name": "mat-reduce-core",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "peerDependencies": {
     "@angular/common": "^8.x",
     "@angular/core": "^8.x",
     "hammerjs": "^2.x"
   },
   "dependencies": {
-    "@mat-datetimepicker/core": "^2.x",
+    "@mat-datetimepicker/core": "3.0.1",
     "angular2-signaturepad": "^2.x",
     "cleave.js": "1.5.3",
     "ngx-cleave-directive": "1.1.3",

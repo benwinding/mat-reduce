@@ -21,6 +21,6 @@ case "$1" in
       yarn deploy-demo
       ;;
   *)
-      echo $"Usage: $0 {lib|demo}"
+      echo $"Usage: $0 {lib|core|demo}"
       exit 1
  esac

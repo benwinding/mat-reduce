@@ -113,13 +113,9 @@ export class FormBuilderTypedService extends FormBuilder {
       //   function(x) { return x.hero.address.postcode;}
       // we need the 'hero.address.postcode'
       // for gr.get('hero.address.postcode') function
-      const properties = propertyFunction
-        .toString()
-        .split('.')
-        .splice(1);
-
-      const r = properties.join('.');
-      return r;
+      const regex = /(?:\s\=\>\s)*?(?:[\s]*return[\s]*)*?(?:[\w]*\.){1}([\w\.]*)/;
+      const result = regex.exec(propertyFunction.toString());
+      return result[1];
     };
 
     if (gr) {

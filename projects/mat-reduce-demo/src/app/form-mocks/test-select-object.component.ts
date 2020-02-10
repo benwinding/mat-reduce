@@ -54,7 +54,6 @@ const friendObjectArray = [
       [formControl]="testControlAutoComplete"
       [selectionObjects]="selectChoices$ | async"
       [displayWith]="displayWith"
-      selectionKey="name"
     >
     </form-select-object-autocomplete>
     <pre>{{ { 'control.value': testControlAutoComplete?.value } | json }}</pre>

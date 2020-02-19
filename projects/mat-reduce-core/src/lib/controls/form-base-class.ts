@@ -54,7 +54,9 @@ export class FormBase<T>
 
   init() {
     this._destroyed.next();
-    if (!this.allowAutoComplete) {
+    if (this.allowAutoComplete) {
+      this.autoCompleteObscureName = this.formControlName;
+    } else {
       this.autoCompleteObscureName = uuidv4();
     }
     this.internalControl.valueChanges

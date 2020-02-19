@@ -17,7 +17,7 @@ import { SimpleLog } from '../../utils/logger';
         [placeholder]="placeholder"
         [(ngModel)]="value"
         [name]="autoCompleteObscureName"
-        autocomplete="dontcompleteme"
+        [autocomplete]="autoCompleteText"
       />
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>

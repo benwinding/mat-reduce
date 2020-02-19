@@ -46,7 +46,7 @@ import { SimpleLog } from '../../utils/logger';
           [placeholder]="placeholder"
           #textInput
           [name]="autoCompleteObscureName"
-          autocomplete="dontcompleteme"
+          [autocomplete]="autoCompleteText"
           [formControl]="inputTextControl"
           [matAutocomplete]="auto"
           [matChipInputFor]="chipList"

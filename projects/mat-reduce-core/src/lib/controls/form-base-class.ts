@@ -32,6 +32,10 @@ export class FormBase<T>
   placeholder: string;
   @Input()
   debug = false;
+  @Input()
+  name: string;
+
+  autoCompleteText = 'no';
 
   constructor() {
     // Garrentee that init and destroy are called
@@ -55,7 +59,8 @@ export class FormBase<T>
   init() {
     this._destroyed.next();
     if (this.allowAutoComplete) {
-      this.autoCompleteObscureName = this.formControlName;
+      this.autoCompleteObscureName = this.formControlName || this.name;
+      this.autoCompleteText = 'yes';
     } else {
       this.autoCompleteObscureName = uuidv4();
     }

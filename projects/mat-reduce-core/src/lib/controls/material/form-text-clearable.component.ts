@@ -14,7 +14,7 @@ import { FormBase } from '../form-base-class';
         [formControl]="internalControl"
         [name]="autoCompleteObscureName"
         [maxlength]="maxlength"
-        autocomplete="dontcompleteme"
+        autocomplete="autoCompleteText"
       />
       <input
         *ngIf="disabled || locked"
@@ -22,7 +22,7 @@ import { FormBase } from '../form-base-class';
         [disabled]="true"
         [value]="value"
         [name]="autoCompleteObscureName"
-        autocomplete="dontcompleteme"
+        [autocomplete]="autoCompleteText"
       />
       <mat-icon
         matSuffix

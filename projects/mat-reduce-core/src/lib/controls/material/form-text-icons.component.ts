@@ -16,7 +16,7 @@ import { FormBase } from '../form-base-class';
         [maxlength]="maxlength"
         [placeholder]="placeholder"
         [name]="autoCompleteObscureName"
-        autocomplete="dontcompleteme"
+        [autocomplete]="autoCompleteText"
       />
       <mat-icon
         matSuffix

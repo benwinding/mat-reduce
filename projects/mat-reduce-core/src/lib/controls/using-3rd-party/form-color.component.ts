@@ -15,7 +15,7 @@ import { FormBase } from '../form-base-class';
         [hidden]="true"
         [formControl]="internalControl"
         [name]="autoCompleteObscureName"
-        autocomplete="dontcompleteme"
+        [autocomplete]="autoCompleteText"
       />
       <mat-card
         *ngIf="!disabled"

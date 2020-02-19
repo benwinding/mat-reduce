@@ -17,8 +17,7 @@ import { takeUntil } from 'rxjs/operators';
         [rows]="rows"
         [placeholder]="placeholder"
         [formControl]="disabledControl"
-        [name]="autoCompleteObscureName"
-        autocomplete="dontcompleteme"
+        [name]="name"
       ></textarea>
     </mat-form-field>
   `,

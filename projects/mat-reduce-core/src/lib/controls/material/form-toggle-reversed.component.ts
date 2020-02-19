@@ -10,8 +10,7 @@ import { FormBase } from '../form-base-class';
     <div class="full-width">
       <mat-slide-toggle
         [formControl]="reversedControl"
-        [name]="autoCompleteObscureName"
-        autocomplete="dontcompleteme"
+        [name]="name"
       >
         <div class="flex-center">
           <ng-content></ng-content>

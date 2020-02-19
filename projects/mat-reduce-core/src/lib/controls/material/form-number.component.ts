@@ -16,7 +16,7 @@ import { FormBase } from '../form-base-class';
         [placeholder]="placeholder"
         [formControl]="internalControl"
         [name]="autoCompleteObscureName"
-        autocomplete="dontcompleteme"
+        [autocomplete]="autoCompleteText"
       />
     </mat-form-field>
   `,

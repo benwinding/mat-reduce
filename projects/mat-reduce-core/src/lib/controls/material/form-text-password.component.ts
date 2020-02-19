@@ -13,7 +13,7 @@ import { FormBase } from '../form-base-class';
         [maxlength]="maxlength"
         [formControl]="internalControl"
         [name]="autoCompleteObscureName"
-        autocomplete="dontcompleteme"
+        [autocomplete]="autoCompleteText"
         [type]="inputType"
       />
       <mat-icon matSuffix (click)="toggleHide()">{{

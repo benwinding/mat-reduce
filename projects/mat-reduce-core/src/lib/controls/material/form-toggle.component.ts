@@ -9,8 +9,7 @@ import { FormBase } from '../form-base-class';
     <div class="full-width">
       <mat-slide-toggle
         [formControl]="internalControl"
-        [name]="autoCompleteObscureName"
-        autocomplete="dontcompleteme"
+        [name]="name"
       >
         {{ placeholder }} ({{ value ? yes : no }})
       </mat-slide-toggle>

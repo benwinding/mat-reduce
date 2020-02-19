@@ -51,7 +51,7 @@ import { v1 as uuidv1 } from 'uuid';
           [placeholder]="placeholder"
           #textInput
           [name]="autoCompleteObscureName"
-          autocomplete="dontcompleteme"
+          [autocomplete]="autoCompleteText"
           [formControl]="inputTextControl"
           [matAutocomplete]="auto"
           [matChipInputFor]="chipList"

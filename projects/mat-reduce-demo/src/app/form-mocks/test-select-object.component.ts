@@ -19,6 +19,8 @@ const friendObjectArray = [
   makeFriend('John')
 ];
 
+const friendObjectArray2 = [makeFriend('Frank')];
+
 @Component({
   template: `
     <h1>form-select-object Testing</h1>
@@ -57,6 +59,17 @@ const friendObjectArray = [
     >
     </form-select-object-autocomplete>
     <pre>{{ { 'control.value': testControlAutoComplete?.value } | json }}</pre>
+
+    <h3>Multiple (Object)</h3>
+    <form-select-object-multiple
+      placeholder="Select a friend!"
+      [formControl]="testControlMultiple1"
+      [selectionObjects]="selectChoices$ | async"
+      [compareObject]="compareObject"
+      selectionKey="name"
+    >
+    </form-select-object-multiple>
+    <pre>{{ { 'control.value': testControlMultiple1?.value } | json }}</pre>
   `
 })
 export class TestSelectObjectComponent {
@@ -64,9 +77,12 @@ export class TestSelectObjectComponent {
 
   testControl = new FormControl(friendObjectArray[0]);
   testControlMultiple = new FormControl(friendObjectArray.slice(0, 2));
+  testControlMultiple1 = new FormControl(friendObjectArray2.slice(0, 1));
   testControlAutoComplete = new FormControl(friendObjectArray[0]);
 
   selectChoices$: Observable<Tag[]> = of(friendObjectArray);
+
+  public compareObject = (l, r) => l.name === r.name;
 
   constructor() {
     this.formControlEnabled.valueChanges.subscribe(isEnabled => {

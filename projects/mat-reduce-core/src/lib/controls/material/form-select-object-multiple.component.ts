@@ -77,6 +77,6 @@ export class LibFormSelectObjectMultipleComponent extends FormBase<Object> {
   selectionObjects: Object[];
   @Input()
   selectionKey: string;
-
+  @Input()
   compareObject = compareObject;
 }

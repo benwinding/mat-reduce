@@ -1,8 +1,15 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../out-tsc/app",
-    "types": []
+    "baseUrl": "./",
+    "outDir": "../../out-tsc/demo",
+    "types": [],
+    "paths": {
+      "mat-reduce": ["../mat-reduce/src/public_api"],
+      "mat-reduce/*": ["../mat-reduce/src/*"],
+      "mat-reduce-core": ["../mat-reduce-core/src/public_api"],
+      "mat-reduce-core/*": ["../mat-reduce-core/src/*"]
+    }
   },
   "exclude": [
     "test.ts",

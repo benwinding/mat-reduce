@@ -66,6 +66,7 @@ const friendObjectArray2 = [makeFriend('Frank')];
       [formControl]="testControlMultiple1"
       [selectionObjects]="selectChoices$ | async"
       [compareObject]="compareObject"
+      [hasSelectAll]="true"
       selectionKey="name"
     >
     </form-select-object-multiple>

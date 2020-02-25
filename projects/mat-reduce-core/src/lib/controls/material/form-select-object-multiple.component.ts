@@ -42,6 +42,11 @@ function compareObject(l1: {}, l2: {}) {
             </span>
           </div>
         </mat-select-trigger>
+        <ng-container *ngIf="hasSelectAll">
+          <mat-option (click)="onClickSelectAll()">
+            -- Select All --
+          </mat-option>
+        </ng-container>
         <mat-option
           *ngFor="let selectionObject of selectionObjects"
           [value]="selectionObject"
@@ -76,7 +81,14 @@ export class LibFormSelectObjectMultipleComponent extends FormBase<Object> {
   @Input()
   selectionObjects: Object[];
   @Input()
+  hasSelectAll: boolean;
+  @Input()
   selectionKey: string;
   @Input()
   compareObject = compareObject;
+
+  onClickSelectAll() {
+    const allValues = this.selectionObjects;
+    this.writeValue(allValues);
+  }
 }

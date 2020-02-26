@@ -7,6 +7,7 @@ import {
   OptionKeyValue
 } from '../../utils';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { FormSelectObjectInterface } from './form-select-interfaces';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -49,7 +50,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
   ]
 })
 // tslint:disable: ban-types
-export class LibFormSelectObjectComponent extends FormBase<Object> {
+export class LibFormSelectObjectComponent extends FormBase<Object>
+  implements FormSelectObjectInterface {
   @Input()
   selectionObjects: Object[];
   @Input()
@@ -64,11 +66,7 @@ export class LibFormSelectObjectComponent extends FormBase<Object> {
 
   constructor() {
     super();
-    this.$options = TransformSelections(
-      this.$inputOptions,
-      this.selectionKey,
-      this.displayWith
-    );
+    this.$options = TransformSelections(this, this.$inputOptions);
   }
 
   writeValue(newVal: Object) {

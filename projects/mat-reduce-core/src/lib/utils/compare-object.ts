@@ -1,5 +1,6 @@
 import { pipe, Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
+import { FormSelectObjectInterface } from '../controls/material/form-select-interfaces';
 // tslint:disable: ban-types
 
 export function compareObjectDefault(l1: {}, l2: {}): boolean {
@@ -25,21 +26,17 @@ export interface OptionKeyValue {
   value: Object;
 }
 
-export function TransformSelections(
-  $inputOptions: Observable<Object[]>,
-  selectionKey: string,
-  displayWith: (o: Object) => string
-) {
+export function TransformSelections(control: FormSelectObjectInterface, $inputOptions: Observable<Object[]>) {
   return $inputOptions.pipe(
     filter(a => !!a),
     map(options =>
       options.map(o => {
         let labelString = '-';
-        if (selectionKey) {
-          labelString = o[selectionKey];
+        if (typeof control.selectionKey === 'string') {
+          labelString = o[control.selectionKey];
         }
-        if (displayWith) {
-          labelString = displayWith(o);
+        if (typeof control.displayWith === 'function') {
+          labelString = control.displayWith(o);
         }
         const oNew: OptionKeyValue = {
           value: o,

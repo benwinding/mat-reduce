@@ -1,12 +1,13 @@
 import { Component, forwardRef, Input } from '@angular/core';
 import { NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { FormBase } from '../form-base-class';
-import { BehaviorSubject, Observable, pipe } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import {
   compareObjectDefault,
   OptionKeyValue,
   TransformSelections
 } from '../../utils';
+import { FormSelectObjectInterface } from './form-select-interfaces';
 
 // tslint:disable: ban-types
 
@@ -68,7 +69,8 @@ import {
     }
   ]
 })
-export class LibFormSelectObjectMultipleComponent extends FormBase<Object> {
+export class LibFormSelectObjectMultipleComponent extends FormBase<Object>
+  implements FormSelectObjectInterface {
   @Input()
   set selectionObjects(newObjects: Object[]) {
     this.$inputOptions.next(newObjects);
@@ -87,11 +89,7 @@ export class LibFormSelectObjectMultipleComponent extends FormBase<Object> {
 
   constructor() {
     super();
-    this.$options = TransformSelections(
-      this.$inputOptions,
-      this.selectionKey,
-      this.displayWith
-    );
+    this.$options = TransformSelections(this, this.$inputOptions);
   }
 
   onClickSelectAll() {

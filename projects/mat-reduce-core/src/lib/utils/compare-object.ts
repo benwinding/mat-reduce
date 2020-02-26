@@ -43,12 +43,14 @@ export function TransformSelectionsPipe(control: FormSelectObjectInterface, $inp
 }
 
 export function TransformToLabel(control: FormSelectObjectInterface, o: Object): string {
-  let labelString = '-';
+  if (!o || typeof o !== 'object') {
+    return '-';
+  }
   if (typeof control.selectionKey === 'string') {
-    labelString = o[control.selectionKey];
+    return o[control.selectionKey];
   }
   if (typeof control.displayWith === 'function') {
-    labelString = control.displayWith(o);
+    return control.displayWith(o);
   }
-  return labelString;
+  return '-';
 }

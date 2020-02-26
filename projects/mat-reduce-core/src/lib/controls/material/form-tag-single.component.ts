@@ -22,7 +22,7 @@ import { Tag } from './Tag';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 
 import { v1 as uuidv1 } from 'uuid';
-import { SimpleLog } from '../../utils/logger';
+import { SimpleLog } from '../../utils';
 
 @Component({
   // tslint:disable-next-line:component-selector

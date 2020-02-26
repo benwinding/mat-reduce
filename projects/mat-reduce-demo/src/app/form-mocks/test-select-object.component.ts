@@ -66,6 +66,7 @@ const friendObjectArray2 = [makeFriend('Frank')];
       [formControl]="testControlMultiple1"
       [selectionObjects]="selectChoices$ | async"
       [compareObject]="compareObject"
+      [displayWith]="displayWith2"
       [hasSelectAll]="true"
       selectionKey="name"
     >
@@ -84,6 +85,7 @@ export class TestSelectObjectComponent {
   selectChoices$: Observable<Tag[]> = of(friendObjectArray);
 
   public compareObject = (l, r) => l.name === r.name;
+  public displayWith2 = o => `${o.name} +++ ${o.id}`;
 
   constructor() {
     this.formControlEnabled.valueChanges.subscribe(isEnabled => {

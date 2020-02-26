@@ -1,23 +1,12 @@
 import { Component, forwardRef, Input } from '@angular/core';
 import { NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { FormBase } from '../form-base-class';
-
-function compareObject(l1: {}, l2: {}) {
-  if (!l1 || !l2) {
-    return false;
-  }
-  let json1, json2;
-  try {
-    json1 = JSON.stringify(l1);
-    json2 = JSON.stringify(l2);
-  } catch (error) {
-    return false;
-  }
-  if (json1 !== json2) {
-    return false;
-  }
-  return true;
-}
+import {
+  compareObjectDefault,
+  TransformSelections,
+  OptionKeyValue
+} from '../../utils';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -30,10 +19,10 @@ function compareObject(l1: {}, l2: {}) {
         [compareWith]="compareObject"
       >
         <mat-option
-          *ngFor="let selectionObject of selectionObjects"
-          [value]="selectionObject"
+          *ngFor="let option of $options | async"
+          [value]="option.value"
         >
-          {{ selectionObject[selectionKey] }}
+          {{ option.label }}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -59,13 +48,28 @@ function compareObject(l1: {}, l2: {}) {
     }
   ]
 })
+// tslint:disable: ban-types
 export class LibFormSelectObjectComponent extends FormBase<Object> {
   @Input()
   selectionObjects: Object[];
   @Input()
   selectionKey: string;
+  @Input()
+  compareObject = compareObjectDefault;
+  @Input()
+  displayWith: (o: Object) => string;
 
-  compareObject = compareObject;
+  $inputOptions = new BehaviorSubject<Object[]>([]);
+  $options: Observable<OptionKeyValue[]>;
+
+  constructor() {
+    super();
+    this.$options = TransformSelections(
+      this.$inputOptions,
+      this.selectionKey,
+      this.displayWith
+    );
+  }
 
   writeValue(newVal: Object) {
     this.value = newVal || {};

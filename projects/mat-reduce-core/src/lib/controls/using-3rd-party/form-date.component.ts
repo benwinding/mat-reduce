@@ -1,7 +1,7 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { FormBase } from '../form-base-class';
-import { SimpleLog } from '../../utils/logger';
+import { SimpleLog } from '../../utils';
 
 @Component({
   // tslint:disable-next-line:component-selector

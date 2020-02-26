@@ -1,23 +1,14 @@
 import { Component, forwardRef, Input } from '@angular/core';
 import { NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { FormBase } from '../form-base-class';
+import { BehaviorSubject, Observable, pipe } from 'rxjs';
+import {
+  compareObjectDefault,
+  OptionKeyValue,
+  TransformSelections
+} from '../../utils';
 
-function compareObject(l1: {}, l2: {}) {
-  if (!l1 || !l2) {
-    return false;
-  }
-  let json1, json2;
-  try {
-    json1 = JSON.stringify(l1);
-    json2 = JSON.stringify(l2);
-  } catch (error) {
-    return false;
-  }
-  if (json1 !== json2) {
-    return false;
-  }
-  return true;
-}
+// tslint:disable: ban-types
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -48,10 +39,10 @@ function compareObject(l1: {}, l2: {}) {
           </mat-option>
         </ng-container>
         <mat-option
-          *ngFor="let selectionObject of selectionObjects"
-          [value]="selectionObject"
+          *ngFor="let option of $options | async"
+          [value]="option.value"
         >
-          {{ selectionObject[selectionKey] }}
+          {{ option.label }}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -79,16 +70,32 @@ function compareObject(l1: {}, l2: {}) {
 })
 export class LibFormSelectObjectMultipleComponent extends FormBase<Object> {
   @Input()
-  selectionObjects: Object[];
+  set selectionObjects(newObjects: Object[]) {
+    this.$inputOptions.next(newObjects);
+  }
   @Input()
   hasSelectAll: boolean;
   @Input()
   selectionKey: string;
   @Input()
-  compareObject = compareObject;
+  compareObject = compareObjectDefault;
+  @Input()
+  displayWith: (o: Object) => string;
+
+  $inputOptions = new BehaviorSubject<Object[]>([]);
+  $options: Observable<OptionKeyValue[]>;
+
+  constructor() {
+    super();
+    this.$options = TransformSelections(
+      this.$inputOptions,
+      this.selectionKey,
+      this.displayWith
+    );
+  }
 
   onClickSelectAll() {
-    const allValues = this.selectionObjects;
+    const allValues = this.$inputOptions.getValue();
     this.writeValue(allValues);
   }
 }

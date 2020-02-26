@@ -25,7 +25,7 @@ import { debounceTime, map } from 'rxjs/operators';
         multiple
       >
         <mat-select-trigger>
-          <div *ngIf="this.$selectedLabel as selectedLabel">
+          <div *ngIf="this.$selectedLabel | async as selectedLabel">
             {{ selectedLabel }}
           </div>
         </mat-select-trigger>
@@ -94,9 +94,12 @@ export class LibFormSelectObjectMultipleComponent extends FormBase<Object>
           return '';
         }
         let label = TransformToLabel(this, selected[0]);
-        if (selected.length > 1) {
-          const remaining = selected.length - 1;
-          label = `${label} (${remaining} Others)`;
+        const remaining = selected.length - 1;
+        if (remaining === 1) {
+          label = `${label} (${remaining} other)`;
+        }
+        if (remaining > 1) {
+          label = `${label} (${remaining} others)`;
         }
         return label;
       })

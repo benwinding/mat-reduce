@@ -26,18 +26,12 @@ export interface OptionKeyValue {
   value: Object;
 }
 
-export function TransformSelections(control: FormSelectObjectInterface, $inputOptions: Observable<Object[]>) {
+export function TransformSelectionsPipe(control: FormSelectObjectInterface, $inputOptions: Observable<Object[]>) {
   return $inputOptions.pipe(
     filter(a => !!a),
     map(options =>
       options.map(o => {
-        let labelString = '-';
-        if (typeof control.selectionKey === 'string') {
-          labelString = o[control.selectionKey];
-        }
-        if (typeof control.displayWith === 'function') {
-          labelString = control.displayWith(o);
-        }
+        const labelString = TransformToLabel(control, o);
         const oNew: OptionKeyValue = {
           value: o,
           label: labelString
@@ -46,4 +40,15 @@ export function TransformSelections(control: FormSelectObjectInterface, $inputOp
       })
     )
   );
+}
+
+export function TransformToLabel(control: FormSelectObjectInterface, o: Object): string {
+  let labelString = '-';
+  if (typeof control.selectionKey === 'string') {
+    labelString = o[control.selectionKey];
+  }
+  if (typeof control.displayWith === 'function') {
+    labelString = control.displayWith(o);
+  }
+  return labelString;
 }

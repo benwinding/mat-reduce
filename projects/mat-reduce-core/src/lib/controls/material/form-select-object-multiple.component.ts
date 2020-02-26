@@ -5,9 +5,11 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import {
   compareObjectDefault,
   OptionKeyValue,
-  TransformSelections
+  TransformSelectionsPipe,
+  TransformToLabel
 } from '../../utils';
 import { FormSelectObjectInterface } from './form-select-interfaces';
+import { debounceTime, map } from 'rxjs/operators';
 
 // tslint:disable: ban-types
 
@@ -23,15 +25,8 @@ import { FormSelectObjectInterface } from './form-select-interfaces';
         multiple
       >
         <mat-select-trigger>
-          <div *ngIf="this.internalControl.value as selected">
-            {{ selected?.length ? selected[0][selectionKey] : '' }}
-            <span
-              *ngIf="this.internalControl.value?.length > 1"
-              class="example-additional-selection"
-            >
-              (+{{ selected.length - 1 }}
-              {{ selected?.length === 2 ? 'other' : 'others' }})
-            </span>
+          <div *ngIf="this.$selectedLabel as selectedLabel">
+            {{ selectedLabel }}
           </div>
         </mat-select-trigger>
         <ng-container *ngIf="hasSelectAll">
@@ -87,9 +82,25 @@ export class LibFormSelectObjectMultipleComponent extends FormBase<Object>
   $inputOptions = new BehaviorSubject<Object[]>([]);
   $options: Observable<OptionKeyValue[]>;
 
+  $selectedLabel: Observable<string>;
+
   constructor() {
     super();
-    this.$options = TransformSelections(this, this.$inputOptions);
+    this.$options = TransformSelectionsPipe(this, this.$inputOptions);
+    this.$selectedLabel = this.internalControl.valueChanges.pipe(
+      debounceTime(200),
+      map((selected: Object[]) => {
+        if (!Array.isArray(selected) || !selected.length) {
+          return '';
+        }
+        let label = TransformToLabel(this, selected[0]);
+        if (selected.length > 1) {
+          const remaining = selected.length - 1;
+          label = `${label} (${remaining} Others)`;
+        }
+        return label;
+      })
+    );
   }
 
   onClickSelectAll() {

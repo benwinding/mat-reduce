@@ -3,7 +3,7 @@ import { NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { FormBase } from '../form-base-class';
 import {
   compareObjectDefault,
-  TransformSelections,
+  TransformSelectionsPipe,
   OptionKeyValue
 } from '../../utils';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -68,7 +68,7 @@ export class LibFormSelectObjectComponent extends FormBase<Object>
 
   constructor() {
     super();
-    this.$options = TransformSelections(this, this.$inputOptions);
+    this.$options = TransformSelectionsPipe(this, this.$inputOptions);
   }
 
   writeValue(newVal: Object) {

@@ -53,7 +53,9 @@ import { FormSelectObjectInterface } from './form-select-interfaces';
 export class LibFormSelectObjectComponent extends FormBase<Object>
   implements FormSelectObjectInterface {
   @Input()
-  selectionObjects: Object[];
+  set selectionObjects(newObjects: Object[]) {
+    this.$inputOptions.next(newObjects);
+  }
   @Input()
   selectionKey: string;
   @Input()

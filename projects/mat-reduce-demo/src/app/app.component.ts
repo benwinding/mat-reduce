@@ -17,6 +17,7 @@ import { Router, Event, NavigationEnd } from '@angular/router';
           <li><a routerLink="test-formgroup">form-formgroup</a></li>
           <li><a routerLink="test-number">form-number</a></li>
           <li><a routerLink="test-select-object">form-select-object</a></li>
+          <li><a routerLink="test-select-object-grouped">test-select-object-grouped</a></li>
           <li><a routerLink="test-select">form-select</a></li>
           <li><a routerLink="test-tags">form-tags</a></li>
           <li><a routerLink="test-text">form-text</a></li>

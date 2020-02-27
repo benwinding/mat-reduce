@@ -1,7 +1,7 @@
-import { Component, forwardRef, Input } from '@angular/core';
+import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { FormBase } from '../form-base-class';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import {
   compareObjectDefault,
   OptionKeyValue,
@@ -9,7 +9,7 @@ import {
   TransformToLabel
 } from '../../utils';
 import { FormSelectObjectInterface } from './form-select-interfaces';
-import { debounceTime, map } from 'rxjs/operators';
+import { debounceTime, map, tap, takeUntil, delay } from 'rxjs/operators';
 
 // tslint:disable: ban-types
 
@@ -64,11 +64,11 @@ import { debounceTime, map } from 'rxjs/operators';
     }
   ]
 })
-export class LibFormSelectObjectMultipleComponent extends FormBase<Object>
-  implements FormSelectObjectInterface {
+export class LibFormSelectObjectMultipleComponent extends FormBase<Object[]>
+  implements OnInit, FormSelectObjectInterface {
   @Input()
   set selectionObjects(newObjects: Object[]) {
-    this.$inputOptions.next(newObjects);
+    this.$optionsInput.next(newObjects);
   }
   @Input()
   hasSelectAll: boolean;
@@ -79,35 +79,49 @@ export class LibFormSelectObjectMultipleComponent extends FormBase<Object>
   @Input()
   displayWith: (o: Object) => string;
 
-  $inputOptions = new BehaviorSubject<Object[]>([]);
+  $selectedLabel: Observable<string>;
   $options: Observable<OptionKeyValue[]>;
 
-  $selectedLabel: Observable<string>;
+  private $optionsInput = new BehaviorSubject<Object[]>([]);
+  private $selectedValues = new BehaviorSubject<Object[]>([]);
 
-  constructor() {
-    super();
-    this.$options = TransformSelectionsPipe(this, this.$inputOptions);
-    this.$selectedLabel = this.internalControl.valueChanges.pipe(
-      debounceTime(200),
-      map((selected: Object[]) => {
-        if (!Array.isArray(selected) || !selected.length) {
-          return '';
-        }
-        let label = TransformToLabel(this, selected[0]);
-        const remaining = selected.length - 1;
-        if (remaining === 1) {
-          label = `${label} (${remaining} other)`;
-        }
-        if (remaining > 1) {
-          label = `${label} (${remaining} others)`;
-        }
-        return label;
-      })
+  ngOnInit() {
+    this.$options = TransformSelectionsPipe(this, this.$optionsInput);
+    this.internalControl.valueChanges
+      .pipe(debounceTime(100), takeUntil(this._destroyed))
+      .subscribe(selected => {
+        this.$selectedValues.next(selected);
+      });
+    this.$selectedLabel = this.$selectedValues.pipe(
+      map(items => this.generateLabel(this, items))
     );
   }
 
   onClickSelectAll() {
-    const allValues = this.$inputOptions.getValue();
+    const allValues = this.$optionsInput.getValue();
     this.writeValue(allValues);
+  }
+
+  private generateLabel(c: FormSelectObjectInterface, selected: Object[]) {
+    if (!Array.isArray(selected) || !selected.length) {
+      console.log('form-select-object-multiple generateLabel()', {
+        selected,
+        c
+      });
+      return '...';
+    }
+    let label = TransformToLabel(c, selected[0]);
+    const remaining = selected.length - 1;
+    if (remaining === 1) {
+      label = `${label} (${remaining} other)`;
+    }
+    if (remaining > 1) {
+      label = `${label} (${remaining} others)`;
+    }
+    console.log('form-select-object-multiple generateLabel()', {
+      selected,
+      label
+    });
+    return label;
   }
 }

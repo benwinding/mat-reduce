@@ -23,6 +23,8 @@ jobs:
       run: npm run-script build-core
     - name: Build Lib
       run: npm run-script build-lib
+    - name: Increment Versions
+      run: ./version-up
     - name: Test
       run: npm test
     - name: Publish Core

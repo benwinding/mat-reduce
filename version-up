@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# Edit the src package.jsons
+pushd ./projects/mat-reduce-core
+npm version minor
+popd
+
+pushd ./projects/mat-reduce
+npm version minor
+popd
+
+

@@ -33,10 +33,14 @@ export function TransformSelectionsPipe(
   return $inputOptions.pipe(
     filter(a => !!a),
     map(options =>
-      options.map(o => {
-        const labelString = TransformToLabel(control, o);
+      options.map(option => {
+        const labelString = TransformToLabel(control, option);
+        let selectionValue = option;
+        if (!!control.selectionValue) {
+          selectionValue = option[control.selectionValue];
+        }
         const oNew: OptionKeyValue = {
-          value: o,
+          value: selectionValue,
           label: labelString
         };
         return oNew;
@@ -59,11 +63,14 @@ export function TransformToLabel(
   if (typeof displayWith === 'function') {
     return displayWith(o);
   }
-  console.warn('sorry couldnt generate label, either missing selectionKey or displayWith function', {
-    selectionKey,
-    displayWith,
-    control,
-    object: o
-  });
+  console.warn(
+    'sorry couldnt generate label, either missing selectionKey or displayWith function',
+    {
+      selectionKey,
+      displayWith,
+      control,
+      object: o
+    }
+  );
   return '--';
 }

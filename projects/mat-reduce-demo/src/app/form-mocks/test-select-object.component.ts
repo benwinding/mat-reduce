@@ -40,6 +40,17 @@ const friendObjectArray2 = [makeFriend('Frank')];
     </form-select-object>
     <pre>{{ { 'control.value': testControl?.value } | json }}</pre>
 
+    <h3>Single (Object use Value)</h3>
+    <form-select-object
+      placeholder="Select a friend!"
+      [formControl]="testControl11"
+      [selectionObjects]="selectChoices$ | async"
+      selectionKey="name"
+      selectionValue="id"
+    >
+    </form-select-object>
+    <pre>{{ { 'control.value': testControl11?.value } | json }}</pre>
+
     <h3>Multiple (Object)</h3>
     <form-select-object-multiple
       placeholder="Select a friend!"
@@ -78,6 +89,7 @@ export class TestSelectObjectComponent {
   formControlEnabled = new FormControl(true);
 
   testControl = new FormControl(friendObjectArray[0]);
+  testControl11 = new FormControl(friendObjectArray[0].id);
   testControlMultiple = new FormControl(friendObjectArray.slice(0, 2));
   testControlMultiple1 = new FormControl(friendObjectArray2.slice(0, 1));
   testControlAutoComplete = new FormControl(friendObjectArray[0]);

@@ -59,6 +59,8 @@ export class LibFormSelectObjectComponent extends FormBase<Object>
   @Input()
   selectionKey: string;
   @Input()
+  selectionValue: string;
+  @Input()
   compareObject = compareObjectDefault;
   @Input()
   displayWith: (o: Object) => string;

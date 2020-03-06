@@ -48,9 +48,9 @@ jobs:
         if: steps.cache-modules.outputs.cache-hit != 'true'
         run: npm install
       - name: Build Lib
-        run:
-          - npm run-script build-core
-          - npm run-script build-lib
+        run: |
+          npm run-script build-core
+          npm run-script build-lib
       - name: Publish Lib
         if: github.ref == 'refs/heads/master'
         uses: benwinding/merge-release@master

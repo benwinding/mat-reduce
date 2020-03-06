@@ -5,61 +5,55 @@ jobs:
     name: Deploy Core
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    - name: Use Node.js 10.17
-      uses: actions/setup-node@v1
-      with:
-        node-version: 10.17
-    - name: Cache node_modules
-      id: cache-modules
-      uses: actions/cache@v1
-      with:
-        path: node_modules
-        key: ${{ runner.OS }}-build-${{ hashFiles('package.json') }}
-    - name: Install Dependencies
-      if: steps.cache-modules.outputs.cache-hit != 'true'
-      run: npm install
-    - name: Build Core
-      run: npm run-script build-core
-    - name: Test
-      run: npm test
-    - name: Publish Core
-      if: github.ref == 'refs/heads/master'
-      uses: benwinding/merge-release@master
-      env:
-        DEPLOY_DIR: dist/mat-reduce-core
-        SRC_PACKAGE_DIR: projects/mat-reduce-core
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+      - uses: actions/checkout@master
+      - name: Use Node.js 10.17
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10.17
+      - name: Cache node_modules
+        id: cache-modules
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-build-${{ hashFiles('package.json') }}
+      - name: Install Dependencies
+        if: steps.cache-modules.outputs.cache-hit != 'true'
+        run: npm install
+      - name: Build Core
+        run: npm run-script build-core
+      - name: Publish Core
+        if: github.ref == 'refs/heads/master'
+        uses: benwinding/merge-release@master
+        env:
+          DEPLOY_DIR: dist/mat-reduce-core
+          SRC_PACKAGE_DIR: projects/mat-reduce-core
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
   deploy-lib:
     name: Deploy Lib
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    - name: Use Node.js 10.17
-      uses: actions/setup-node@v1
-      with:
-        node-version: 10.17
-    - name: Cache node_modules
-      id: cache-modules
-      uses: actions/cache@v1
-      with:
-        path: node_modules
-        key: ${{ runner.OS }}-build-${{ hashFiles('package.json') }}
-    - name: Install Dependencies
-      if: steps.cache-modules.outputs.cache-hit != 'true'
-      run: npm install
-    - name: Build Lib
-      run: npm run-script build-lib
-    - name: Test
-      run: npm test
-    - name: Publish Lib
-      if: github.ref == 'refs/heads/master'
-      uses: benwinding/merge-release@master
-      env:
-        DEPLOY_DIR: dist/mat-reduce
-        SRC_PACKAGE_DIR: projects/mat-reduce
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-
-
+      - uses: actions/checkout@master
+      - name: Use Node.js 10.17
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10.17
+      - name: Cache node_modules
+        id: cache-modules
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-build-${{ hashFiles('package.json') }}
+      - name: Install Dependencies
+        if: steps.cache-modules.outputs.cache-hit != 'true'
+        run: npm install
+      - name: Build Lib
+        run: npm run-script build-lib
+      - name: Publish Lib
+        if: github.ref == 'refs/heads/master'
+        uses: benwinding/merge-release@master
+        env:
+          DEPLOY_DIR: dist/mat-reduce
+          SRC_PACKAGE_DIR: projects/mat-reduce
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}

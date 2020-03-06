@@ -29,11 +29,17 @@ jobs:
       run: npm test
     - name: Publish Core
       if: github.ref == 'refs/heads/master'
-      run: ./deploy core
+      uses: benwinding/merge-release@master
       env:
+        DEPLOY_DIR: dist/mat-reduce-core
+        SRC_PACKAGE_DIR: projects/mat-reduce-core
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
     - name: Publish Lib
       if: github.ref == 'refs/heads/master'
-      run: ./deploy lib
+      uses: benwinding/merge-release@master
       env:
+        DEPLOY_DIR: dist/mat-reduce
+        SRC_PACKAGE_DIR: projects/mat-reduce
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}

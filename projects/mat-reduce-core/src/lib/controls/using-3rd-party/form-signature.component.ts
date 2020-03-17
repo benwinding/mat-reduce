@@ -5,11 +5,11 @@ import {
   Input,
   OnInit,
   ViewChild,
-  forwardRef
+  forwardRef,
+  OnDestroy
 } from '@angular/core';
 import { FormBase } from '../form-base-class';
 
-import { v1 as uuidv1 } from 'uuid';
 import { NG_VALUE_ACCESSOR, NG_VALIDATORS } from '@angular/forms';
 import { SimpleLog } from '../../utils';
 import SignaturePad from 'signature_pad';
@@ -17,8 +17,8 @@ import SignaturePad from 'signature_pad';
 @Component({
   selector: 'form-signature',
   template: `
-    <h3>{{ placeholder }}</h3>
     <div #container class="signature-container">
+      <h3>{{ placeholder }}</h3>
       <div class="signature-border" [class.disabled-border]="disabled">
         <canvas #signaturePad [hidden]="disabled"> </canvas>
         <img [hidden]="!disabled" [src]="this.value || blankImageSrc" />
@@ -33,16 +33,22 @@ import SignaturePad from 'signature_pad';
       }
       .signature-container {
         display: inline-block;
+        margin: 15px;
+        max-width: 600px;
         width: 100%;
       }
       .signature-border {
         display: inline-block;
+        width: min-content;
         border: 1px #777 solid;
-        margin: 20px;
+        width: 100%;
         height: 200px;
       }
       .disabled-border {
         border: 2px #aaa dotted;
+      }
+      canvas {
+        border: 2px #ddd dotted;
       }
       img {
         height: 100%;
@@ -63,7 +69,7 @@ import SignaturePad from 'signature_pad';
   ]
 })
 export class LibFormSignatureComponent extends FormBase<string>
-  implements OnInit, AfterViewInit {
+  implements OnInit, OnDestroy, AfterViewInit {
   @Input()
   placeholder = 'Sign Here';
 
@@ -83,11 +89,15 @@ export class LibFormSignatureComponent extends FormBase<string>
     this.logger = new SimpleLog(this.debug);
   }
 
+  ngOnDestroy() {
+    this.signaturePad.nativeElement.remove();
+  }
+
   ngAfterViewInit() {
     this.makeSignaturePad(this.signaturePad.nativeElement);
     setTimeout(() => {
       this.updateWidthToParent();
-    }, 100);
+    });
   }
 
   makeSignaturePad(el: HTMLCanvasElement) {
@@ -97,46 +107,35 @@ export class LibFormSignatureComponent extends FormBase<string>
       canvasHeight: 200
     };
     this.signaturePadObj = new SignaturePad(el, options);
-    this.signaturePadObj.onEnd = e => this.drawComplete(e);
+    this.signaturePadObj.onEnd = () => this.drawComplete();
   }
 
   writeValue(value: any): void {
-    if (this.debug) {
-      this.logger.log('writeValue', { value });
-    }
+    this.logger.log('writeValue', { value });
     this.value = value;
-    setTimeout(() => {
-      this.setSignatureToPad();
-    }, 100);
+    this.setSignatureToPad(value);
   }
 
   updateWidthToParent() {
-    const pad = this.signaturePad.nativeElement;
-    if (!pad) {
-      return;
-    }
     const containerWidth = this.container.nativeElement.clientWidth;
-    if (containerWidth < 600) {
-      const marginLeftAndRight = 20 * 2;
-      this.signaturePad.nativeElement.width =
-        containerWidth - marginLeftAndRight - 10;
-    }
+    this.signaturePad.nativeElement.width = containerWidth;
+    this.signaturePad.nativeElement.height = 200 - 4;
   }
 
-  setSignatureToPad() {
+  async setSignatureToPad(value: string) {
+    await new Promise(res => setTimeout(res, 100));
     // Set current signature from control
-    const currentSignature = this.value;
-    if (!this.signaturePad || !currentSignature) {
+    const canAccessPad = !!this.signaturePadObj;
+    this.logger.log('setSignatureToPad', { canAccessPad, value });
+    if (!canAccessPad) {
       return;
     }
-    this.signaturePadObj.fromDataURL(currentSignature);
+    this.signaturePadObj.fromDataURL(value);
   }
 
-  drawComplete(e) {
-    if (!e) {
-      return;
-    }
-    const imgData = e.toDataURL();
+  drawComplete() {
+    const imgData = this.signaturePadObj.toDataURL();
+    this.logger.log('drawComplete', { imgData });
     this.value = imgData;
   }
 }

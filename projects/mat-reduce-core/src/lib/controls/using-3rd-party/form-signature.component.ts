@@ -11,6 +11,8 @@ import { FormBase } from '../form-base-class';
 
 import { v1 as uuidv1 } from 'uuid';
 import { NG_VALUE_ACCESSOR, NG_VALIDATORS } from '@angular/forms';
+import { SimpleLog } from '../../utils';
+import SignaturePad from 'signature_pad';
 
 @Component({
   selector: 'form-signature',
@@ -18,12 +20,7 @@ import { NG_VALUE_ACCESSOR, NG_VALIDATORS } from '@angular/forms';
     <h3>{{ placeholder }}</h3>
     <div #container class="signature-container">
       <div class="signature-border" [class.disabled-border]="disabled">
-        <signature-pad
-          #signaturePad
-          [hidden]="disabled"
-          [options]="signaturePadOptions"
-          (onEndEvent)="drawComplete(signaturePad)"
-        ></signature-pad>
+        <canvas #signaturePad [hidden]="disabled"> </canvas>
         <img [hidden]="!disabled" [src]="this.value || blankImageSrc" />
       </div>
     </div>
@@ -72,28 +69,45 @@ export class LibFormSignatureComponent extends FormBase<string>
 
   blankImageSrc = 'https://i.imgur.com/4StmpUT.png';
 
-  signaturePadOptions = {
-    minWidth: 2,
-    canvasWidth: 400,
-    canvasHeight: 200
-  };
   @ViewChild('signaturePad', { static: false } as any)
-  signaturePad: ElementRef<any>;
+  signaturePad: ElementRef<HTMLCanvasElement>;
   @ViewChild('container', { static: true }) container: ElementRef<
     HTMLDivElement
   >;
 
+  private signaturePadObj: SignaturePad;
+
+  private logger: SimpleLog;
+
   ngOnInit() {
-    this.autoCompleteObscureName = uuidv1();
+    this.logger = new SimpleLog(this.debug);
   }
 
   ngAfterViewInit() {
-    this.updateWidthToParent();
+    this.makeSignaturePad(this.signaturePad.nativeElement);
+    setTimeout(() => {
+      this.updateWidthToParent();
+    }, 100);
+  }
+
+  makeSignaturePad(el: HTMLCanvasElement) {
+    const options = {
+      minWidth: 2,
+      canvasWidth: 400,
+      canvasHeight: 200
+    };
+    this.signaturePadObj = new SignaturePad(el, options);
+    this.signaturePadObj.onEnd = e => this.drawComplete(e);
   }
 
   writeValue(value: any): void {
+    if (this.debug) {
+      this.logger.log('writeValue', { value });
+    }
     this.value = value;
-    this.setSignatureToPad();
+    setTimeout(() => {
+      this.setSignatureToPad();
+    }, 100);
   }
 
   updateWidthToParent() {
@@ -104,7 +118,8 @@ export class LibFormSignatureComponent extends FormBase<string>
     const containerWidth = this.container.nativeElement.clientWidth;
     if (containerWidth < 600) {
       const marginLeftAndRight = 20 * 2;
-      pad.set('canvasWidth', containerWidth - marginLeftAndRight - 10);
+      this.signaturePad.nativeElement.width =
+        containerWidth - marginLeftAndRight - 10;
     }
   }
 
@@ -114,8 +129,7 @@ export class LibFormSignatureComponent extends FormBase<string>
     if (!this.signaturePad || !currentSignature) {
       return;
     }
-    const pad = this.signaturePad.nativeElement;
-    pad.fromDataURL(currentSignature);
+    this.signaturePadObj.fromDataURL(currentSignature);
   }
 
   drawComplete(e) {

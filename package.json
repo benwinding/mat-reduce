@@ -28,7 +28,6 @@
     "@angular/platform-browser-dynamic": "^8.2.14",
     "@angular/router": "^8.2.14",
     "@mat-datetimepicker/core": "3.0.1",
-    "angular2-signaturepad": "^2.9.0",
     "cleave.js": "1.5.3",
     "core-js": "^3.6.1",
     "ngx-cleave-directive": "1.1.3",
@@ -42,6 +41,7 @@
     "quill-image-resize-module": "3.x",
     "quill-image-rotate-module": "^0.0.2",
     "rxjs": "^6.3.3",
+    "signature_pad": "^3.0.0-beta.3",
     "tslib": "^1.9.0",
     "uuid": "^3.3.2",
     "zone.js": "~0.10.2"

@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@mat-datetimepicker/core": "3.0.1",
-    "angular2-signaturepad": "^2.x",
+    "signature_pad": "^3.0.0-beta.3",
     "cleave.js": "1.5.3",
     "ngx-cleave-directive": "1.1.3",
     "ngx-color-picker": "^8.x",

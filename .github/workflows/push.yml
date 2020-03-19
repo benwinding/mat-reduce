@@ -80,4 +80,8 @@ jobs:
       - name: Build & Deploy Demo
         run: |
           npm run-script build-demo
-          npm run-script deploy-demo
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          BRANCH: gh-pages # The branch the action should deploy to.
+          FOLDER: dist/mat-reduce-demo # The folder the action should deploy.

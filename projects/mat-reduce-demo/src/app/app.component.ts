@@ -38,7 +38,7 @@ import { Router, Event, NavigationEnd } from '@angular/router';
   `
 })
 export class AppComponent {
-  title = 'mat-wrapped';
+  title = 'mat-reduced';
   currentUrl = '';
 
   constructor(private router: Router) {

@@ -10,11 +10,24 @@
 A _less_ verbose angular material.
 
 ## Get Started
+`yarn add mat-reduce`
 
-### 1. Install
-`yarn add mat-reduced`
+### Simple (Without Quill)
+To include all form controls, except the Quill Editor, use the following:
 
-### 2. Add to Angular Module
+``` typescript
+import { MatReduceCoreModule } from 'mat-reduce-core';
+
+@NgModule({
+  ...,
+  MatReduceCoreModule,
+  ...
+})
+```
+
+### Advanced (With Quill)
+To include all modules and the `<form-quill-editor />`, use the following:
+
 ``` typescript
 import { MatReduceModule } from 'mat-reduce';
 
@@ -25,8 +38,7 @@ import { MatReduceModule } from 'mat-reduce';
 })
 ```
 
-### 3. Add quill script to `angular.json`
-
+Add the quill script to `angular.json`, like so:
 ``` json
 ...
 "scripts": [
@@ -35,3 +47,11 @@ import { MatReduceModule } from 'mat-reduce';
 ...
 
 ```
+
+## Development
+To develop on this locally, simply clone this repo and run:
+```
+yarn
+yarn start
+``` 
+And a development demo of each of the controls is available on http://localhost:4567

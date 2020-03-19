@@ -59,7 +59,7 @@ jobs:
           SRC_PACKAGE_DIR: projects/mat-reduce
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-  deploy-lib:
+  deploy-demo:
     name: Deploy Demo
     runs-on: ubuntu-latest
     steps:

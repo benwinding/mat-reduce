@@ -15,13 +15,13 @@ import { debounceTime, takeUntil } from 'rxjs/operators';
 import * as QuillNamespace from 'quill';
 const Quill: any = QuillNamespace;
 import Counter, { QuillCounterConfig } from './editor-modules/counter';
+import { AddQuillInlineStyles } from './editor-modules/add-quill-inline-styles';
 
 import { ImageDrop } from 'quill-image-drop-module';
 import ImageCompress from 'quill-image-compress';
 import ImageResize from 'quill-image-resize-module';
 import ImageRotate from 'quill-image-rotate-module';
-import { htmlEditButton } from 'quill-html-edit-button';
-import { AddQuillInlineStyles } from './editor-modules/add-quill-inline-styles';
+import htmlEditButton from 'quill-html-edit-button';
 
 AddQuillInlineStyles(Quill);
 
@@ -155,7 +155,8 @@ export class LibFormQuillEditorComponent extends FormBase<string>
         maxWidth: 1200
       },
       image1Rotate: true,
-      image2Resize: true
+      image2Resize: true,
+      htmlEditButton: {debug: true}
     };
     this.quillModulesUsed = {
       ...quillModulesDefaults,

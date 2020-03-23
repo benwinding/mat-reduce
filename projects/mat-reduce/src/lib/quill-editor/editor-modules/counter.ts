@@ -1,9 +1,17 @@
 import 'quill';
-import { Subject } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { Subject, OperatorFunction, concat } from 'rxjs';
+import { debounceTime, take, publish } from 'rxjs/operators';
+
+function debounceTimeAfterFirst(
+  dueTime: number
+): OperatorFunction<number, number> {
+  return publish(value =>
+    concat(value.pipe(take(1)), value.pipe(debounceTime(dueTime)))
+  );
+}
 
 export interface QuillCounterConfig {
-  container: string;
+  divId: string;
   units: 'words' | 'chars' | 'kb';
 }
 
@@ -22,13 +30,21 @@ export default class Counter {
     this.quill = quill;
     this.options = options;
 
-    const container = document.querySelector(this.options.container);
+    const toolbarModule = quill.getModule('toolbar');
+    if (!toolbarModule) {
+      throw new Error(
+        'quill.counter requires the "toolbar" module to be included too'
+      );
+    }
+    const container = toolbarModule.container.querySelector(
+      '#' + this.options.divId
+    );
 
     this.quill.on('text-change', () => {
       this.updateTrigger.next();
     });
 
-    this.updateTrigger.pipe(debounceTime(2000)).subscribe(() => {
+    this.updateTrigger.pipe(debounceTimeAfterFirst(2000)).subscribe(() => {
       const length = this.calculate();
       container.innerHTML = length + ' ' + this.options.units;
       // console.log('form-html-editor: updating counter =' + container.innerHTML);

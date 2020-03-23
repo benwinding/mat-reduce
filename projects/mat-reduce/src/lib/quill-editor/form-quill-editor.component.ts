@@ -34,7 +34,7 @@ Quill.register('modules/imageCompress', ImageCompress);
 Quill.register('modules/image1Rotate', ImageRotate);
 Quill.register('modules/image2Resize', ImageResize);
 
-type conf = QuillCounterConfig;
+type Config = QuillCounterConfig;
 
 @Component({
   selector: 'form-quill-editor',
@@ -146,9 +146,9 @@ export class LibFormQuillEditorComponent extends FormBase<string>
     this.logger = new SimpleLog(this.debug);
     const quillModulesDefaults = {
       toolbar: '#toolbar',
-      counter: { container: '#counter', units: 'words' } as conf,
-      counterChars: { container: '#counterChars', units: 'chars' } as conf,
-      counterKiloBytes: { container: '#counterKiloBytes', units: 'kb' } as conf,
+      counter: { divId: 'counter', units: 'words' } as Config,
+      counterChars: { divId: 'counterChars', units: 'chars' } as Config,
+      counterKiloBytes: { divId: 'counterKiloBytes', units: 'kb' } as Config,
       imageDrop: true,
       imageCompress: {
         quality: 0.7,

@@ -29,6 +29,7 @@ jobs:
           SRC_PACKAGE_DIR: projects/mat-reduce-core
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+          GIT_TAG_SUFFIX: core
   deploy-lib:
     name: Deploy Lib
     runs-on: ubuntu-latest

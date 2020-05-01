@@ -9,6 +9,7 @@ import { takeUntil, startWith, map, filter } from 'rxjs/operators';
   selector: 'form-select-object-autocomplete',
   template: `
     <mat-form-field [appearance]="appearance" class="full-width">
+      <autocomplete-drop-down-arrow></autocomplete-drop-down-arrow>
       <input
         type="text"
         matInput

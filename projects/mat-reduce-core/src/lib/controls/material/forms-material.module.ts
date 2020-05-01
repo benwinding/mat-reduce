@@ -36,6 +36,7 @@ import { LibFormSelectStringMultipleComponent } from './form-select-string-multi
 import { LibFormSelectObjectAutoCompleteComponent } from './form-select-object-autocomplete.component';
 import { LibFormSelectStringAutoCompleteComponent } from './form-select-string-autocomplete.component';
 import { ExtMatAutocompleteTriggerEnforceSelectionDirective } from './appExtMatAutocompleteTriggerEnforceSelection';
+import { AutoCompleteDropDownArrowComponent } from './internal/autocomplete-drop-down-arrow.component';
 
 const exportedModules = [
   CommonModule,
@@ -55,7 +56,7 @@ const exportedModules = [
   MatSelectModule,
   MatCheckboxModule,
   MatTooltipModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
 ];
 
 const exported = [
@@ -79,10 +80,15 @@ const exported = [
   LibFormToggleReversedComponent,
 ];
 
+const internalComponents = [
+  ExtMatAutocompleteTriggerEnforceSelectionDirective,
+  AutoCompleteDropDownArrowComponent,
+];
+
 @NgModule({
   imports: [...exportedModules],
   exports: [...exported, ...exportedModules],
-  declarations: [...exported, ExtMatAutocompleteTriggerEnforceSelectionDirective],
-  providers: []
+  declarations: [...exported, ...internalComponents],
+  providers: [],
 })
 export class MatReduceFormsUsingMaterialModule {}

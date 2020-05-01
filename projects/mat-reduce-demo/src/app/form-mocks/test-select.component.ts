@@ -15,7 +15,7 @@ const friendArray = [
 
 @Component({
   template: `
-    <h1>form-select Testing</h1>
+    <h1>form-select-string Testing</h1>
 
     <form-toggle
       [formControl]="formControlEnabled"

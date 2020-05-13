@@ -30,6 +30,17 @@ import { FormControl } from '@angular/forms';
 
     <h5>Value</h5>
     <pre>{{testControlR.value}}</pre>
+
+    <h3>Checkbox Normal</h3>
+    <form-checkbox
+      placeholder="Normal checkbox"
+      [formControl]="testControlCheck"
+    >
+    </form-checkbox>
+
+    <h5>Value</h5>
+    <pre>{{testControlCheck.value}}</pre>
+
   `
 })
 export class TestTogglesComponent {
@@ -37,15 +48,18 @@ export class TestTogglesComponent {
 
   testControl = new FormControl(false);
   testControlR = new FormControl(false);
+  testControlCheck = new FormControl(false);
 
   constructor() {
     this.formControlEnabled.valueChanges.subscribe(isEnabled => {
       if (isEnabled) {
         this.testControl.enable();
         this.testControlR.enable();
+        this.testControlCheck.enable();
       } else {
         this.testControl.disable();
         this.testControlR.disable();
+        this.testControlCheck.disable();
       }
     });
   }

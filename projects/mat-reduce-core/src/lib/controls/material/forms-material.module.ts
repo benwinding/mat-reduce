@@ -37,6 +37,7 @@ import { LibFormSelectObjectAutoCompleteComponent } from './form-select-object-a
 import { LibFormSelectStringAutoCompleteComponent } from './form-select-string-autocomplete.component';
 import { ExtMatAutocompleteTriggerEnforceSelectionDirective } from './appExtMatAutocompleteTriggerEnforceSelection';
 import { AutoCompleteDropDownArrowComponent } from './internal/autocomplete-drop-down-arrow.component';
+import { LibFormCheckboxComponent } from './form-checkbox.component';
 
 const exportedModules = [
   CommonModule,
@@ -61,6 +62,7 @@ const exportedModules = [
 
 const exported = [
   LibFormNumberComponent,
+  LibFormCheckboxComponent,
   LibFormSelectObjectAutoCompleteComponent,
   LibFormSelectObjectComponent,
   LibFormSelectObjectMultipleComponent,

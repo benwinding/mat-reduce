@@ -100,7 +100,12 @@ export class LibFormSelectObjectMultipleComponent extends FormBase<Object[]>
   }
 
   onClickSelectAll() {
-    const allValues = this.$optionsInput.getValue();
+    const allValues = this.$optionsInput.getValue().map(v => {
+      if (this.selectionValue) {
+        return v[this.selectionValue];
+      }
+      return v;
+    });
     this.writeValue(allValues);
   }
 

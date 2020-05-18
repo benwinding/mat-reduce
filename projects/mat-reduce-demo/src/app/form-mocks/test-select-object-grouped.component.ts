@@ -30,7 +30,7 @@ const friendObjectArray2 = [makeFriend('Frank')];
       placeholder="Form Enabled"
     ></form-toggle>
 
-    <h3>Multiple (Object)</h3>
+    <h3>Multiple in FormGroup (Object)</h3>
     <form [formGroup]="group">
       <form-select-object-multiple
         placeholder="Select a friend!"

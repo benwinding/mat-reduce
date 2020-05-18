@@ -26,7 +26,8 @@ import {
   TestNumberComponent,
   TestEditorComponent,
   TestTogglesComponent,
-  TestPhoneNumberComponent
+  TestPhoneNumberComponent,
+  TestSelectObjectSelectAllComponent
 } from './form-mocks';
 
 @NgModule({
@@ -46,6 +47,7 @@ import {
     TestEditorComponent,
     TestTogglesComponent,
     TestPhoneNumberComponent,
+    TestSelectObjectSelectAllComponent,
 
     AppBtnBackComponent
   ],

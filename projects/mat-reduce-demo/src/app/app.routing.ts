@@ -14,7 +14,8 @@ import {
   TestDateComponent,
   TestSelectObjectComponent,
   TestPhoneNumberComponent,
-  TestSelectObjectGroupedComponent
+  TestSelectObjectGroupedComponent,
+  TestSelectObjectSelectAllComponent
 } from './form-mocks';
 
 const allRoutes: Routes = [
@@ -41,6 +42,10 @@ const allRoutes: Routes = [
   {
     path: 'test-select-object-grouped',
     component: TestSelectObjectGroupedComponent
+  },
+  {
+    path: 'test-select-object-selectall',
+    component: TestSelectObjectSelectAllComponent
   },
   {
     path: 'test-tags',

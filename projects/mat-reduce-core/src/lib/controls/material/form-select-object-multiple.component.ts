@@ -6,7 +6,7 @@ import {
   compareObjectDefault,
   OptionKeyValue,
   TransformSelectionsPipe,
-  TransformToLabel
+  TransformSelectedToLabel
 } from '../../utils';
 import { FormSelectObjectInterface } from './form-select-interfaces';
 import { debounceTime, map, tap, takeUntil, delay } from 'rxjs/operators';
@@ -84,7 +84,7 @@ export class LibFormSelectObjectMultipleComponent extends FormBase<Object[]>
   $selectedLabel: Observable<string>;
   $options: Observable<OptionKeyValue[]>;
 
-  private $optionsInput = new BehaviorSubject<Object[]>([]);
+  $optionsInput = new BehaviorSubject<Object[]>([]);
   private $selectedValues = new BehaviorSubject<Object[]>([]);
 
   ngOnInit() {
@@ -112,7 +112,7 @@ export class LibFormSelectObjectMultipleComponent extends FormBase<Object[]>
       });
       return '...';
     }
-    let label = TransformToLabel(c, selected[0]);
+    let label = TransformSelectedToLabel(c, selected[0]);
     const remaining = selected.length - 1;
     if (remaining === 1) {
       label = `${label} (${remaining} other)`;

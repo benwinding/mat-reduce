@@ -54,7 +54,7 @@ export class LibFormSelectObjectComponent extends FormBase<Object>
   implements FormSelectObjectInterface {
   @Input()
   set selectionObjects(newObjects: Object[]) {
-    this.$inputOptions.next(newObjects);
+    this.$optionsInput.next(newObjects);
   }
   @Input()
   selectionKey: string;
@@ -65,12 +65,12 @@ export class LibFormSelectObjectComponent extends FormBase<Object>
   @Input()
   displayWith: (o: Object) => string;
 
-  $inputOptions = new BehaviorSubject<Object[]>([]);
+  $optionsInput = new BehaviorSubject<Object[]>([]);
   $options: Observable<OptionKeyValue[]>;
 
   constructor() {
     super();
-    this.$options = TransformSelectionsPipe(this, this.$inputOptions);
+    this.$options = TransformSelectionsPipe(this, this.$optionsInput);
   }
 
   writeValue(newVal: Object) {

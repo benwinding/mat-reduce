@@ -57,6 +57,7 @@ const friendObjectArray2 = [makeFriend('Frank')];
       [formControl]="testControlMultiple"
       [selectionObjects]="selectChoices$ | async"
       selectionKey="name"
+      selectionValue="id"
     >
     </form-select-object-multiple>
     <pre>{{ { 'control.value': testControlMultiple?.value } | json }}</pre>

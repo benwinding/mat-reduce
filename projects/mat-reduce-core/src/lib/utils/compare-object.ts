@@ -31,17 +31,17 @@ export function TransformSelectionsPipe(
   $inputOptions: Observable<Object[]>
 ) {
   return $inputOptions.pipe(
-    filter(a => !!a),
-    map(options =>
-      options.map(option => {
-        const labelString = TransformToLabel(control, option);
+    filter((a) => !!a),
+    map((options) =>
+      options.map((option) => {
+        const labelString = TransformOptionToLabel(control, option);
         let selectionValue = option;
         if (!!control.selectionValue) {
           selectionValue = option[control.selectionValue];
         }
         const oNew: OptionKeyValue = {
           value: selectionValue,
-          label: labelString
+          label: labelString,
         };
         return oNew;
       })
@@ -49,27 +49,37 @@ export function TransformSelectionsPipe(
   );
 }
 
-export function TransformToLabel(
-  control: FormSelectObjectInterface,
-  o: Object
+export function TransformSelectedToLabel(
+  c: FormSelectObjectInterface,
+  selectedValue: Object
 ): string {
-  if (!o || typeof o !== 'object') {
+  let selectedItem = selectedValue;
+  if (c.selectionValue) {
+    const options = c.$optionsInput.getValue();
+    selectedItem = options.find((s) => s[c.selectionValue] === selectedValue);
+  }
+  return TransformOptionToLabel(c, selectedItem);
+}
+
+export function TransformOptionToLabel(
+  c: FormSelectObjectInterface,
+  option: Object
+): string {
+  if (!option || typeof option !== 'object') {
     return '-';
   }
-  const { selectionKey, displayWith } = control;
-  if (typeof selectionKey === 'string') {
-    return o[selectionKey];
+  if (typeof c.selectionKey === 'string') {
+    return option[c.selectionKey];
   }
-  if (typeof displayWith === 'function') {
-    return displayWith(o);
+  if (typeof c.displayWith === 'function') {
+    return c.displayWith(option);
   }
   console.warn(
     'sorry couldnt generate label, either missing selectionKey or displayWith function',
     {
-      selectionKey,
-      displayWith,
-      control,
-      object: o
+      control: c,
+      selectedItem: option,
+      option,
     }
   );
   return '--';

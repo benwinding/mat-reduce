@@ -50,7 +50,7 @@ export class TestSelectObjectSelectAllComponent {
 
   selectChoices$: Observable<Tag[]> = of(friendObjectArray);
 
-  control = new FormControl(friendObjectArray.slice(0, 2));
+  control = new FormControl(friendObjectArray.slice(0, 2).map(c => c.id));
 
   public compareObject = (l, r) => l === r;
   public displayWith2 = o => `${o.name} +++ ${o.id}`;

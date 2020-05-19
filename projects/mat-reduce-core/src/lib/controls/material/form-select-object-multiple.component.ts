@@ -1,4 +1,4 @@
-import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import { Component, forwardRef, Input, OnInit, ViewChild } from '@angular/core';
 import { NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { FormBase } from '../form-base-class';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
@@ -6,10 +6,12 @@ import {
   compareObjectDefault,
   OptionKeyValue,
   TransformSelectionsPipe,
-  TransformSelectedToLabel
+  TransformSelectedToLabel,
 } from '../../utils';
 import { FormSelectObjectInterface } from './form-select-interfaces';
 import { debounceTime, map, tap, takeUntil, delay } from 'rxjs/operators';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/core';
 
 // tslint:disable: ban-types
 
@@ -30,9 +32,10 @@ import { debounceTime, map, tap, takeUntil, delay } from 'rxjs/operators';
           </div>
         </mat-select-trigger>
         <ng-container *ngIf="hasSelectAll">
-          <mat-option (click)="onClickSelectAll()">
-            -- Select All --
-          </mat-option>
+          <div class="select-all-c" (click)="onClickSelectAll($event)">
+            <mat-checkbox [ngModel]="allSelected"> </mat-checkbox>
+            <span class="select-all-text">-- Select All --</span>
+          </div>
         </ng-container>
         <mat-option
           *ngFor="let option of $options | async"
@@ -49,20 +52,28 @@ import { debounceTime, map, tap, takeUntil, delay } from 'rxjs/operators';
         width: 100%;
         padding-bottom: 15px;
       }
-    `
+      .select-all-c {
+        display: flex;
+        align-items: center;
+        padding: 16px;
+      }
+      .select-all-text {
+        margin-left: 10px;
+      }
+    `,
   ],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => LibFormSelectObjectMultipleComponent),
-      multi: true
+      multi: true,
     },
     {
       provide: NG_VALIDATORS,
       useExisting: forwardRef(() => LibFormSelectObjectMultipleComponent),
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+  ],
 })
 export class LibFormSelectObjectMultipleComponent extends FormBase<Object[]>
   implements OnInit, FormSelectObjectInterface {
@@ -81,6 +92,8 @@ export class LibFormSelectObjectMultipleComponent extends FormBase<Object[]>
   @Input()
   displayWith: (o: Object) => string;
 
+  allSelected: boolean;
+
   $selectedLabel: Observable<string>;
   $options: Observable<OptionKeyValue[]>;
 
@@ -91,29 +104,37 @@ export class LibFormSelectObjectMultipleComponent extends FormBase<Object[]>
     this.$options = TransformSelectionsPipe(this, this.$optionsInput);
     this.internalControl.valueChanges
       .pipe(debounceTime(100), takeUntil(this._destroyed))
-      .subscribe(selected => {
+      .subscribe((selected) => {
         this.$selectedValues.next(selected);
       });
     this.$selectedLabel = this.$selectedValues.pipe(
-      map(items => this.generateLabel(this, items))
+      map((items) => this.generateLabel(this, items))
     );
   }
 
-  onClickSelectAll() {
-    const allValues = this.$optionsInput.getValue().map(v => {
-      if (this.selectionValue) {
-        return v[this.selectionValue];
-      }
-      return v;
-    });
-    this.writeValue(allValues);
+  onClickSelectAll(e) {
+    e.preventDefault();
+    this.allSelected = !this.allSelected; // to control select-unselect
+
+    let newValue: Object[];
+    if (!this.allSelected) {
+      newValue = [];
+    } else {
+      newValue = this.$optionsInput.getValue().map((v) => {
+        if (this.selectionValue) {
+          return v[this.selectionValue];
+        }
+        return v;
+      });
+    }
+    this.writeValue(newValue);
   }
 
   private generateLabel(c: FormSelectObjectInterface, selected: Object[]) {
     if (!Array.isArray(selected) || !selected.length) {
       console.log('form-select-object-multiple generateLabel()', {
         selected,
-        c
+        c,
       });
       return '...';
     }
@@ -127,7 +148,7 @@ export class LibFormSelectObjectMultipleComponent extends FormBase<Object[]>
     }
     console.log('form-select-object-multiple generateLabel()', {
       selected,
-      label
+      label,
     });
     return label;
   }

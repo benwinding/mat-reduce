@@ -27,7 +27,8 @@ import {
   TestEditorComponent,
   TestTogglesComponent,
   TestPhoneNumberComponent,
-  TestSelectObjectSelectAllComponent
+  TestSelectObjectSelectAllComponent,
+  TestSelectObjectAutocompleteComponent
 } from './form-mocks';
 
 @NgModule({
@@ -39,6 +40,7 @@ import {
     TestSelectObjectComponent,
     TestSelectObjectGroupedComponent,
     TestSelectComponent,
+    TestSelectObjectAutocompleteComponent,
     TestAssigneeComponent,
     TestTextComponent,
     TestColorComponent,

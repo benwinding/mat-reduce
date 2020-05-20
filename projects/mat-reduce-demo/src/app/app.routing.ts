@@ -15,7 +15,8 @@ import {
   TestSelectObjectComponent,
   TestPhoneNumberComponent,
   TestSelectObjectGroupedComponent,
-  TestSelectObjectSelectAllComponent
+  TestSelectObjectSelectAllComponent,
+  TestSelectObjectAutocompleteComponent
 } from './form-mocks';
 
 const allRoutes: Routes = [
@@ -46,6 +47,10 @@ const allRoutes: Routes = [
   {
     path: 'test-select-object-selectall',
     component: TestSelectObjectSelectAllComponent
+  },
+  {
+    path: 'test-select-object-autocomplete',
+    component: TestSelectObjectAutocompleteComponent
   },
   {
     path: 'test-tags',

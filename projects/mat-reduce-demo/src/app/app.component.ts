@@ -19,6 +19,7 @@ import { Router, Event, NavigationEnd } from '@angular/router';
           <li><a routerLink="test-select-object">form-select-object</a></li>
           <li><a routerLink="test-select-object-grouped">test-select-object-grouped</a></li>
           <li><a routerLink="test-select-object-selectall">test-select-object-selectall</a></li>
+          <li><a routerLink="test-select-object-autocomplete">test-select-object-autocomplete</a></li>
           <li><a routerLink="test-select">form-select</a></li>
           <li><a routerLink="test-tags">form-tags</a></li>
           <li><a routerLink="test-text">form-text</a></li>

@@ -62,16 +62,6 @@ const friendObjectArray2 = [makeFriend('Frank')];
     </form-select-object-multiple>
     <pre>{{ { 'control.value': testControlMultiple?.value } | json }}</pre>
 
-    <h3>Single Autocomplete (Object)</h3>
-    <form-select-object-autocomplete
-      placeholder="Select a friend!"
-      [formControl]="testControlAutoComplete"
-      [selectionObjects]="selectChoices$ | async"
-      [displayWith]="displayWith"
-    >
-    </form-select-object-autocomplete>
-    <pre>{{ { 'control.value': testControlAutoComplete?.value } | json }}</pre>
-
     <h3>Multiple (Object)</h3>
     <form-select-object-multiple
       placeholder="Select a friend!"
@@ -93,7 +83,6 @@ export class TestSelectObjectComponent {
   testControl11 = new FormControl(friendObjectArray[0].id);
   testControlMultiple = new FormControl(friendObjectArray.slice(0, 2));
   testControlMultiple1 = new FormControl(friendObjectArray2.slice(0, 1));
-  testControlAutoComplete = new FormControl(friendObjectArray[0]);
 
   selectChoices$: Observable<Tag[]> = of(friendObjectArray);
 

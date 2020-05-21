@@ -47,16 +47,16 @@ const friendObjectArray = [
       [displayWith]="displayWith"
     >
     </form-select-object-autocomplete>
-    <pre>{{ { 'control.value': testControlAutoComplete?.value } | json }}</pre>
+    <pre>{{ { 'control.value': testControlAutoCompleteNA?.value } | json }}</pre>
 
     <h3>Single Autocomplete (string) not-found</h3>
     <form-select-string-autocomplete
       placeholder="Select a friend!"
-      [formControl]="testControlAutoCompleteNA"
+      [formControl]="testControlAutoCompleteNAString"
       [selections]="selectChoiceStrings$ | async"
     >
     </form-select-string-autocomplete>
-    <pre>{{ { 'control.value': testControlAutoComplete?.value } | json }}</pre>
+    <pre>{{ { 'control.value': testControlAutoCompleteNAString?.value } | json }}</pre>
   `
 })
 export class TestSelectObjectAutocompleteComponent {
@@ -66,7 +66,8 @@ export class TestSelectObjectAutocompleteComponent {
   selectChoiceStrings$: Observable<string[]> = of(friendObjectArray.map(a => a.name)).pipe(delay(1000));
 
   testControlAutoComplete = new FormControl(friendObjectArray[0]);
-  testControlAutoCompleteNA = new FormControl('-');
+  testControlAutoCompleteNA = new FormControl(null);
+  testControlAutoCompleteNAString = new FormControl('Frank');
 
   public compareObject = (l, r) => l.name === r.name;
   public displayWith2 = o => `${o.name} +++ ${o.id}`;
@@ -78,9 +79,6 @@ export class TestSelectObjectAutocompleteComponent {
       } else {
         this.testControlAutoComplete.disable();
       }
-    });
-    this.testControlAutoComplete.valueChanges.subscribe(value => {
-      console.log({ value });
     });
   }
 

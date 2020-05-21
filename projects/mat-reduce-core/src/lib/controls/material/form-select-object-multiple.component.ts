@@ -1,7 +1,7 @@
-import { Component, forwardRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { FormBase } from '../form-base-class';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import {
   compareObjectDefault,
   OptionKeyValue,
@@ -9,9 +9,7 @@ import {
   TransformSelectedToLabel,
 } from '../../utils';
 import { FormSelectObjectInterface } from './form-select-interfaces';
-import { debounceTime, map, tap, takeUntil, delay } from 'rxjs/operators';
-import { MatSelect } from '@angular/material/select';
-import { MatOption } from '@angular/material/core';
+import { debounceTime, map, takeUntil } from 'rxjs/operators';
 
 // tslint:disable: ban-types
 

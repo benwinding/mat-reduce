@@ -9,14 +9,23 @@ import {
   Output,
   ViewChild,
   ElementRef,
-  ViewEncapsulation
+  ViewEncapsulation,
 } from '@angular/core';
-import { MatAutocomplete, MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import {
+  MatAutocomplete,
+  MatAutocompleteSelectedEvent,
+  MatAutocompleteTrigger,
+} from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, AbstractControl } from '@angular/forms';
+import {
+  FormControl,
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR,
+  AbstractControl,
+} from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { map, startWith, take } from 'rxjs/operators';
 import { FormBase } from '../form-base-class';
 import { Tag } from './Tag';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
@@ -100,21 +109,21 @@ import { v1 as uuidv1 } from 'uuid';
       .form-tag-control-invalid .mat-form-field-label {
         color: #ff4f4f !important;
       }
-    `
+    `,
   ],
   encapsulation: ViewEncapsulation.None,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => LibFormTagMultipleComponent),
-      multi: true
+      multi: true,
     },
     {
       provide: NG_VALIDATORS,
       useExisting: forwardRef(() => LibFormTagMultipleComponent),
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+  ],
 })
 export class LibFormTagMultipleComponent extends FormBase<Tag[]>
   implements OnInit, OnDestroy {
@@ -142,7 +151,7 @@ export class LibFormTagMultipleComponent extends FormBase<Tag[]>
     return this.value;
   }
   get choicesStrings(): string[] {
-    return this.choices.map(t => (!!t ? t.name : ''));
+    return this.choices.map((t) => (!!t ? t.name : ''));
   }
   visible = true;
   selectable = true;
@@ -157,13 +166,12 @@ export class LibFormTagMultipleComponent extends FormBase<Tag[]>
   @ViewChild('auto', {} as any)
   matAutocomplete: MatAutocomplete;
 
-  destroyed = new Subject<void>();
-
   constructor(private snack: MatSnackBar) {
     super();
+    this.$nginit.pipe(take(1)).subscribe(() => this.init());
   }
 
-  ngOnInit() {
+  init() {
     this.filteredTagNames$ = this.inputTextControl.valueChanges.pipe(
       startWith(null),
       map((tagName: string | null) =>
@@ -172,18 +180,14 @@ export class LibFormTagMultipleComponent extends FormBase<Tag[]>
     );
   }
 
-  ngOnDestroy() {
-    this.destroyed.next();
-  }
-
   writeValue(newVal: Tag[]) {
     this.value = newVal || [];
   }
 
   private getChoicesMinusSelected(): string[] {
-    const alreadySelectedSet = new Set(this.selectedTags.map(t => t.name));
+    const alreadySelectedSet = new Set(this.selectedTags.map((t) => t.name));
     return this.choicesStrings.filter(
-      choice => !alreadySelectedSet.has(choice)
+      (choice) => !alreadySelectedSet.has(choice)
     );
   }
 
@@ -196,14 +200,14 @@ export class LibFormTagMultipleComponent extends FormBase<Tag[]>
     }
     function _filterAll(): string[] {
       const filterValue = value.toLowerCase();
-      return choices.filter(choice =>
+      return choices.filter((choice) =>
         (choice + '').toLowerCase().includes(filterValue)
       );
     }
     function _filterBeginning(): string[] {
       const filterValue = value.toLowerCase();
       return choices.filter(
-        choice => (choice + '').toLowerCase().indexOf(filterValue) === 0
+        (choice) => (choice + '').toLowerCase().indexOf(filterValue) === 0
       );
     }
   }
@@ -215,7 +219,7 @@ export class LibFormTagMultipleComponent extends FormBase<Tag[]>
   removeTagChip(tagToRemove: Tag) {
     this.log('removeTagChip', { tagToRemove });
     this.matAutocompleteTrigger.closePanel();
-    this.value = this.value.filter(t => t.id !== tagToRemove.id);
+    this.value = this.value.filter((t) => t.id !== tagToRemove.id);
     this.inputTextControl.setValue(null);
     this.inputTextControl.markAsTouched();
   }
@@ -230,9 +234,11 @@ export class LibFormTagMultipleComponent extends FormBase<Tag[]>
     this.log('addFromTextInput', { value: event.value });
     // Add fruit only when MatAutocomplete is not open
     // To make sure this does not conflict with OptionSelected Event
-    const found = this.choices.find(c => c.name === inputTrimmed);
+    const found = this.choices.find((c) => c.name === inputTrimmed);
     if (found) {
-      this.log('addFromTextInput() found match, adding that instead of making new tag');
+      this.log(
+        'addFromTextInput() found match, adding that instead of making new tag'
+      );
       this.addedTagToInternalValue(found);
       this.resetTextInput();
       return;
@@ -246,7 +252,7 @@ export class LibFormTagMultipleComponent extends FormBase<Tag[]>
       this.snack.open('Must select item from list', 'Close', {
         duration: 3000,
         horizontalPosition: 'center',
-        verticalPosition: 'bottom'
+        verticalPosition: 'bottom',
       });
       this.log('addFromTextInput() unable to add custom values...');
       return;
@@ -269,11 +275,11 @@ export class LibFormTagMultipleComponent extends FormBase<Tag[]>
   optionSelectedFromList(event: MatAutocompleteSelectedEvent): void {
     this.log('optionSelectedFromList()', {
       event,
-      value: event.option.viewValue
+      value: event.option.viewValue,
     });
     const autoCompleteValue = event.option.viewValue;
     const selectedTag = [...(this.choices || [])]
-      .filter(tag => tag.name === autoCompleteValue)
+      .filter((tag) => tag.name === autoCompleteValue)
       .pop();
     if (!selectedTag) {
       this.warn(
@@ -291,7 +297,7 @@ export class LibFormTagMultipleComponent extends FormBase<Tag[]>
     const newTagId = uuidv1();
     const newTag: Tag = {
       id: newTagId,
-      name: name.trim()
+      name: name.trim(),
     };
     return newTag;
   }
@@ -321,7 +327,8 @@ export class LibFormTagMultipleComponent extends FormBase<Tag[]>
   }
 
   hasRed() {
-    const isDirty = this.inputTextControl.touched || this.inputTextControl.dirty;
+    const isDirty =
+      this.inputTextControl.touched || this.inputTextControl.dirty;
     const isInValid = this.internalControl.invalid;
     return isDirty && isInValid;
   }
@@ -330,7 +337,7 @@ export class LibFormTagMultipleComponent extends FormBase<Tag[]>
     this.snack.open(message, 'Close', {
       duration: 3000,
       horizontalPosition: 'center',
-      verticalPosition: 'bottom'
+      verticalPosition: 'bottom',
     });
   }
 

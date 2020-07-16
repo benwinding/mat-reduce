@@ -2,6 +2,7 @@ import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { FormBase } from '../form-base-class';
 import { SimpleLog } from '../../utils';
+import { take } from 'rxjs/operators';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -46,7 +47,12 @@ export class LibFormDateComponent extends FormBase<Date> implements OnInit {
 
   logger: SimpleLog;
 
-  ngOnInit() {
+  constructor() {
+    super();
+    this.$nginit.pipe(take(1)).subscribe(() => this.init());
+  }
+
+  async init() {
     this.logger = new SimpleLog(this.debug);
   }
 

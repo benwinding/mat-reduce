@@ -9,7 +9,7 @@ import {
   TransformSelectedToLabel,
 } from '../../utils';
 import { FormSelectObjectInterface } from './form-select-interfaces';
-import { debounceTime, map, takeUntil } from 'rxjs/operators';
+import { debounceTime, map, takeUntil, take } from 'rxjs/operators';
 
 // tslint:disable: ban-types
 
@@ -98,7 +98,12 @@ export class LibFormSelectObjectMultipleComponent extends FormBase<Object[]>
   $optionsInput = new BehaviorSubject<Object[]>([]);
   private $selectedValues = new BehaviorSubject<Object[]>([]);
 
-  ngOnInit() {
+  constructor() {
+    super();
+    this.$nginit.pipe(take(1)).subscribe(() => this.init());
+  }
+
+  init() {
     this.$options = TransformSelectionsPipe(this, this.$optionsInput);
     this.internalControl.valueChanges
       .pipe(debounceTime(100), takeUntil(this._destroyed))

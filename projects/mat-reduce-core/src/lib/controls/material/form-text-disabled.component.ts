@@ -3,9 +3,9 @@ import { NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { FormBase } from '../form-base-class';
 import {
   FormControlTypeSafe,
-  FormBuilderTypedService
+  FormBuilderTypedService,
 } from '../../services/form-builder-typed.service';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, take } from 'rxjs/operators';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -26,20 +26,20 @@ import { takeUntil } from 'rxjs/operators';
       .full-width {
         width: 100%;
       }
-    `
+    `,
   ],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => LibFormTextDisabledComponent),
-      multi: true
+      multi: true,
     },
     {
       provide: NG_VALIDATORS,
       useExisting: forwardRef(() => LibFormTextDisabledComponent),
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+  ],
 })
 export class LibFormTextDisabledComponent extends FormBase<string>
   implements OnInit {
@@ -49,11 +49,12 @@ export class LibFormTextDisabledComponent extends FormBase<string>
     super();
     this.disabledControl = this.fb.control<string>({
       value: '',
-      disabled: true
+      disabled: true,
     });
+    this.$nginit.pipe(take(1)).subscribe(() => this.init());
   }
 
-  ngOnInit() {
+  init() {
     this.disabledControl.setValue(this.internalControl.value);
     this.internalControl.valueChanges
       .pipe(takeUntil(this._destroyed))

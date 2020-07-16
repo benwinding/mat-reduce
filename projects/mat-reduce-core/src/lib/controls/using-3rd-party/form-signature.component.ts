@@ -13,6 +13,7 @@ import { FormBase } from '../form-base-class';
 import { NG_VALUE_ACCESSOR, NG_VALIDATORS } from '@angular/forms';
 import { SimpleLog } from '../../utils';
 import SignaturePad from 'signature_pad';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'form-signature',
@@ -85,11 +86,17 @@ export class LibFormSignatureComponent extends FormBase<string>
 
   private logger: SimpleLog;
 
-  ngOnInit() {
+  constructor() {
+    super();
+    this.$nginit.pipe(take(1)).subscribe(() => this.init());
+    this.$ngdestroy.pipe(take(1)).subscribe(() => this.destroy());
+  }
+
+  init() {
     this.logger = new SimpleLog(this.debug);
   }
 
-  ngOnDestroy() {
+  destroy() {
     this.signaturePad.nativeElement.remove();
   }
 

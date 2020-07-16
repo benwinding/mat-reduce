@@ -2,92 +2,108 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {
   TestTextComponent,
-  TestEditorComponent,
+  TestTogglesComponent,
   TestSelectComponent,
+  TestSelectObjectComponent,
+  TestSelectObjectGroupedComponent,
+  TestSelectObjectSelectAllComponent,
+  TestSelectObjectAutocompleteComponent,
   TestTagsComponent,
   TestFormGroupComponent,
   TestAssigneeComponent,
+  TestNumberComponent,
+} from './test-material';
+import {
+  TestEditorComponent,
+  TestPhoneNumberComponent,
   TestColorComponent,
   TestTimeComponent,
-  TestNumberComponent,
-  TestTogglesComponent,
   TestDateComponent,
-  TestSelectObjectComponent,
-  TestPhoneNumberComponent,
-  TestSelectObjectGroupedComponent,
-  TestSelectObjectSelectAllComponent,
-  TestSelectObjectAutocompleteComponent
-} from './form-mocks';
+  TestSignatureComponent,
+} from './test-3rd-party';
 
-const allRoutes: Routes = [
+export const materialRoutes: Routes = [
   {
-    path: 'test-text',
-    component: TestTextComponent
+    path: 'form-text',
+    component: TestTextComponent,
   },
   {
-    path: 'test-toggles',
-    component: TestTogglesComponent
+    path: 'form-toggle',
+    component: TestTogglesComponent,
   },
   {
-    path: 'test-editor',
-    component: TestEditorComponent
+    path: 'form-select',
+    component: TestSelectComponent,
   },
   {
-    path: 'test-select',
-    component: TestSelectComponent
+    path: 'form-select-object',
+    component: TestSelectObjectComponent,
   },
   {
-    path: 'test-select-object',
-    component: TestSelectObjectComponent
+    path: 'form-select-object-grouped',
+    component: TestSelectObjectGroupedComponent,
   },
   {
-    path: 'test-select-object-grouped',
-    component: TestSelectObjectGroupedComponent
+    path: 'form-select-object-selectall',
+    component: TestSelectObjectSelectAllComponent,
   },
   {
-    path: 'test-select-object-selectall',
-    component: TestSelectObjectSelectAllComponent
+    path: 'form-select-object-autocomplete',
+    component: TestSelectObjectAutocompleteComponent,
   },
   {
-    path: 'test-select-object-autocomplete',
-    component: TestSelectObjectAutocompleteComponent
+    path: 'form-tags',
+    component: TestTagsComponent,
   },
   {
-    path: 'test-tags',
-    component: TestTagsComponent
+    path: 'form-formgroup',
+    component: TestFormGroupComponent,
   },
   {
-    path: 'test-formgroup',
-    component: TestFormGroupComponent
+    path: 'form-assignee',
+    component: TestAssigneeComponent,
   },
   {
-    path: 'test-assignee',
-    component: TestAssigneeComponent
+    path: 'form-number',
+    component: TestNumberComponent,
   },
   {
-    path: 'test-color',
-    component: TestColorComponent
+    path: 'form-phone-number',
+    component: TestPhoneNumberComponent,
   },
-  {
-    path: 'test-time',
-    component: TestTimeComponent
-  },
-  {
-    path: 'test-number',
-    component: TestNumberComponent
-  },
-  {
-    path: 'test-phone-number',
-    component: TestPhoneNumberComponent
-  },
-  {
-    path: 'test-date',
-    component: TestDateComponent
-  }
 ];
 
+export const thirdPartyRoutes: Routes = [
+  {
+    path: 'form-color',
+    component: TestColorComponent,
+  },
+  {
+    path: 'form-time',
+    component: TestTimeComponent,
+  },
+  {
+    path: 'form-date',
+    component: TestDateComponent,
+  },
+  {
+    path: 'form-editor',
+    component: TestEditorComponent,
+  },
+  {
+    path: 'form-signature',
+    component: TestSignatureComponent,
+  },
+
+];
+
+const allRoutes: Routes = [
+  ...materialRoutes,
+  ...thirdPartyRoutes
+]
+
 @NgModule({
-  imports: [RouterModule.forRoot(allRoutes)],
-  exports: [RouterModule]
+  imports: [RouterModule.forRoot(allRoutes, {enableTracing: false})],
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

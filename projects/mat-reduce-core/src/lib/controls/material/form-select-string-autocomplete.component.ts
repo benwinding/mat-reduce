@@ -9,7 +9,13 @@ import {
   asyncScheduler,
   BehaviorSubject,
 } from 'rxjs';
-import { takeUntil, throttleTime, startWith, filter } from 'rxjs/operators';
+import {
+  takeUntil,
+  throttleTime,
+  startWith,
+  filter,
+  take,
+} from 'rxjs/operators';
 import { SimpleLog } from '../../utils';
 
 @Component({
@@ -84,9 +90,10 @@ export class LibFormSelectStringAutoCompleteComponent extends FormBase<string>
     super();
     this.$filteredOptions = new BehaviorSubject<string[]>([]);
     this.$inputOptions = new BehaviorSubject<string[]>([]);
+    this.$nginit.pipe(take(1)).subscribe(() => this.init());
   }
 
-  ngOnInit() {
+  init() {
     this.logger = new SimpleLog(this.debug);
     this.setSubscriptions();
   }

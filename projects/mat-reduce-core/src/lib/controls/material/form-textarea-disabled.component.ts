@@ -5,7 +5,7 @@ import {
   FormControlTypeSafe,
   FormBuilderTypedService
 } from '../../services/form-builder-typed.service';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, take } from 'rxjs/operators';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -54,9 +54,10 @@ export class LibFormTextAreaDisabledComponent extends FormBase<string>
       value: '',
       disabled: true
     });
+    this.$nginit.pipe(take(1)).subscribe(() => this.init());
   }
 
-  ngOnInit() {
+  init() {
     this.disabledControl.setValue(this.internalControl.value);
     this.internalControl.valueChanges
       .pipe(takeUntil(this._destroyed))

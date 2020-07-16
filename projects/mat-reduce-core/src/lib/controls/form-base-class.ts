@@ -6,15 +6,16 @@ import {
 } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { OnDestroy, OnInit, Input } from '@angular/core';
-import { takeUntil, auditTime } from 'rxjs/operators';
+import { takeUntil, auditTime, take } from 'rxjs/operators';
 import { ConvertToTitleCase } from '../utils/case-helper';
 import { v4 as uuidv4 } from 'uuid';
 
 export class FormBase<T>
   implements OnInit, OnDestroy, ControlValueAccessor, Validator {
   internalControl: FormControl = new FormControl();
+
   autoCompleteObscureName: string;
-  _destroyed = new Subject();
+  autoCompleteText = 'no';
 
   disabled = false;
   validationError: string;
@@ -35,28 +36,25 @@ export class FormBase<T>
   @Input()
   name: string;
 
-  autoCompleteText = 'no';
+  $nginit = new Subject();
+  $ngdestroy = new Subject();
+
+  _destroyed = new Subject();
 
   constructor() {
-    // Garrentee that init and destroy are called
-    // even if ngOnInit() or ngOnDestroy() are overriden
-    const originalOnDestroy = this.ngOnDestroy;
-    this.ngOnDestroy = () => {
-      this.destroy();
-      originalOnDestroy.apply(this);
-    };
-    const originalOnInit = this.ngOnInit;
-    this.ngOnInit = () => {
-      this.init();
-      originalOnInit.apply(this);
-    };
+    this.$nginit.pipe(take(1)).subscribe(() => this._init());
+    this.$ngdestroy.pipe(take(1)).subscribe(() => this._destroy());
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.$nginit.next()
+  }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    this.$ngdestroy.next()
+  }
 
-  init() {
+  private _init() {
     this._destroyed.next();
     if (this.allowAutoComplete) {
       this.autoCompleteObscureName = this.formControlName || this.name;
@@ -80,7 +78,7 @@ export class FormBase<T>
     }
   }
 
-  destroy() {
+  private _destroy() {
     this._destroyed.next();
   }
 

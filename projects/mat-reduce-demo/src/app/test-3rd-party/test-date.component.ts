@@ -29,7 +29,7 @@ import { FormControl, Validators } from '@angular/forms';
 
     <h4>Value</h4>
     <pre *ngIf="testControl as c">
-    {{ { value: c.value, valid: c.valid } | json}}
+    {{ { value: c.value, valid: c.valid } | json }}
   </pre
     >
     <div style="width: 400px;">
@@ -43,10 +43,10 @@ import { FormControl, Validators } from '@angular/forms';
     </div>
     <h4>Value</h4>
     <pre *ngIf="testControlRequired as c">
-    {{ { value: c.value, valid: c.valid } | json}}
+    {{ { value: c.value, valid: c.valid } | json }}
   </pre
     >
-  `
+  `,
 })
 export class TestDateComponent {
   formControlEnabled = new FormControl(true);
@@ -57,7 +57,7 @@ export class TestDateComponent {
   testControlRequired = new FormControl(null, Validators.required);
 
   constructor() {
-    this.formControlEnabled.valueChanges.subscribe(isEnabled => {
+    this.formControlEnabled.valueChanges.subscribe((isEnabled) => {
       if (isEnabled) {
         this.testControl.enable();
         this.testControlRequired.enable();

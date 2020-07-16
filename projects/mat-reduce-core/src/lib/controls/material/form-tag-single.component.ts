@@ -8,14 +8,18 @@ import {
   OnInit,
   Output,
   ViewChild,
-  ElementRef
+  ElementRef,
 } from '@angular/core';
-import { MatAutocomplete, MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import {
+  MatAutocomplete,
+  MatAutocompleteSelectedEvent,
+  MatAutocompleteTrigger,
+} from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { map, startWith, take } from 'rxjs/operators';
 import { ConfirmationService } from '../../dialogs/app-confirmation.component';
 import { FormBase } from '../form-base-class';
 import { Tag } from './Tag';
@@ -93,20 +97,20 @@ import { SimpleLog } from '../../utils';
         top: 3px !important;
         color: white;
       }
-    `
+    `,
   ],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => LibFormTagSingleComponent),
-      multi: true
+      multi: true,
     },
     {
       provide: NG_VALIDATORS,
       useExisting: forwardRef(() => LibFormTagSingleComponent),
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+  ],
 })
 export class LibFormTagSingleComponent extends FormBase<Tag>
   implements OnInit, OnDestroy {
@@ -134,7 +138,7 @@ export class LibFormTagSingleComponent extends FormBase<Tag>
     return this.value;
   }
   get choicesStrings(): string[] {
-    return this.choices.map(t => (!!t ? t.name : ''));
+    return this.choices.map((t) => (!!t ? t.name : ''));
   }
   visible = true;
   selectable = true;
@@ -149,7 +153,6 @@ export class LibFormTagSingleComponent extends FormBase<Tag>
   @ViewChild('auto', {} as any)
   matAutocomplete: MatAutocomplete;
 
-  destroyed = new Subject<void>();
   logger: SimpleLog;
 
   constructor(
@@ -157,9 +160,10 @@ export class LibFormTagSingleComponent extends FormBase<Tag>
     private snack: MatSnackBar
   ) {
     super();
+    this.$nginit.pipe(take(1)).subscribe(() => this.init());
   }
 
-  ngOnInit() {
+  init() {
     this.checkExists(this.choices, 'this.selectChoices$');
     this.logger = new SimpleLog(this.debug);
 
@@ -171,10 +175,6 @@ export class LibFormTagSingleComponent extends FormBase<Tag>
     );
   }
 
-  ngOnDestroy() {
-    this.destroyed.next();
-  }
-
   writeValue(newVal: Tag) {
     this.value = newVal;
   }
@@ -183,7 +183,7 @@ export class LibFormTagSingleComponent extends FormBase<Tag>
     const selectedTagName = this.selectedTag ? this.selectedTag.name : '';
     const alreadySelectedSet = new Set([selectedTagName]);
     return this.choicesStrings.filter(
-      choice => !alreadySelectedSet.has(choice)
+      (choice) => !alreadySelectedSet.has(choice)
     );
   }
 
@@ -196,14 +196,14 @@ export class LibFormTagSingleComponent extends FormBase<Tag>
     }
     function _filterAll(): string[] {
       const filterValue = value.toLowerCase();
-      return choices.filter(choice =>
+      return choices.filter((choice) =>
         (choice + '').toLowerCase().includes(filterValue)
       );
     }
     function _filterBeginning(): string[] {
       const filterValue = value.toLowerCase();
       return choices.filter(
-        choice => (choice + '').toLowerCase().indexOf(filterValue) === 0
+        (choice) => (choice + '').toLowerCase().indexOf(filterValue) === 0
       );
     }
   }
@@ -231,9 +231,11 @@ export class LibFormTagSingleComponent extends FormBase<Tag>
     this.logger.log('addFromTextInput', { value: event.value });
     // Add fruit only when MatAutocomplete is not open
     // To make sure this does not conflict with OptionSelected Event
-    const found = this.choices.find(c => c.name === inputTrimmed);
+    const found = this.choices.find((c) => c.name === inputTrimmed);
     if (found) {
-      this.logger.log('addFromTextInput() found match, adding that instead of making new tag');
+      this.logger.log(
+        'addFromTextInput() found match, adding that instead of making new tag'
+      );
       this.addedTagToInternalValue(found);
       this.resetTextInput();
       return;
@@ -247,7 +249,7 @@ export class LibFormTagSingleComponent extends FormBase<Tag>
       this.snack.open('Must select item from list', 'Close', {
         duration: 3000,
         horizontalPosition: 'center',
-        verticalPosition: 'bottom'
+        verticalPosition: 'bottom',
       });
       this.logger.log('addFromTextInput() unable to add custom values...');
       return;
@@ -278,11 +280,11 @@ export class LibFormTagSingleComponent extends FormBase<Tag>
   optionSelectedFromList(event: MatAutocompleteSelectedEvent): void {
     this.logger.log('optionSelectedFromList()', {
       event,
-      value: event.option.viewValue
+      value: event.option.viewValue,
     });
     const autoCompleteValue = event.option.viewValue;
     const selectedTag = [...(this.choices || [])]
-      .filter(tag => tag.name === autoCompleteValue)
+      .filter((tag) => tag.name === autoCompleteValue)
       .pop();
     if (!selectedTag) {
       this.logger.warn(
@@ -300,7 +302,7 @@ export class LibFormTagSingleComponent extends FormBase<Tag>
     const newTagId = uuidv1();
     const newTag: Tag = {
       id: newTagId,
-      name: name.trim()
+      name: name.trim(),
     };
     return newTag;
   }
@@ -331,7 +333,7 @@ export class LibFormTagSingleComponent extends FormBase<Tag>
     this.snack.open(message, 'Close', {
       duration: 3000,
       horizontalPosition: 'center',
-      verticalPosition: 'bottom'
+      verticalPosition: 'bottom',
     });
   }
 }

@@ -1,6 +1,7 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { FormBase } from '../form-base-class';
+import { take } from 'rxjs/operators';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -110,7 +111,12 @@ export class LibFormColorComponent extends FormBase<string> implements OnInit {
   @Input()
   defaultColor = '#42d742';
 
-  ngOnInit() {
+  constructor() {
+    super();
+    this.$nginit.pipe(take(1)).subscribe(() => this.init());
+  }
+
+  async init() {
     if (!this.value) {
       setTimeout(() => {
         this.value = this.defaultColor;

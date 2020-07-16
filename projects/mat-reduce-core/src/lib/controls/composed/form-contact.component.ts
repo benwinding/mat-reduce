@@ -2,7 +2,7 @@ import { Component, Input, forwardRef, OnInit } from '@angular/core';
 import { Contact } from './form-assignee.models';
 import { FormBase } from '../form-base-class';
 import { FormControl, NG_VALUE_ACCESSOR, NG_VALIDATORS } from '@angular/forms';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, take } from 'rxjs/operators';
 import { FormBuilderTypedService, FormGroupTypeSafe } from '../../services/form-builder-typed.service';
 
 @Component({
@@ -47,9 +47,10 @@ export class LibFormGroupContactComponent extends FormBase<Contact> implements O
 
   constructor(private fb: FormBuilderTypedService) {
     super();
+    this.$nginit.pipe(take(1)).subscribe(() => this.init());
   }
 
-  ngOnInit() {
+  init() {
     this.contactGroup = this.fb.group<Contact>({
       id: new FormControl(),
       name: new FormControl(),

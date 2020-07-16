@@ -8,7 +8,7 @@ import {
   Contractor,
   blankContact,
   Tag,
-  User
+  User,
 } from '../from-mat-reduce-core';
 
 function makeStaff(staffName): Tag {
@@ -16,12 +16,12 @@ function makeStaff(staffName): Tag {
     id: uuidv1(),
     name: staffName,
     email: staffName + '@example.com',
-    phone: '2194818482'
+    phone: '2194818482',
   };
   return {
     id: staff.id,
     name: staffName,
-    obj: staff
+    obj: staff,
   };
 }
 
@@ -33,32 +33,32 @@ function makeContractor(contractorsName: string): Tag {
         ...blankContact(),
         name: contractorsName,
         phone: '123142125125',
-        email: contractorsName.replace(' ', '.').toLowerCase() + '@example.com'
-      }
-    ]
+        email: contractorsName.replace(' ', '.').toLowerCase() + '@example.com',
+      },
+    ],
   };
   return {
     id: contractor.id,
     name: contractorsName,
-    obj: contractor
+    obj: contractor,
   };
 }
 
 const contractorsList: Tag[] = [
   makeContractor('David Franklin'),
   makeContractor('Sam Degan'),
-  makeContractor('Phillip Smithford')
+  makeContractor('Phillip Smithford'),
 ];
 const staffList: Tag[] = [
   makeStaff('Abigale Waterford'),
-  makeStaff('Fred Goodman')
+  makeStaff('Fred Goodman'),
 ];
 const currentUser: User = {
   id: '02184184y81y2481284',
   Email: 'mydetails@component.com',
   'First Name': 'Fred',
   'Last Name': 'Wailsman',
-  Phone: '09214717214'
+  Phone: '09214717214',
 };
 
 @Component({
@@ -78,17 +78,29 @@ const currentUser: User = {
     <form-contact [formControl]="formContact"> </form-contact>
     <h5>Value</h5>
     <pre>{{ formContact?.value | json }}</pre>
-  `
+  `,
 })
 export class TestAssigneeComponent {
   formControlEnabled = new FormControl(false);
   assigneeSelectorControl = new FormControl();
 
   formContact = new FormControl({
-    email: 'something@ascasc.ca'
+    email: 'something@ascasc.ca',
   });
 
   contractorsList$: Observable<Tag[]> = of(contractorsList);
   staffList$: Observable<Tag[]> = of(staffList);
   currentUser$: Observable<User> = of(currentUser);
+
+  constructor() {
+    this.formControlEnabled.valueChanges.subscribe((isEnabled) => {
+      if (isEnabled) {
+        this.assigneeSelectorControl.enable();
+        this.formContact.enable();
+      } else {
+        this.assigneeSelectorControl.disable();
+        this.formContact.disable();
+      }
+    });
+  }
 }

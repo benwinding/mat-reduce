@@ -3,7 +3,7 @@ import { FormControl, NG_VALUE_ACCESSOR, NG_VALIDATORS } from '@angular/forms';
 import { Subject, pipe } from 'rxjs';
 import { FormBase } from '../form-base-class';
 import { Tag } from '../material/Tag';
-import { takeUntil, auditTime, tap } from 'rxjs/operators';
+import { takeUntil, auditTime, tap, take } from 'rxjs/operators';
 import {
   FormControlTypeSafe,
   FormBuilderTypedService
@@ -113,33 +113,15 @@ export class LibFormAssigneeSelectorComponent extends FormBase<Assignee>
   hideSelectContractor = true;
   hideSelectStaff = true;
 
-  destroyed = new Subject();
-
   constructor(private fb: FormBuilderTypedService) {
     super();
     this.selectImportTypeControl = this.fb.control<AssigneeType>();
     this.selectItemContractorControl = this.fb.control<Tag>();
     this.selectItemStaffControl = this.fb.control<Tag>();
+    this.$nginit.pipe(take(1)).subscribe(() => this.init());
   }
 
-  makeLogPipe(logString: string) {
-    return pipe(
-      takeUntil(this.destroyed),
-      auditTime(300),
-      tap(val => console.log('assignee-selector: ', logString, { val }))
-    );
-  }
-
-  checkStatus(control: FormControl, disabled: boolean) {
-    if (disabled && !control.disabled) {
-      control.disable();
-    }
-    if (!disabled && control.disabled) {
-      control.enable();
-    }
-  }
-
-  async ngOnInit() {
+  async init() {
     // Check if main control has been disabled/enabled
     this.internalControl.statusChanges
       .pipe(this.makeLogPipe('control.statusChanges'))
@@ -189,8 +171,21 @@ export class LibFormAssigneeSelectorComponent extends FormBase<Assignee>
     }
   }
 
-  async ngOnDestroy() {
-    this.destroyed.next();
+  makeLogPipe(logString: string) {
+    return pipe(
+      takeUntil(this._destroyed),
+      auditTime(300),
+      tap(val => console.log('assignee-selector: ', logString, { val }))
+    );
+  }
+
+  checkStatus(control: FormControl, disabled: boolean) {
+    if (disabled && !control.disabled) {
+      control.disable();
+    }
+    if (!disabled && control.disabled) {
+      control.enable();
+    }
   }
 
   get selectedImportType() {

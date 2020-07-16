@@ -8,7 +8,7 @@ import {
   asyncScheduler,
   combineLatest,
 } from 'rxjs';
-import { takeUntil, startWith, filter, throttleTime } from 'rxjs/operators';
+import { takeUntil, startWith, filter, throttleTime, take } from 'rxjs/operators';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { SimpleLog } from '../../utils';
 
@@ -110,9 +110,11 @@ export class LibFormSelectObjectAutoCompleteComponent extends FormBase<Object>
     this.$inputOptions = new BehaviorSubject<string[]>([]);
     this.$inputOptionsLabelled = new BehaviorSubject<Option[]>([]);
     this.$filteredOptions = new BehaviorSubject<Option[]>([]);
+
+    this.$nginit.pipe(take(1)).subscribe(() => this.init());
   }
 
-  ngOnInit() {
+  init() {
     this.logger = new SimpleLog(this.debug);
     const untilDestroyed = <T>($observable: Observable<T>) => {
       return $observable.pipe(

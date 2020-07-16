@@ -1,54 +1,70 @@
 import { Component } from '@angular/core';
-import { Router, Event, NavigationEnd } from '@angular/router';
+import { materialRoutes, thirdPartyRoutes } from './app.routing';
 
 @Component({
   selector: 'app-root',
   template: `
     <!--The content below is only a placeholder and can be replaced.-->
-    <div style="text-align:center">
-      <h1>
-        <a routerLink="/">Welcome to {{ title }}!</a>
-      </h1>
-    </div>
-    <ul *ngIf="currentUrl == '/'">
-      <li>CORE
-        <ul>
-          <li><a routerLink="test-date">form-date</a></li>
-          <li><a routerLink="test-formgroup">form-formgroup</a></li>
-          <li><a routerLink="test-number">form-number</a></li>
-          <li><a routerLink="test-select-object">form-select-object</a></li>
-          <li><a routerLink="test-select-object-grouped">test-select-object-grouped</a></li>
-          <li><a routerLink="test-select-object-selectall">test-select-object-selectall</a></li>
-          <li><a routerLink="test-select-object-autocomplete">test-select-object-autocomplete</a></li>
-          <li><a routerLink="test-select">form-select</a></li>
-          <li><a routerLink="test-tags">form-tags</a></li>
-          <li><a routerLink="test-text">form-text</a></li>
-          <li><a routerLink="test-toggles">form-toggles</a></li>
-        </ul>
-      </li>
-      <li>3rd Party
-        <ul>
-          <li><a routerLink="test-assignee">form-assignee</a></li>
-          <li><a routerLink="test-color">form-color</a></li>
-          <li><a routerLink="test-editor">form-editor</a></li>
-          <li><a routerLink="test-phone-number">form-phone-number</a></li>
-          <li><a routerLink="test-time">form-time</a></li>
-        </ul>
-      </li>
-    </ul>
-    <router-outlet> </router-outlet>
-  `
+    <h2>Mat-Reduce Demo</h2>
+    <mat-drawer-container style="height: 90vh;">
+      <mat-drawer mode="side" opened>
+        <nav>
+          <h2>Material Wrappers</h2>
+          <a
+            *ngFor="let linkItem of linkItemsMaterial"
+            [routerLink]="[linkItem.path]"
+            routerLinkActive="active"
+            #rla="routerLinkActive"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            {{ linkItem.path }}
+          </a>
+          <h2>3rd Party Wrappers</h2>
+          <a
+            *ngFor="let linkItem of linkItems3rdParty"
+            [routerLink]="[linkItem.path]"
+            routerLinkActive="active"
+            #rla="routerLinkActive"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            {{ linkItem.path }}
+          </a>
+        </nav>
+      </mat-drawer>
+      <mat-drawer-content>
+        <div style="padding: 10px;">
+          <router-outlet></router-outlet>
+        </div>
+      </mat-drawer-content>
+    </mat-drawer-container>
+  `,
+  styles: [
+    `
+      nav {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        overflow: hidden;
+        width: 250px;
+      }
+      nav a,
+      nav a:visited {
+        text-decoration: none;
+        color: black;
+      }
+      nav a {
+        padding: 8px;
+        width: 100%;
+        font-family: sans-serif;
+      }
+      .active {
+        font-weight: bold;
+        border-bottom: 1px solid red;
+      }
+    `,
+  ],
 })
 export class AppComponent {
-  title = 'mat-reduce';
-  currentUrl = '';
-
-  constructor(private router: Router) {
-    this.router.events.subscribe((e: Event) => {
-      if (!(e instanceof NavigationEnd)) {
-        return;
-      }
-      this.currentUrl = e.url;
-    });
-  }
+  linkItemsMaterial = materialRoutes;
+  linkItems3rdParty = thirdPartyRoutes;
 }

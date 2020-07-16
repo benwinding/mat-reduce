@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -10,24 +11,31 @@ import { FormControl } from '@angular/forms';
       placeholder="Form Enabled"
     ></form-toggle>
 
-    <pre>
-      {{'formValue: ' + testControl.value}}
-    </pre>
+    <form-text placeholder="Type something friend!" [formControl]="testControl">
+    </form-text>
 
-    <form-color
-      placeholder="Test Colors!"
+    <h5>Value</h5>
+    <pre>{{ testControl.value }}</pre>
+
+    <h5>Password (maxlength=8)</h5>
+    <form-text-password
+      placeholder="Password please"
       [formControl]="testControl"
+      maxlength="8"
     >
-    </form-color>
-  `
+    </form-text-password>
+
+    <h5>Value</h5>
+    <pre>{{ testControl.value }}</pre>
+  `,
 })
-export class TestColorComponent {
+export class TestTextComponent {
   formControlEnabled = new FormControl(true);
 
   testControl = new FormControl();
 
   constructor() {
-    this.formControlEnabled.valueChanges.subscribe(isEnabled => {
+    this.formControlEnabled.valueChanges.subscribe((isEnabled) => {
       if (isEnabled) {
         this.testControl.enable();
       } else {

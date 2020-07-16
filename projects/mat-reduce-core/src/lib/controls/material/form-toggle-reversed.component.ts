@@ -1,6 +1,6 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { NG_VALIDATORS, NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
-import { takeUntil, debounceTime, tap, delay } from 'rxjs/operators';
+import { takeUntil, debounceTime, tap, delay, take } from 'rxjs/operators';
 import { FormBase } from '../form-base-class';
 
 @Component({
@@ -8,10 +8,7 @@ import { FormBase } from '../form-base-class';
   selector: 'form-toggle-reversed',
   template: `
     <div class="full-width">
-      <mat-slide-toggle
-        [formControl]="reversedControl"
-        [name]="name"
-      >
+      <mat-slide-toggle [formControl]="reversedControl" [name]="name">
         <div class="flex-center">
           <ng-content></ng-content>
           <span>{{ placeholder }}</span>
@@ -33,20 +30,20 @@ import { FormBase } from '../form-base-class';
         display: flex;
         align-items: center;
       }
-    `
+    `,
   ],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => LibFormToggleReversedComponent),
-      multi: true
+      multi: true,
     },
     {
       provide: NG_VALIDATORS,
       useExisting: forwardRef(() => LibFormToggleReversedComponent),
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+  ],
 })
 export class LibFormToggleReversedComponent extends FormBase<boolean>
   implements OnInit {
@@ -56,21 +53,21 @@ export class LibFormToggleReversedComponent extends FormBase<boolean>
   no = 'No';
 
   reversedControl = new FormControl();
-
   private lockControl: boolean;
 
-  ngOnInit() {
+  constructor() {
+    super();
+    this.$nginit.pipe(take(1)).subscribe(() => this.init());
+  }
+
+  init() {
     this.reversedControl.valueChanges
-      .pipe(
-        takeUntil(this._destroyed),
-        debounceTime(100)
-      )
-      .subscribe(value => {
+      .pipe(takeUntil(this._destroyed), debounceTime(100))
+      .subscribe((value) => {
         if (this.lockControl) {
           return;
         }
         this.value = !value;
-        // console.log('reversedControl.valueChanges', { thisValue: this.value });
       });
 
     this.internalControl.valueChanges

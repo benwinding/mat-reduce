@@ -69,11 +69,14 @@ const currentUser: User = {
     ></form-toggle>
     <h1>Assignee Selector</h1>
     <form-assignee-selector
+      [formControl]="assigneeSelectorControl"
       [contractorsList]="contractorsList$ | async"
       [staffList]="staffList$ | async"
       [currentUser]="currentUser$ | async"
     >
     </form-assignee-selector>
+    <h5>Value</h5>
+    <pre>{{ assigneeSelectorControl?.value | json }}</pre>
     <h1>form-contact</h1>
     <form-contact [formControl]="formContact"> </form-contact>
     <h5>Value</h5>
@@ -94,6 +97,7 @@ export class TestAssigneeComponent {
 
   constructor() {
     this.formControlEnabled.valueChanges.subscribe((isEnabled) => {
+      console.log('form control enabled', {isEnabled})
       if (isEnabled) {
         this.assigneeSelectorControl.enable();
         this.formContact.enable();

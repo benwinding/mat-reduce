@@ -86,11 +86,15 @@ export class LibFormToggleReversedComponent extends FormBase<boolean>
 
     this.internalControl.statusChanges
       .pipe(takeUntil(this._destroyed))
-      .subscribe(() => {
-        if (this.disabled) {
-          this.reversedControl.disable();
-        } else {
-          this.reversedControl.enable();
+      .subscribe((newVal) => {
+        const disabled = newVal === 'DISABLED';
+        const shouldDisable = disabled && this.reversedControl.enabled;
+        const shouldEnable = !disabled && !this.reversedControl.enabled;
+        if (shouldDisable) {
+          this.reversedControl.disable()
+        }
+        if (shouldEnable) {
+          this.reversedControl.enable()
         }
       });
   }

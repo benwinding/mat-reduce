@@ -2,7 +2,7 @@ import { Component, Input, forwardRef, OnInit } from '@angular/core';
 import { Contact } from './form-assignee.models';
 import { FormBase } from '../form-base-class';
 import { FormControl, NG_VALUE_ACCESSOR, NG_VALIDATORS } from '@angular/forms';
-import { takeUntil, take } from 'rxjs/operators';
+import { takeUntil, take, delay } from 'rxjs/operators';
 import { FormBuilderTypedService, FormGroupTypeSafe } from '../../services/form-builder-typed.service';
 
 @Component({
@@ -60,8 +60,21 @@ export class LibFormGroupContactComponent extends FormBase<Contact> implements O
     this.contactGroup.valueChanges
       .pipe(takeUntil(this._destroyed))
       .subscribe(c => {
-        console.log('changed value', { c });
         this.value = c;
+      });
+
+    this.internalControl.statusChanges
+      .pipe(takeUntil(this._destroyed))
+      .subscribe(newVal => {
+        const disabled = newVal === 'DISABLED';
+        const shouldDisable = disabled && this.contactGroup.enabled;
+        const shouldEnable = !disabled && !this.contactGroup.enabled;
+        if (shouldDisable) {
+          this.contactGroup.disable()
+        }
+        if (shouldEnable) {
+          this.contactGroup.enable()
+        }
       });
   }
 

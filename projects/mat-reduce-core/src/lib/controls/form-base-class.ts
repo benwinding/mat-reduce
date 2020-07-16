@@ -107,6 +107,7 @@ export class FormBase<T>
 
   setDisabledState?(isDisabled: boolean): void {
     this.disabled = isDisabled;
+    console.log('form-base-class: setDisabledState()', { isDisabled });
     setTimeout(() => {
       if (isDisabled) {
         this.internalControl.disable();

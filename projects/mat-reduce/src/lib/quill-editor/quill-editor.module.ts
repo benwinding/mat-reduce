@@ -21,10 +21,11 @@ const exported = [
   imports: [
     ...exportedModules,
     CommonModule,
-    QuillModule.forRoot(),
+    QuillModule.forRoot()
   ],
   exports: [...exported, ...exportedModules],
   declarations: [...exported],
-  providers: []
+  providers: [
+  ]
 })
 export class MatReduceQuillEditorModule {}

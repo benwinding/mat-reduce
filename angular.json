@@ -24,8 +24,7 @@
             ],
             "styles": ["projects/mat-reduce-demo/src/styles.css"],
             "scripts": ["node_modules/quill/dist/quill.min.js"],
-            "preserveSymlinks": true,
-            "es5BrowserSupport": true
+            "preserveSymlinks": true
           },
           "configurations": {
             "production": {
@@ -109,6 +108,11 @@
           "options": {
             "tsConfig": "projects/mat-reduce-core/tsconfig.lib.json",
             "project": "projects/mat-reduce-core/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/mat-reduce-core/tsconfig.lib.prod.json"
+            }
           }
         }
       }
@@ -123,6 +127,11 @@
           "options": {
             "tsConfig": "projects/mat-reduce/tsconfig.lib.json",
             "project": "projects/mat-reduce/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/mat-reduce/tsconfig.lib.prod.json"
+            }
           }
         }
       }

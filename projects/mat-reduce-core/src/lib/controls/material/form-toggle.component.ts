@@ -8,8 +8,9 @@ import { FormBase } from '../form-base-class';
   template: `
     <div class="full-width">
       <mat-slide-toggle
-        [formControl]="internalControl"
+        ngDefaultControl
         [name]="name"
+        [formControl]="internalControl"
       >
         {{ placeholder }} ({{ value ? yes : no }})
       </mat-slide-toggle>

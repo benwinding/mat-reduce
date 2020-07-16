@@ -35,7 +35,7 @@ export class FormBase<T>
   @Input()
   debug = false;
   @Input()
-  name: string;
+  name: string = 'default-name';
 
   $nginit = new Subject();
   $ngdestroy = new Subject();

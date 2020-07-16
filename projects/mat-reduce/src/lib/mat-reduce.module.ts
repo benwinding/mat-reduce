@@ -4,7 +4,7 @@ import { MatReduceQuillEditorModule } from './quill-editor/quill-editor.module';
 import { MatReduceCoreModule } from './from-core';
 import { ReactiveFormsModule } from '@angular/forms';
 
-const exportedModules = [MatReduceQuillEditorModule];
+const exportedModules = [MatReduceQuillEditorModule, MatReduceCoreModule];
 
 @NgModule({
   entryComponents: [],
@@ -12,7 +12,6 @@ const exportedModules = [MatReduceQuillEditorModule];
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    MatReduceCoreModule,
     ...exportedModules,
   ],
   exports: [...exportedModules],

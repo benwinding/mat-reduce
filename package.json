@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --project=mat-reduce-demo --port 4567 --aot",
+    "start": "ng serve --project=mat-reduce-demo --port 4567",
     "build-lib": "ng build --project mat-reduce --prod && cp README.md ./dist/mat-reduce",
     "build-core": "ng build --project mat-reduce-core",
     "watch-lib": "ng-packagr -p projects/mat-reduce/ --watch",

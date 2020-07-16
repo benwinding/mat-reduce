@@ -10,7 +10,10 @@ import { FormControl } from '@angular/forms';
       placeholder="Form Enabled"
     ></form-toggle>
 
-    <form-text placeholder="Type something friend!" [formControl]="testControl">
+    <form-text
+      placeholder="Type something friend!"
+      [formControl]="testControl"
+    >
     </form-text>
 
     <h5>Value</h5>

@@ -11,8 +11,9 @@ import { FormBase } from '../form-base-class';
         matInput
         [placeholder]="placeholder"
         [maxlength]="maxlength"
+        [name]="name"
+        ngDefaultControl
         [formControl]="internalControl"
-        [name]="autoCompleteObscureName"
         [autocomplete]="autoCompleteText"
         [type]="inputType"
       />

@@ -1,25 +1,29 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "../../out-tsc/demo",
-    "target": "es2015",
-    "declaration": true,
-    "inlineSources": true,
-    "types": [],
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "ES5",
+    "module": "ES2020",
     "lib": [
-      "dom",
-      "es2018"
-    ]
+      "es2018",
+      "dom"
+    ],
+    "paths": {
+      "mat-reduce": ["../mat-reduce/src/public_api.ts"],
+      "mat-reduce-core": ["../mat-reduce-core/src/public_api.ts"],
+    }
   },
-  "exclude": [
-    "test.ts",
-    "**/*.spec.ts",
-    "src/test.ts",
-    "src/environments"
-  ],
+  "exclude": ["test.ts", "**/*.spec.ts", "src/test.ts", "src/environments"],
   "angularCompilerOptions": {
-    "enableIvy": false,
-    "skipTemplateCodegen": true,
+    "enableIvy": true,
+    "skipTemplateCodegen": false,
     "strictMetadataEmit": true,
     "enableResourceInlining": false,
     "fullTemplateTypeCheck": true

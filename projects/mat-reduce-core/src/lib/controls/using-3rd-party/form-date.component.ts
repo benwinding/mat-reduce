@@ -11,6 +11,7 @@ import { take } from 'rxjs/operators';
     <mat-form-field [appearance]="appearance" class="full-width">
       <input
         matInput
+        ngDefaultControl
         (focus)="picker.open()"
         [min]="minDate"
         [matDatepicker]="picker"

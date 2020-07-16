@@ -3,17 +3,13 @@ import { CommonModule } from '@angular/common';
 import { MatReduceQuillEditorModule } from './quill-editor/quill-editor.module';
 import { MatReduceCoreModule } from './from-core';
 
-const exportedModules = [
-  CommonModule,
-  MatReduceCoreModule,
-  MatReduceQuillEditorModule
-];
+const exportedModules = [MatReduceQuillEditorModule];
 
 @NgModule({
   entryComponents: [],
   declarations: [],
-  imports: [...exportedModules],
+  imports: [CommonModule, MatReduceCoreModule, ...exportedModules],
   exports: [...exportedModules],
-  providers: []
+  providers: [],
 })
 export class MatReduceModule {}

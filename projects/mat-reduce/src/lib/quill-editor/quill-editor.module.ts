@@ -14,7 +14,7 @@ const exportedModules = [
 ];
 
 const exported = [
-  LibFormQuillEditorComponent
+  LibFormQuillEditorComponent,
 ];
 
 @NgModule({

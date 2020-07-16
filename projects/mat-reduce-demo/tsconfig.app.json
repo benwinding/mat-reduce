@@ -1,15 +1,15 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "baseUrl": "./",
     "outDir": "../../out-tsc/demo",
+    "target": "es2015",
+    "declaration": true,
+    "inlineSources": true,
     "types": [],
-    "paths": {
-      "mat-reduce": ["../mat-reduce/src/public_api"],
-      "mat-reduce/*": ["../mat-reduce/src/*"],
-      "mat-reduce-core": ["../mat-reduce-core/src/public_api"],
-      "mat-reduce-core/*": ["../mat-reduce-core/src/*"]
-    }
+    "lib": [
+      "dom",
+      "es2018"
+    ]
   },
   "exclude": [
     "test.ts",
@@ -18,7 +18,10 @@
     "src/environments"
   ],
   "angularCompilerOptions": {
-    "strictTemplates": true,
-    "strictInjectionParameters": true
+    "enableIvy": false,
+    "skipTemplateCodegen": true,
+    "strictMetadataEmit": true,
+    "enableResourceInlining": false,
+    "fullTemplateTypeCheck": true
   }
 }

@@ -11,7 +11,6 @@ import { FormControl } from '@angular/forms';
     ></form-toggle>
 
     <form-signature
-      debug="true"
       placeholder="Sign here!"
       [formControl]="testSignControl"
     >

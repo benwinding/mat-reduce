@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import {
   MatDatetimepickerModule,
@@ -11,14 +12,13 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { NgxCleaveDirectiveModule } from 'ngx-cleave-directive';
 
 import { LibFormColorComponent } from './form-color.component';
 import { LibFormDateComponent } from './form-date.component';
 import { LibFormTimeComponent } from './form-time.component';
-import { CommonModule } from '@angular/common';
-import { LibFormSignatureComponent } from './form-signature.component';
-import { NgxCleaveDirectiveModule } from 'ngx-cleave-directive';
 import { LibFormPhoneComponent } from './form-phone.component';
+import { LibFormSignatureComponent } from './form-signature.component';
 
 const exportedModules = [
   CommonModule,

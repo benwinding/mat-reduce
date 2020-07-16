@@ -1,12 +1,10 @@
 import {
-  AfterViewInit,
   Component,
   ElementRef,
   Input,
-  OnInit,
   ViewChild,
   forwardRef,
-  OnDestroy
+  AfterViewInit,
 } from '@angular/core';
 import { FormBase } from '../form-base-class';
 
@@ -54,23 +52,22 @@ import { take } from 'rxjs/operators';
       img {
         height: 100%;
       }
-    `
+    `,
   ],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => LibFormSignatureComponent),
-      multi: true
+      multi: true,
     },
     {
       provide: NG_VALIDATORS,
       useExisting: forwardRef(() => LibFormSignatureComponent),
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+  ],
 })
-export class LibFormSignatureComponent extends FormBase<string>
-  implements OnInit, OnDestroy, AfterViewInit {
+export class LibFormSignatureComponent extends FormBase<string> implements AfterViewInit {
   @Input()
   placeholder = 'Sign Here';
 
@@ -111,7 +108,7 @@ export class LibFormSignatureComponent extends FormBase<string>
     const options = {
       minWidth: 2,
       canvasWidth: 400,
-      canvasHeight: 200
+      canvasHeight: 200,
     };
     this.signaturePadObj = new SignaturePad(el, options);
     this.signaturePadObj.onEnd = () => this.drawComplete();
@@ -130,7 +127,7 @@ export class LibFormSignatureComponent extends FormBase<string>
   }
 
   async setSignatureToPad(value: string) {
-    await new Promise(res => setTimeout(res, 100));
+    await new Promise((res) => setTimeout(res, 100));
     // Set current signature from control
     const canAccessPad = !!this.signaturePadObj;
     this.logger.log('setSignatureToPad', { canAccessPad, value });

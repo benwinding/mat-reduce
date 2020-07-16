@@ -67,13 +67,13 @@ export const materialRoutes: Routes = [
     path: 'form-number',
     component: TestNumberComponent,
   },
+];
+
+export const thirdPartyRoutes: Routes = [
   {
     path: 'form-phone-number',
     component: TestPhoneNumberComponent,
   },
-];
-
-export const thirdPartyRoutes: Routes = [
   {
     path: 'form-color',
     component: TestColorComponent,

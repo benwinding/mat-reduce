@@ -25,7 +25,7 @@ interface ConfirmationDialogData {
         <mat-icon>{{ okIcon }}</mat-icon>
         <span>{{ okLabel }}</span>
       </button>
-      <button mat-raised-button color="white" (click)="onClickCancel($event)">
+      <button mat-raised-button (click)="onClickCancel($event)">
         <mat-icon>cancel</mat-icon>
         <span>Cancel</span>
       </button>

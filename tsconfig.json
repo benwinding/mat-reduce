@@ -20,5 +20,9 @@
       "mat-reduce-core": ["./dist/mat-reduce-core"],
       "mat-reduce-core/*": ["./dist/mat-reduce-core/*"]
     }
+  },
+  "angularCompilerOptions": {
+    "strictTemplates": true,
+    "strictInjectionParameters": true
   }
 }

@@ -20,6 +20,7 @@ import {
   TestTimeComponent,
   TestPhoneNumberComponent,
   TestEditorComponent,
+  TestSignatureComponent,
 } from './test-3rd-party';
 import {
   TestTagsComponent,
@@ -53,6 +54,7 @@ import { RouterModule } from '@angular/router';
     TestEditorComponent,
     TestTogglesComponent,
     TestPhoneNumberComponent,
+    TestSignatureComponent,
     TestSelectObjectSelectAllComponent,
     TestSelectObjectAutocompleteComponent,
 

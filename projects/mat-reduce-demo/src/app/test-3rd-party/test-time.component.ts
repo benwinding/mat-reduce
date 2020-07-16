@@ -4,7 +4,7 @@ import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   template: `
-    <h1>form-text Testing</h1>
+    <h1>form-time Testing</h1>
 
     <form-toggle
       [formControl]="formControlEnabled"

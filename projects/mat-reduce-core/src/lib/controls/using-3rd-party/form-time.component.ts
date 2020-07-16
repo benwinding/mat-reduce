@@ -30,7 +30,7 @@ import { FormBase } from '../form-base-class';
         #picker
         [defaultTime]="defaultTime"
         [minutesGap]="minutesGap"
-        ESC="true"
+        [ESC]="true"
       ></ngx-material-timepicker>
     </mat-form-field>
   `,

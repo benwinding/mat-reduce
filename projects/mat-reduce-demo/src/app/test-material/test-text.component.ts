@@ -21,7 +21,7 @@ import { FormControl } from '@angular/forms';
     <form-text-password
       placeholder="Password please"
       [formControl]="testControl"
-      maxlength="8"
+      [maxlength]="8"
     >
     </form-text-password>
 

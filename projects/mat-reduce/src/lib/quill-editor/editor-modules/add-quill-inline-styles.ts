@@ -1,46 +1,50 @@
+function getImport(q, importName) {
+  return q.import(importName);
+}
+
 export function AddQuillInlineStyles(Quill: any) {
   // configure Quill to use inline styles so the email's format properly
-  const DirectionAttribute = Quill.import('attributors/attribute/direction');
+  const DirectionAttribute = getImport(Quill, 'attributors/attribute/direction');
   Quill.register(DirectionAttribute, true);
 
-  const AlignClass = Quill.import('attributors/class/align');
+  const AlignClass = getImport(Quill, 'attributors/class/align');
   Quill.register(AlignClass, true);
 
-  const BackgroundClass = Quill.import('attributors/class/background');
+  const BackgroundClass = getImport(Quill, 'attributors/class/background');
   Quill.register(BackgroundClass, true);
 
-  const ColorClass = Quill.import('attributors/class/color');
+  const ColorClass = getImport(Quill, 'attributors/class/color');
   Quill.register(ColorClass, true);
 
-  const DirectionClass = Quill.import('attributors/class/direction');
+  const DirectionClass = getImport(Quill, 'attributors/class/direction');
   Quill.register(DirectionClass, true);
 
-  const FontClass = Quill.import('attributors/class/font');
+  const FontClass = getImport(Quill, 'attributors/class/font');
   Quill.register(FontClass, true);
 
-  const SizeClass = Quill.import('attributors/class/size');
+  const SizeClass = getImport(Quill, 'attributors/class/size');
   Quill.register(SizeClass, true);
 
-  const AlignStyle = Quill.import('attributors/style/align');
+  const AlignStyle = getImport(Quill, 'attributors/style/align');
   Quill.register(AlignStyle, true);
 
-  const BackgroundStyle = Quill.import('attributors/style/background');
+  const BackgroundStyle = getImport(Quill, 'attributors/style/background');
   Quill.register(BackgroundStyle, true);
 
-  const ColorStyle = Quill.import('attributors/style/color');
+  const ColorStyle = getImport(Quill, 'attributors/style/color');
   Quill.register(ColorStyle, true);
 
-  const DirectionStyle = Quill.import('attributors/style/direction');
+  const DirectionStyle = getImport(Quill, 'attributors/style/direction');
   Quill.register(DirectionStyle, true);
 
-  const FontStyle = Quill.import('attributors/style/font');
+  const FontStyle = getImport(Quill, 'attributors/style/font');
   Quill.register(FontStyle, true);
 
-  const SizeStyle = Quill.import('attributors/style/size');
+  const SizeStyle = getImport(Quill, 'attributors/style/size');
   Quill.register(SizeStyle, true);
   // create new Quill instance after...
 
-  const BaseImageFormat = Quill.import('formats/image');
+  const BaseImageFormat = getImport(Quill, 'formats/image');
   const ImageFormatAttributesList = ['alt', 'height', 'width', 'style'];
 
   class ImageFormat extends BaseImageFormat {

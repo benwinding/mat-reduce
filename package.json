@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve --project=mat-reduce-demo --port 4567",
     "build-lib": "ng build --project mat-reduce --prod && cp README.md ./dist/mat-reduce",
-    "build-core": "ng build --project mat-reduce-core",
+    "build-core": "ng build --project mat-reduce-core --prod",
     "watch-lib": "ng-packagr -p projects/mat-reduce/ --watch",
     "watch-core": "ng-packagr -p projects/mat-reduce-core/ --watch",
     "build-demo": "ng build --project=mat-reduce-demo --prod",

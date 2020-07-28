@@ -94,15 +94,15 @@ export const thirdPartyRoutes: Routes = [
     path: 'form-signature',
     component: TestSignatureComponent,
   },
-  {
-    path: '**',
-    redirectTo: 'form-text'
-  }
 ];
 
 const allRoutes: Routes = [
   ...materialRoutes,
-  ...thirdPartyRoutes
+  ...thirdPartyRoutes,
+  {
+    path: '**',
+    redirectTo: 'form-text'
+  }
 ]
 
 @NgModule({

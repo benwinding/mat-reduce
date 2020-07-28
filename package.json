@@ -30,7 +30,6 @@
     "@mat-datetimepicker/core": "4.x",
     "cleave.js": "1.5.3",
     "core-js": "^3.6.1",
-    "ngx-cleave-directive": "1.1.3",
     "ngx-color-picker": "8.x",
     "ngx-material-timepicker": "5.x",
     "ngx-quill": "12.x",

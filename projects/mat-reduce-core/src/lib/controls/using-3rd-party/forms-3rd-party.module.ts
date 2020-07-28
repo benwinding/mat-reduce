@@ -12,7 +12,6 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
-import { NgxCleaveDirectiveModule } from 'ngx-cleave-directive';
 
 import { LibFormColorComponent } from './form-color.component';
 import { LibFormDateComponent } from './form-date.component';
@@ -46,7 +45,6 @@ const exported = [
     CommonModule,
     ColorPickerModule,
     NgxMaterialTimepickerModule,
-    NgxCleaveDirectiveModule,
     ...exportedModules,
   ],
   exports: [...exported, ...exportedModules],

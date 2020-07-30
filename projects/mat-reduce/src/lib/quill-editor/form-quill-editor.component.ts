@@ -4,7 +4,7 @@ import {
   Input,
   OnDestroy,
   OnInit,
-  ViewEncapsulation
+  ViewEncapsulation,
 } from '@angular/core';
 import { NG_VALIDATORS, NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
 import { SimpleLog, FormBase } from '../from-core';
@@ -22,6 +22,13 @@ import ImageCompress from 'quill-image-compress';
 import ImageResize from 'quill-image-resize-module';
 import ImageRotate from 'quill-image-rotate-module';
 import htmlEditButton from 'quill-html-edit-button';
+// We do not add Sans Serif since it is the default
+
+// Add fonts to whitelist
+
+let Font = Quill.import('attributors/style/font');
+Font.whitelist = ['inconsolata', 'roboto', 'mirza', 'arial', 'quicksand', 'roboto-slab'];
+Quill.register(Font, true);
 
 AddQuillInlineStyles(Quill);
 
@@ -39,7 +46,11 @@ type Config = QuillCounterConfig;
 @Component({
   selector: 'form-quill-editor',
   template: `
-    <div [class.editor-disabled]="disabled">
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto"
+      rel="stylesheet"
+    />
+    <div [class.ql-editor-disabled]="disabled">
       <quill-editor
         [formControl]="quillControl"
         [modules]="quillModulesUsed"
@@ -49,10 +60,16 @@ type Config = QuillCounterConfig;
         <div quill-editor-toolbar>
           <span class="ql-formats">
             <select class="ql-font">
-              <option selected></option>
-              <option value="serif"></option>
-              <option value="monospace"></option>
+              <option selected>Sans Serif</option>
+              <option value="inconsolata">Inconsolata</option>
+              <option value="roboto">Roboto</option>
+              <option value="roboto-slab">Roboto Slab</option>
+              <option value="mirza">Mirza</option>
+              <option value="arial">Arial</option>
+              <option value="quicksand">Quicksand</option>
             </select>
+          </span>
+          <span class="ql-formats">
             <select class="ql-header">
               <option value="1"></option>
               <option value="2"></option>
@@ -87,13 +104,13 @@ type Config = QuillCounterConfig;
             <button class="ql-link"></button>
             <button class="ql-image"></button>
           </span>
-          <span class="ql-formats font12px">
+          <span class="ql-formats ql-font12px">
             <div id="counter"></div>
           </span>
-          <span class="ql-formats font12px">
+          <span class="ql-formats ql-font12px">
             <div id="counterChars"></div>
           </span>
-          <span class="ql-formats font12px">
+          <span class="ql-formats ql-font12px">
             <div id="counterKiloBytes"></div>
           </span>
         </div>
@@ -104,26 +121,30 @@ type Config = QuillCounterConfig;
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => LibFormQuillEditorComponent),
-      multi: true
+      multi: true,
     },
     {
       provide: NG_VALIDATORS,
       useExisting: forwardRef(() => LibFormQuillEditorComponent),
-      multi: true
-    }
+      multi: true,
+    },
   ],
   styles: [
     `
-      .font12px {
+      .ql-font12px {
         font-size: 12px;
       }
-      .editor-disabled {
+      .ql-editor-disabled {
         filter: contrast(0.4) brightness(1.5);
       }
-    `
+    `,
   ],
-  styleUrls: ['./quill-css/quill.snow.css', './quill-css/quill.bubble.css'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: [
+    './quill-css/quill.snow.css',
+    './quill-css/quill.bubble.css',
+    './quill-font-classes.scss',
+  ],
+  encapsulation: ViewEncapsulation.None,
 })
 export class LibFormQuillEditorComponent extends FormBase<string>
   implements OnDestroy, OnInit {
@@ -152,21 +173,21 @@ export class LibFormQuillEditorComponent extends FormBase<string>
       imageDrop: true,
       imageCompress: {
         quality: 0.7,
-        maxWidth: 1200
+        maxWidth: 1200,
       },
       image1Rotate: true,
       image2Resize: true,
-      htmlEditButton: {debug: true}
+      htmlEditButton: { debug: true },
     };
     this.quillModulesUsed = {
       ...quillModulesDefaults,
-      ...this.quillModules
+      ...this.quillModules,
     };
 
     this.quillControl.valueChanges
       .pipe(takeUntil(this._destroyed))
       .pipe(debounceTime(1000))
-      .subscribe(newValue => {
+      .subscribe((newValue) => {
         this._value = this.wrapValue(newValue);
         this.onChange(this._value);
         this.onTouched();
@@ -193,7 +214,7 @@ export class LibFormQuillEditorComponent extends FormBase<string>
     this.quillControl.setValue(value);
     this.logger.log('form-quill-editor: writeValue', {
       value,
-      thisValue: this.value
+      thisValue: this.value,
     });
   }
 

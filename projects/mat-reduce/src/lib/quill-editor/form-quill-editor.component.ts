@@ -8,7 +8,6 @@ import {
 } from '@angular/core';
 import { NG_VALIDATORS, NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
 import { SimpleLog, FormBase } from '../from-core';
-import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 
 // import 'quill/dist/quill.min.js';
@@ -22,16 +21,32 @@ import ImageCompress from 'quill-image-compress';
 import ImageResize from 'quill-image-resize-module';
 import ImageRotate from 'quill-image-rotate-module';
 import htmlEditButton from 'quill-html-edit-button';
-// We do not add Sans Serif since it is the default
 
-// Add fonts to whitelist
+import { AddQuillFonts } from './editor-modules/quill-fonts';
 
-function getImport(q, importName) {
-  return q.import(importName);
-}
-let Font = getImport(Quill, 'attributors/style/font');
-Font.whitelist = ['inconsolata', 'roboto', 'mirza', 'arial', 'quicksand', 'roboto-slab'];
-Quill.register(Font, true);
+const fontsGoogle = [
+  'Abril Fatface',
+  'Cairo',
+  'Concert One',
+  'Courier',
+  'Crimson Text',
+  'Fjalla One',
+  'Garamond',
+  'IBM Plex Sans',
+  'Nunito',
+  'Poppins',
+  'Roboto',
+  'Rubik',
+  'Tahoma',
+  'Ubuntu',
+  'Varela',
+  'Verdana',
+];
+const { fontObjs, fontStyleText } = AddQuillFonts(
+  fontsGoogle,
+  Quill
+);
+console.log({fontObjs, fontStyleText})
 
 AddQuillInlineStyles(Quill);
 
@@ -64,12 +79,9 @@ type Config = QuillCounterConfig;
           <span class="ql-formats">
             <select class="ql-font">
               <option selected>Sans Serif</option>
-              <option value="inconsolata">Inconsolata</option>
-              <option value="roboto">Roboto</option>
-              <option value="roboto-slab">Roboto Slab</option>
-              <option value="mirza">Mirza</option>
-              <option value="arial">Arial</option>
-              <option value="quicksand">Quicksand</option>
+              <option *ngFor="let font of fontObjs" [value]="font.value">{{
+                font.name
+              }}</option>
             </select>
           </span>
           <span class="ql-formats">
@@ -140,13 +152,12 @@ type Config = QuillCounterConfig;
       .ql-editor-disabled {
         filter: contrast(0.4) brightness(1.5);
       }
+      .ql-editor {
+        font-family: 'Sans Serif'
+      }
     `,
   ],
-  styleUrls: [
-    './quill-css/quill.snow.css',
-    './quill-css/quill.bubble.css',
-    './quill-font-classes.scss',
-  ],
+  styleUrls: ['./quill-css/quill.snow.css', './quill-css/quill.bubble.css'],
   encapsulation: ViewEncapsulation.None,
 })
 export class LibFormQuillEditorComponent extends FormBase<string>
@@ -162,11 +173,22 @@ export class LibFormQuillEditorComponent extends FormBase<string>
 
   quillControl = new FormControl();
 
-  destroyed = new Subject();
+  fontObjs: { name: string; value: string }[] = fontObjs;
 
   logger: SimpleLog;
+  fontStylesRef: HTMLStyleElement;
 
-  ngOnInit() {
+  constructor() {
+    super();
+    this.fontStylesRef = document.createElement('style');
+    this.fontStylesRef.innerHTML = fontStyleText;
+    document.head.appendChild(this.fontStylesRef);
+
+    this.$nginit.subscribe(() => this.onInit());
+    this.$ngdestroy.subscribe(() => this.onDestroy());
+  }
+
+  onInit() {
     this.logger = new SimpleLog(this.debug);
     const quillModulesDefaults = {
       toolbar: '#toolbar',
@@ -197,8 +219,8 @@ export class LibFormQuillEditorComponent extends FormBase<string>
       });
   }
 
-  ngOnDestroy() {
-    this.destroyed.next();
+  onDestroy() {
+    this.fontStylesRef.remove();
   }
 
   setDisabledState?(isDisabled: boolean): void {

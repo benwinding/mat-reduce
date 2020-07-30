@@ -23,7 +23,7 @@ import { debounceTime, takeUntil } from 'rxjs/operators';
     <form-quill-editor
       placeholder="Type some HTML friend!"
       [formControl]="testControl"
-      [quillModules]="{ htmlEditButton: {} }"
+      [quillModules]="{ }"
       [debug]="true"
     >
     </form-quill-editor>

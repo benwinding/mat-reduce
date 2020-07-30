@@ -1,0 +1,9 @@
+.ql-font12px {
+  font-size: 12px;
+}
+.ql-editor-disabled {
+  filter: contrast(0.4) brightness(1.5);
+}
+.ql-editor {
+  font-family: 'Sans Serif'
+}

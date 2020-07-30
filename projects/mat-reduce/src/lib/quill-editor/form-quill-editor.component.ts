@@ -144,20 +144,7 @@ type Config = QuillCounterConfig;
       multi: true,
     },
   ],
-  styles: [
-    `
-      .ql-font12px {
-        font-size: 12px;
-      }
-      .ql-editor-disabled {
-        filter: contrast(0.4) brightness(1.5);
-      }
-      .ql-editor {
-        font-family: 'Sans Serif'
-      }
-    `,
-  ],
-  styleUrls: ['./quill-css/quill.snow.css', './quill-css/quill.bubble.css'],
+  styleUrls: ['./quill-themes/quill.snow.css', './quill-themes/quill.bubble.css'],
   encapsulation: ViewEncapsulation.None,
 })
 export class LibFormQuillEditorComponent extends FormBase<string>
@@ -180,10 +167,6 @@ export class LibFormQuillEditorComponent extends FormBase<string>
 
   constructor() {
     super();
-    this.fontStylesRef = document.createElement('style');
-    this.fontStylesRef.innerHTML = fontStyleText;
-    document.head.appendChild(this.fontStylesRef);
-
     this.$nginit.subscribe(() => this.onInit());
     this.$ngdestroy.subscribe(() => this.onDestroy());
   }
@@ -217,6 +200,10 @@ export class LibFormQuillEditorComponent extends FormBase<string>
         this.onChange(this._value);
         this.onTouched();
       });
+
+    this.fontStylesRef = document.createElement('style');
+    this.fontStylesRef.innerHTML = fontStyleText;
+    document.head.appendChild(this.fontStylesRef);
   }
 
   onDestroy() {

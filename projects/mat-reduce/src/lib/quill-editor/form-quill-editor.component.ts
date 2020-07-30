@@ -26,7 +26,10 @@ import htmlEditButton from 'quill-html-edit-button';
 
 // Add fonts to whitelist
 
-let Font = Quill.import('attributors/style/font');
+function getImport(q, importName) {
+  return q.import(importName);
+}
+let Font = getImport(Quill, 'attributors/style/font');
 Font.whitelist = ['inconsolata', 'roboto', 'mirza', 'arial', 'quicksand', 'roboto-slab'];
 Quill.register(Font, true);
 

@@ -5,5 +5,23 @@
   filter: contrast(0.4) brightness(1.5);
 }
 .ql-editor {
-  font-family: 'Sans Serif'
+  font-family: 'Sans Serif';
+}
+
+.ql-picker.ql-fontsize {
+  width: 108px;
+}
+
+.ql-picker.ql-fontsize > .ql-picker-label::before {
+  content: attr(data-label);
+}
+
+.ql-picker.ql-fontsize .ql-picker-label[data-value='']::before,
+.ql-picker.ql-fontsize .ql-picker-item[data-value='']::before {
+  content: 'Normal';
+}
+
+.ql-picker.ql-fontsize
+  .ql-picker-item[data-label]:not([data-label=''])::before {
+  content: attr(data-label);
 }

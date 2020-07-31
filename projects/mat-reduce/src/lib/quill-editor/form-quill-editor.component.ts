@@ -14,13 +14,14 @@ import { debounceTime, takeUntil } from 'rxjs/operators';
 import * as QuillNamespace from 'quill';
 const Quill: any = QuillNamespace;
 import Counter, { QuillCounterConfig } from './editor-modules/counter';
-import { AddQuillInlineStyles } from './editor-modules/add-quill-inline-styles';
+// import { AddQuillInlineStyles } from './editor-modules/add-quill-inline-styles';
 
 import { ImageDrop } from 'quill-image-drop-module';
 import ImageCompress from 'quill-image-compress';
 import ImageResize from 'quill-image-resize-module';
 import ImageRotate from 'quill-image-rotate-module';
 import htmlEditButton from 'quill-html-edit-button';
+import { FontStyle, FontSizeStyleText } from './editor-modules/quill-font-sizes';
 
 import { AddQuillFonts } from './editor-modules/quill-fonts';
 
@@ -42,13 +43,10 @@ const fontsGoogle = [
   'Varela',
   'Verdana',
 ];
-const { fontObjs, fontStyleText } = AddQuillFonts(
-  fontsGoogle,
-  Quill
-);
-console.log({fontObjs, fontStyleText})
+const { fontObjs, fontStyleText } = AddQuillFonts(fontsGoogle, Quill);
+const fontStylesText = FontSizeStyleText + fontStyleText
 
-AddQuillInlineStyles(Quill);
+// AddQuillInlineStyles(Quill);
 
 Quill.register('modules/htmlEditButton', htmlEditButton);
 Quill.register('modules/counter', Counter);
@@ -58,6 +56,7 @@ Quill.register('modules/imageDrop', ImageDrop);
 Quill.register('modules/imageCompress', ImageCompress);
 Quill.register('modules/image1Rotate', ImageRotate);
 Quill.register('modules/image2Resize', ImageResize);
+Quill.register(FontStyle, true);
 
 type Config = QuillCounterConfig;
 
@@ -85,14 +84,14 @@ type Config = QuillCounterConfig;
             </select>
           </span>
           <span class="ql-formats">
-            <select class="ql-header">
-              <option value="1"></option>
-              <option value="2"></option>
-              <option value="3"></option>
-              <option value="4"></option>
-              <option value="5"></option>
-              <option value="6"></option>
-              <option selected></option>
+            <select class="ql-fontsize">
+              <option selected>Normal</option>
+              <option value="1em">h6</option>
+              <option value="2em">h5</option>
+              <option value="3em">h4</option>
+              <option value="4em">h3</option>
+              <option value="5em">h2</option>
+              <option value="6em">h1</option>
             </select>
           </span>
           <span class="ql-formats">
@@ -144,7 +143,11 @@ type Config = QuillCounterConfig;
       multi: true,
     },
   ],
-  styleUrls: ['./quill-themes/quill.snow.css', './quill-themes/quill.bubble.css'],
+  styleUrls: [
+    './quill-themes/quill.snow.css',
+    './quill-themes/quill.bubble.css',
+    './form-quill-editor.css',
+  ],
   encapsulation: ViewEncapsulation.None,
 })
 export class LibFormQuillEditorComponent extends FormBase<string>
@@ -202,7 +205,8 @@ export class LibFormQuillEditorComponent extends FormBase<string>
       });
 
     this.fontStylesRef = document.createElement('style');
-    this.fontStylesRef.innerHTML = fontStyleText;
+    this.fontStylesRef.id = 'quill-styles-'+ Math.random().toString(32).slice(2,10);
+    this.fontStylesRef.innerHTML = fontStylesText;
     document.head.appendChild(this.fontStylesRef);
   }
 

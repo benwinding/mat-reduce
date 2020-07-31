@@ -22,8 +22,8 @@ export function AddQuillInlineStyles(Quill: any) {
   const FontClass = getImport(Quill, 'attributors/class/font');
   Quill.register(FontClass, true);
 
-  const SizeClass = getImport(Quill, 'attributors/class/size');
-  Quill.register(SizeClass, true);
+  // const SizeClass = getImport(Quill, 'attributors/class/size');
+  // Quill.register(SizeClass, true);
 
   const AlignStyle = getImport(Quill, 'attributors/style/align');
   Quill.register(AlignStyle, true);
@@ -40,8 +40,8 @@ export function AddQuillInlineStyles(Quill: any) {
   const FontStyle = getImport(Quill, 'attributors/style/font');
   Quill.register(FontStyle, true);
 
-  const SizeStyle = getImport(Quill, 'attributors/style/size');
-  Quill.register(SizeStyle, true);
+  // const SizeStyle = getImport(Quill, 'attributors/style/size');
+  // Quill.register(SizeStyle, true);
   // create new Quill instance after...
 
   const BaseImageFormat = getImport(Quill, 'formats/image');

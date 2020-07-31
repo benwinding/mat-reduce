@@ -19,10 +19,10 @@ export function AddQuillFonts(googleFontList: string[], quillInstance) {
   const fontStyles = fontList.reduce((acc, font) => {
     const fontName = getFontNameDashes(font);
     return (acc + `
-  .ql-picker.ql-font .ql-picker-label[data-value=${fontName}]::before, 
-  .ql-picker.ql-font .ql-picker-item[data-value=${fontName}]::before {
+  .ql-picker.ql-font .ql-picker-label[data-value='${fontName}']::before, 
+  .ql-picker.ql-font .ql-picker-item[data-value='${fontName}']::before {
     font-family: ${font}, sans-serif;
-    font-size: 1.2em;
+    font-size: 1em;
   }
   .ql-font-${fontName} {
     font-family: ${font};

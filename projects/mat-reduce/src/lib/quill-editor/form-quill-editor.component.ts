@@ -14,7 +14,7 @@ import { debounceTime, takeUntil } from 'rxjs/operators';
 import * as QuillNamespace from 'quill';
 const Quill: any = QuillNamespace;
 import Counter, { QuillCounterConfig } from './editor-modules/counter';
-// import { AddQuillInlineStyles } from './editor-modules/add-quill-inline-styles';
+import { AddQuillInlineStyles } from './editor-modules/add-quill-inline-styles';
 
 import { ImageDrop } from 'quill-image-drop-module';
 import ImageCompress from 'quill-image-compress';
@@ -46,7 +46,7 @@ const fontsGoogle = [
 const { fontObjs, fontStyleText } = AddQuillFonts(fontsGoogle, Quill);
 const fontStylesText = FontSizeStyleText + fontStyleText
 
-// AddQuillInlineStyles(Quill);
+AddQuillInlineStyles(Quill);
 
 Quill.register('modules/htmlEditButton', htmlEditButton);
 Quill.register('modules/counter', Counter);

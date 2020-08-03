@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Component, ViewChild, TemplateRef } from '@angular/core';
 
 import { FormControl, Validators } from '@angular/forms';
 
@@ -36,7 +37,18 @@ import { FormControl, Validators } from '@angular/forms';
     {{ testControlRequired.value }}
   </pre
     >
-  `
+
+    <button mat-raised-button color="primary" (click)="onClickDialog()">
+      Launch Dialog
+    </button>
+
+    <ng-template #clickDialogTemplate>
+      <form-time
+        placeholder="Select Time!"
+      >
+      </form-time>
+    </ng-template>
+  `,
 })
 export class TestTimeComponent {
   formControlEnabled = new FormControl(true);
@@ -46,8 +58,13 @@ export class TestTimeComponent {
   testControlRequired = new FormControl('', Validators.required);
   testSignControl = new FormControl();
 
-  constructor() {
-    this.formControlEnabled.valueChanges.subscribe(isEnabled => {
+  @ViewChild('clickDialogTemplate')
+  clickDialogTemplate: TemplateRef<HTMLElement>;
+
+  constructor(
+    private dialog: MatDialog
+  ) {
+    this.formControlEnabled.valueChanges.subscribe((isEnabled) => {
       if (isEnabled) {
         this.testControl.enable();
         this.testControlRequired.enable();
@@ -59,5 +76,9 @@ export class TestTimeComponent {
         this.testControl.disable();
       }
     });
+  }
+
+  onClickDialog() {
+    this.dialog.open(this.clickDialogTemplate);
   }
 }

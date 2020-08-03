@@ -1,4 +1,10 @@
-import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  forwardRef,
+  Input,
+  OnInit,
+  ViewEncapsulation,
+} from '@angular/core';
 import { NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { FormBase } from '../form-base-class';
 
@@ -6,7 +12,7 @@ import { FormBase } from '../form-base-class';
   // tslint:disable-next-line:component-selector
   selector: 'form-time',
   template: `
-    <mat-form-field [appearance]="appearance" class="full-width">
+    <mat-form-field [appearance]="appearance" class="form-time-full-width">
       <input
         matInput
         [formControl]="internalControl"
@@ -20,8 +26,8 @@ import { FormBase } from '../form-base-class';
       />
       <mat-icon
         matSuffix
-        class="has-pointer"
-        [class.is-grey]="disabled"
+        class="form-time-has-pointer"
+        [class.form-time-is-grey]="disabled"
         (click)="disabled ? null : picker.open()"
       >
         access_time
@@ -38,27 +44,34 @@ import { FormBase } from '../form-base-class';
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => LibFormTimeComponent),
-      multi: true
+      multi: true,
     },
     {
       provide: NG_VALIDATORS,
       useExisting: forwardRef(() => LibFormTimeComponent),
-      multi: true
-    }
+      multi: true,
+    },
   ],
   styles: [
     `
-      .is-grey {
+      .form-time-is-grey {
         color: #aaa;
       }
-      .has-pointer {
+      .form-time-has-pointer {
         cursor: pointer;
       }
-      .full-width {
+      .form-time-full-width {
         width: 100%;
       }
-    `
-  ]
+      .timepicker-backdrop-overlay {
+        z-index: 1000 !important;
+      }
+      .timepicker-overlay {
+        z-index: 1000 !important;
+      }
+    `,
+  ],
+  encapsulation: ViewEncapsulation.None,
 })
 export class LibFormTimeComponent extends FormBase<string> implements OnInit {
   @Input()

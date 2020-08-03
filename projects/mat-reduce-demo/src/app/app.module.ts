@@ -1,3 +1,5 @@
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -71,6 +73,8 @@ import { RouterModule } from '@angular/router';
     MatSidenavModule,
     MatIconModule,
     MatReduceModule,
+    MatDialogModule,
+    MatButtonModule,
     // MatReduceCoreModule,
 
     AppRoutingModule,

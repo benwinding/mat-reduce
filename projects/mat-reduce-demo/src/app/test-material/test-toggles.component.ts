@@ -47,7 +47,7 @@ export class TestTogglesComponent {
   formControlEnabled = new FormControl(true);
 
   testControl = new FormControl(false);
-  testControlR = new FormControl(false);
+  testControlR = new FormControl(null);
   testControlCheck = new FormControl(false);
 
   constructor() {

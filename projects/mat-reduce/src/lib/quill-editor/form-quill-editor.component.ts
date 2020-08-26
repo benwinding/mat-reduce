@@ -86,12 +86,12 @@ type Config = QuillCounterConfig;
           <span class="ql-formats">
             <select class="ql-fontsize">
               <option selected>Normal</option>
-              <option value="1em">h6</option>
-              <option value="2em">h5</option>
-              <option value="3em">h4</option>
-              <option value="4em">h3</option>
-              <option value="5em">h2</option>
-              <option value="6em">h1</option>
+              <option value="1em">Size 6</option>
+              <option value="2em">Size 5</option>
+              <option value="3em">Size 4</option>
+              <option value="4em">Size 3</option>
+              <option value="5em">Size 2</option>
+              <option value="6em">Size 1</option>
             </select>
           </span>
           <span class="ql-formats">

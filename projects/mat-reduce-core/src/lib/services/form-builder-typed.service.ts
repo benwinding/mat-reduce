@@ -30,6 +30,7 @@ export type FormGroupControlsOf<T> = {
 export abstract class FormGroupTypeSafe<T> extends FormGroup {
   // give the value a custom type s
   value: T;
+  valueChanges: Observable<T>;
   label: string;
   setValue(newValue: T) {
     super.setValue(newValue);
@@ -48,6 +49,7 @@ export abstract class FormGroupTypeSafe<T> extends FormGroup {
 
 export abstract class FormArrayTypeSafe<T> extends FormArray {
   value: T[];
+  valueChanges: Observable<T[]>;
   at(index: number): FormControlTypeSafe<T> | FormGroupTypeSafe<T> {
     return super.at(index) as any;
   }

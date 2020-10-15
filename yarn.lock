@@ -7847,19 +7847,12 @@ quill-html-edit-button@^1.0.10:
   dependencies:
     quill "^1.x"
 
-quill-image-compress@^1.2.3:
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/quill-image-compress/-/quill-image-compress-1.2.3.tgz#68b7e48d1d582b6bcd95966dbc7e0dfa11d7ce55"
-  integrity sha512-fL+x+Tqre8uMcP1vKmObiKKjtj7b3yYWK0dfYWnf8napdGl3/xMEAm8/HxhiccfnkBeHxHOKXex0WQCL5C1t3g==
+quill-image-compress@1.2.9:
+  version "1.2.9"
+  resolved "https://registry.yarnpkg.com/quill-image-compress/-/quill-image-compress-1.2.9.tgz#c41b440ac700ae2663fc53fd51abad7fcacfc95c"
+  integrity sha512-Or3T6JO/A4tXO9aWei2CDOcmbRe/AEhrxMrQem3QwfCp41UTkNqMAJAf/oNwfccPQW7LBVAmOKM91ywsCz6ecQ==
   dependencies:
     quill "^1.x"
-
-quill-image-drop-module@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/quill-image-drop-module/-/quill-image-drop-module-1.0.3.tgz#0e5ec8329dd67a12126f166b191bf64d2057a7d3"
-  integrity sha1-Dl7IMp3WehISbxZrGRv2TSBXp9M=
-  dependencies:
-    quill "^1.2.2"
 
 quill-image-resize-module@3.x:
   version "3.0.0"

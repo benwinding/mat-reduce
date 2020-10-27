@@ -2,8 +2,8 @@
   "name": "mat-reduce",
   "version": "10.0.0",
   "peerDependencies": {
-    "@angular/common": "10.x",
-    "@angular/core": "10.x",
+    "@angular/common": "^10.1.4",
+    "@angular/core": "^10.1.4",
     "hammerjs": "^2.x"
   },
   "homepage": "https://github.com/benwinding/mat-reduce",

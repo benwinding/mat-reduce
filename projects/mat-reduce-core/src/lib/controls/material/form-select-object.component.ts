@@ -72,8 +72,4 @@ export class LibFormSelectObjectComponent extends FormBase<Object>
     super();
     this.$options = TransformSelectionsPipe(this, this.$optionsInput);
   }
-
-  writeValue(newVal: Object) {
-    this.value = newVal || {};
-  }
 }

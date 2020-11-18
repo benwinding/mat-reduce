@@ -17,9 +17,9 @@ import {
 } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { FormControl } from '@angular/forms';
-import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import { Observable, Subject, BehaviorSubject, combineLatest } from 'rxjs';
 import { map, startWith, takeUntil } from 'rxjs/operators';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { COMMA, ENTER, P } from '@angular/cdk/keycodes';
 
 import {
   isIncludedAtBeginning,
@@ -28,6 +28,7 @@ import {
 } from '../../../utils/tag-helper';
 import { Tag } from '../Tag';
 import { MakeLogger } from '../../../utils/simple-logger';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -78,7 +79,7 @@ import { MakeLogger } from '../../../utils/simple-logger';
         (optionSelected)="optionSelectedFromList($event)"
       >
         <mat-option
-          *ngFor="let choiceName of filteredTagNames$ | async"
+          *ngFor="let choiceName of $filteredChoiceStrings | async"
           [value]="choiceName"
         >
           {{ choiceName }}
@@ -148,11 +149,11 @@ export class LibFormTagInternalComponent implements OnInit, OnDestroy {
   $currentValue = new BehaviorSubject<Tag[]>(null);
   $choiceTags = new BehaviorSubject<Tag[]>([]);
   $choiceStrings = new BehaviorSubject<string[]>([]);
+  $filteredChoiceStrings = new BehaviorSubject<string[]>([]);
 
   destroyed = new Subject();
   separatorKeysCodes: number[] = [ENTER, COMMA];
   inputTextControl = new FormControl();
-  filteredTagNames$: Observable<string[]>;
 
   @ViewChild('textInput', {} as any) textInput: ElementRef<HTMLInputElement>;
   @ViewChild('textInput', { read: MatAutocompleteTrigger } as any)
@@ -162,7 +163,7 @@ export class LibFormTagInternalComponent implements OnInit, OnDestroy {
 
   logger = MakeLogger('form-tag-internal');
 
-  constructor() {
+  constructor(private snackbar: MatSnackBar) {
     this.$choiceTags
       .pipe(
         map((choices) => (Array.isArray(choices) ? choices : [])),
@@ -170,12 +171,20 @@ export class LibFormTagInternalComponent implements OnInit, OnDestroy {
         takeUntil(this.destroyed)
       )
       .subscribe((choices) => this.$choiceStrings.next(choices));
-    this.filteredTagNames$ = this.inputTextControl.valueChanges.pipe(
-      startWith(null),
-      map((tagName: string | null) =>
-        tagName ? this._filter(tagName) : this.getChoicesMinusSelected()
-      )
+    const $textChanges = this.inputTextControl.valueChanges.pipe(
+      map((a) => a as string)
     );
+    combineLatest([$textChanges, this.$currentValue, this.$choiceStrings])
+      .pipe(
+        startWith([]),
+        map(([tagName]) =>
+          tagName ? this._filter(tagName) : this.getChoicesMinusSelected()
+        ),
+        takeUntil(this.destroyed)
+      )
+      .subscribe((choices) => {
+        this.$filteredChoiceStrings.next(choices);
+      });
   }
 
   ngOnInit() {
@@ -221,20 +230,89 @@ export class LibFormTagInternalComponent implements OnInit, OnDestroy {
     this.resetTextInput();
   }
 
+  notfiy(message: string) {
+    this.snackbar.open(message, 'Close', {
+      duration: 3000,
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom',
+    });
+  }
+
   async onTextInputBlur(event: MatChipInputEvent): Promise<void> {
     const value = event.value;
     const inputTrimmed = (value || '').trim();
-    if (!inputTrimmed) {
-      this.resetTextInput();
-      return;
+    const ctx = this;
+
+    function getTagMatching(name: string) {
+      const choiceTags = ctx.$choiceTags.getValue() || [];
+      const selectedTag = choiceTags.find((t) => doesTextMatch(t.name, name));
+      return selectedTag;
     }
-    this.logger.log('onTextInputBlur', { inputTrimmed });
-    const hasSelectBoxOpen = this.matAutocomplete.isOpen;
-    if (hasSelectBoxOpen) {
-      return;
+
+    function processNoCustom(): boolean {
+      if (!inputTrimmed) {
+        return true;
+      }
+      const hasSelectBoxOpen = ctx.matAutocomplete.isOpen;
+      ctx.logger.log('onTextInputBlur', { inputTrimmed, hasSelectBoxOpen });
+      if (!hasSelectBoxOpen) {
+        ctx.notfiy('Must match item in list');
+        return false;
+      }
+      const itemsShowing = ctx.$filteredChoiceStrings.getValue() || [];
+      const has1ItemShowing = itemsShowing.length === 1;
+      if (has1ItemShowing) {
+        const itemShowing = itemsShowing[0];
+        const selectedTag = getTagMatching(itemShowing);
+        ctx.onMenuItemClicked.next(selectedTag);
+        return true;
+      }
+      const matchAtBeginning = itemsShowing.find((str) =>
+        isIncludedAtBeginning(str, inputTrimmed)
+      );
+      const hasMatchAtBeginning = !!matchAtBeginning;
+      if (hasMatchAtBeginning) {
+        const selectedTag = getTagMatching(matchAtBeginning);
+        ctx.onMenuItemClicked.next(selectedTag);
+        return true;
+      }
+      ctx.notfiy('Must match item in list');
+      return false;
     }
-    this.onBlurredTextField.next(inputTrimmed);
-    this.resetTextInput();
+    function processCustom(): boolean {
+      if (!inputTrimmed) {
+        return true;
+      }
+      const existsInValue = (ctx.$currentValue.getValue() || []).some((t) =>
+        doesTextMatch(t.name, inputTrimmed)
+      );
+      if (existsInValue) {
+        ctx.notfiy('Already added to list');
+        return false;
+      }
+      const hasSelectBoxOpen = ctx.matAutocomplete.isOpen;
+      ctx.logger.log('onTextInputBlur', { inputTrimmed, hasSelectBoxOpen });
+      if (!hasSelectBoxOpen) {
+        ctx.onBlurredTextField.next(inputTrimmed);
+        return true;
+      }
+      const choiceTags = ctx.$choiceTags.getValue() || [];
+      const selectedTag = choiceTags.find((t) =>
+        doesTextMatch(t.name, inputTrimmed)
+      );
+      const hasExactMatch = !!selectedTag;
+      if (hasExactMatch) {
+        ctx.onMenuItemClicked.next(selectedTag);
+        return true;
+      }
+      ctx.onBlurredTextField.next(inputTrimmed);
+      return true;
+    }
+    if (this.customValues) {
+      processCustom() && this.resetTextInput();
+    } else {
+      processNoCustom() && this.resetTextInput();
+    }
   }
 
   resetTextInput() {

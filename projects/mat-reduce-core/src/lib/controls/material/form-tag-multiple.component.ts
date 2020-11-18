@@ -80,11 +80,9 @@ export class LibFormTagMultipleComponent
     this.logger.SetEnabled(this.debug);
   }
   
-  onMenuItemClicked(tag: Tag) {
-    this.logger.log('onMenuItemClicked', { tag });
-    const currentValue = [...(this.value || [])];
-    currentValue.push(tag);
-    this.value = currentValue;
+  onMenuItemClicked(newTag: Tag) {
+    this.logger.log('onMenuItemClicked', { newTag });
+    this.addedTagToInternalValue(newTag);
   }
   onRemovedTag(tag: Tag) {
     this.logger.log('onRemovedTag', { tag });
@@ -95,10 +93,16 @@ export class LibFormTagMultipleComponent
   }
   onBlurredTextField(text: string) {
     this.logger.log('onBlurredTextField', { text });
+    if (!this.customValues) {
+      return;
+    }
     const newTag = this.makeNewTag(text);
-    const currentValue = [...(this.value || [])];
-    currentValue.push(newTag);
-    this.value = currentValue;
+    this.addedTagToInternalValue(newTag);
+    this.notify(`Adding "${newTag.name}" to the global list...`);
+    this.addedNewTag.emit(newTag);
+    if (Array.isArray(this.choices)) {
+      this.choices = [newTag, ...this.choices];
+    }
   }
 
   writeValue(newVal: Tag[]) {

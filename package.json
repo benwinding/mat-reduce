@@ -8,7 +8,7 @@
     "build-core": "ng build --project mat-reduce-core --prod",
     "watch-lib": "ng build --project mat-reduce --watch",
     "watch-core": "ng build --project mat-reduce-core --watch",
-    "build-demo": "ng build --project=mat-reduce-demo --prod",
+    "build-demo": "ng build --project=mat-reduce-demo --prod && cp ./dist/mat-reduce-demo/index.html ./dist/mat-reduce-demo/404.html",
     "deploy-demo": "gh-pages -d dist/mat-reduce-demo",
     "build": "ng build",
     "test": "echo ng test",

@@ -1,10 +1,10 @@
 export function MakeLogger(loggerName: string) {
-  const logger = new SimpleLogger();
+  const logger = new SimpleLogger2();
   logger.SetSubtitle(loggerName);
   return logger;
 }
 
-class SimpleLogger {
+export class SimpleLogger2 {
   private title = '👇';
   private subtitle = ' default ';
   private enabled = false;

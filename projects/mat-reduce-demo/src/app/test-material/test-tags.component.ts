@@ -8,7 +8,7 @@ import { Tag } from '../from-mat-reduce-core';
 function makeTag(name): Tag {
   return {
     name,
-    id: uuidv1()
+    id: uuidv1(),
   };
 }
 
@@ -18,11 +18,12 @@ const friendArray = [
   makeTag('Cindy'),
   makeTag('Albert'),
   makeTag('Franklin'),
-  makeTag('John')
+  makeTag('John'),
 ];
 
 @Component({
   template: `
+    <h1>test-tags Testing</h1>
     <form-toggle
       [formControl]="formControlEnabled"
       placeholder="Form Enabled"
@@ -35,6 +36,35 @@ const friendArray = [
       [formControl]="formControlCustomValues"
       placeholder="Tags Custom Values"
     ></form-toggle>
+
+    <h1>Multiple</h1>
+
+    <form-tag-multiple
+      [customValues]="formControlCustomValues.value"
+      [removable]="formControlRemovable.value"
+      [formControl]="tagControlMultiple"
+      [debug]="true"
+      [choices]="selectChoices$ | async"
+      placeholder="Select Many Friends"
+    >
+    </form-tag-multiple>
+
+    <h3>Form Value</h3>
+    <pre>
+  {{ tagControlMultiple.value | json }}
+</pre>
+
+    <h1>Multiple Required</h1>
+
+    <form-tag-multiple
+      [customValues]="formControlCustomValues.value"
+      [removable]="formControlRemovable.value"
+      [formControl]="tagControlMultipleRequired"
+      [choices]="selectChoices$ | async"
+      [debug]="true"
+      placeholder="* Select Many Friends"
+    >
+    </form-tag-multiple>
 
     <h1>Single</h1>
 
@@ -89,35 +119,7 @@ const friendArray = [
       {{ tagControlSingleDelayed.value | json }}
     </pre
     >
-
-    <h1>Multiple</h1>
-
-    <form-tag-multiple
-      [customValues]="formControlCustomValues.value"
-      [removable]="formControlRemovable.value"
-      [formControl]="tagControlMultiple"
-      [choices]="selectChoices$ | async"
-      placeholder="Select Many Friends"
-    >
-    </form-tag-multiple>
-
-    <h3>Form Value</h3>
-    <pre>
-      {{ tagControlMultiple.value | json }}
-    </pre
-    >
-
-    <h1>Multiple Required</h1>
-
-    <form-tag-multiple
-      [customValues]="formControlCustomValues.value"
-      [removable]="formControlRemovable.value"
-      [formControl]="tagControlMultipleRequired"
-      [choices]="selectChoices$ | async"
-      placeholder="* Select Many Friends"
-    >
-    </form-tag-multiple>
-  `
+  `,
 })
 export class TestTagsComponent {
   formControlCustomValues = new FormControl();
@@ -135,9 +137,9 @@ export class TestTagsComponent {
 
   constructor() {
     console.log({
-      tagControlMultipleRequired: this.tagControlMultipleRequired
+      tagControlMultipleRequired: this.tagControlMultipleRequired,
     });
-    this.formControlEnabled.valueChanges.subscribe(isEnabled => {
+    this.formControlEnabled.valueChanges.subscribe((isEnabled) => {
       if (isEnabled) {
         this.tagControlSingle.enable();
         this.tagControlSingleDelayed.enable();
@@ -159,7 +161,7 @@ export class TestTagsComponent {
       delayedChoices.next([
         makeTag('Frank2'),
         makeTag('Albert2'),
-        makeTag('John')
+        makeTag('John'),
       ]);
     }, 1000);
   }

@@ -18,7 +18,7 @@ import {
 import { MatChipInputEvent } from '@angular/material/chips';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map, startWith, take } from 'rxjs/operators';
 import { ConfirmationService } from '../../dialogs/app-confirmation.component';
 import { FormBase } from '../form-base-class';
@@ -27,6 +27,11 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 
 import { v1 as uuidv1 } from 'uuid';
 import { SimpleLog } from '../../utils';
+import {
+  doesTextMatch,
+  isIncluded,
+  isIncludedAtBeginning,
+} from '../../utils/tag-helper';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -112,7 +117,8 @@ import { SimpleLog } from '../../utils';
     },
   ],
 })
-export class LibFormTagSingleComponent extends FormBase<Tag>
+export class LibFormTagSingleComponent
+  extends FormBase<Tag>
   implements OnInit, OnDestroy {
   // EXTERNAL API
   private _choices: Tag[];
@@ -187,7 +193,7 @@ export class LibFormTagSingleComponent extends FormBase<Tag>
     );
   }
 
-  private _filter(value: string): string[] {
+  private _filter(subStr: string): string[] {
     const choices = this.getChoicesMinusSelected();
     if (this.filterStrategy === 'all') {
       return _filterAll();
@@ -195,16 +201,10 @@ export class LibFormTagSingleComponent extends FormBase<Tag>
       return _filterBeginning();
     }
     function _filterAll(): string[] {
-      const filterValue = value.toLowerCase();
-      return choices.filter((choice) =>
-        (choice + '').toLowerCase().includes(filterValue)
-      );
+      return choices.filter((choice) => isIncluded(choice, subStr));
     }
     function _filterBeginning(): string[] {
-      const filterValue = value.toLowerCase();
-      return choices.filter(
-        (choice) => (choice + '').toLowerCase().indexOf(filterValue) === 0
-      );
+      return choices.filter((choice) => isIncludedAtBeginning(choice, subStr));
     }
   }
 
@@ -231,7 +231,7 @@ export class LibFormTagSingleComponent extends FormBase<Tag>
     this.logger.log('addFromTextInput', { value: event.value });
     // Add fruit only when MatAutocomplete is not open
     // To make sure this does not conflict with OptionSelected Event
-    const found = this.choices.find((c) => c.name === inputTrimmed);
+    const found = this.choices.find((c) => doesTextMatch(c.name, inputTrimmed));
     if (found) {
       this.logger.log(
         'addFromTextInput() found match, adding that instead of making new tag'
@@ -284,7 +284,7 @@ export class LibFormTagSingleComponent extends FormBase<Tag>
     });
     const autoCompleteValue = event.option.viewValue;
     const selectedTag = [...(this.choices || [])]
-      .filter((tag) => tag.name === autoCompleteValue)
+      .filter((tag) => doesTextMatch(tag.name, autoCompleteValue))
       .pop();
     if (!selectedTag) {
       this.logger.warn(

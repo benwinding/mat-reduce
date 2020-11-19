@@ -13,12 +13,19 @@ function makeTag(name): Tag {
 }
 
 const friendArray = [
-  makeTag('Frank'),
-  makeTag('Rosie'),
-  makeTag('Cindy'),
   makeTag('Albert'),
+  makeTag('Alison'),
+  makeTag('Cindy'),
+  makeTag('Daniel'),
+  makeTag('Dilbert'),
+  makeTag('Dylan'),
+  makeTag('Frank'),
   makeTag('Franklin'),
+  makeTag('Franky'),
   makeTag('John'),
+  makeTag('Robert'),
+  makeTag('Robin'),
+  makeTag('Rosie'),
 ];
 
 @Component({

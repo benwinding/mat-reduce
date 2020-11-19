@@ -14,12 +14,12 @@ import {
   MatAutocomplete,
   MatAutocompleteSelectedEvent,
   MatAutocompleteTrigger,
+  MatAutocompleteActivatedEvent,
 } from '@angular/material/autocomplete';
-import { MatChipInputEvent } from '@angular/material/chips';
 import { FormControl } from '@angular/forms';
-import { Observable, Subject, BehaviorSubject, combineLatest } from 'rxjs';
+import { Subject, BehaviorSubject, combineLatest } from 'rxjs';
 import { map, startWith, takeUntil } from 'rxjs/operators';
-import { COMMA, ENTER, P } from '@angular/cdk/keycodes';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 
 import {
   isIncludedAtBeginning,
@@ -62,9 +62,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
           [matChipInputFor]="chipList"
           [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
           [matChipInputAddOnBlur]="true"
-          (matChipInputTokenEnd)="onTextInputBlur($event)"
-          (keydown)="focusOnEnter($event)"
-          (blur)="onBlur()"
+          (keydown)="onKeyDown($event)"
+          (blur)="onBlur($event)"
         />
         <mat-icon
           class="tag-icon"
@@ -76,7 +75,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
       </mat-chip-list>
       <mat-autocomplete
         #auto="matAutocomplete"
-        (optionSelected)="optionSelectedFromList($event)"
+        (optionSelected)="optionSelectedFromAutoComplete($event)"
+        (optionActivated)="optionActivatedFromAutoComplete($event)"
       >
         <mat-option
           *ngFor="let choiceName of $filteredChoiceStrings | async"
@@ -161,7 +161,7 @@ export class LibFormTagInternalComponent implements OnInit, OnDestroy {
   @ViewChild('auto', {} as any)
   matAutocomplete: MatAutocomplete;
 
-  logger = MakeLogger('form-tag-internal');
+  logger = MakeLogger('--> form-tag-internal');
 
   constructor(private snackbar: MatSnackBar) {
     this.$choiceTags
@@ -219,8 +219,8 @@ export class LibFormTagInternalComponent implements OnInit, OnDestroy {
     }
   }
 
-  onBlur() {
-    this.logger.log('onBlur');
+  onBlur(e: any) {
+    this.logger.log('onBlur', { e });
   }
 
   removeTagChip(tagToRemove: Tag) {
@@ -238,10 +238,11 @@ export class LibFormTagInternalComponent implements OnInit, OnDestroy {
     });
   }
 
-  async onTextInputBlur(event: MatChipInputEvent): Promise<void> {
-    const value = event.value;
+  private processText(input: string): void {
+    const value = input;
     const inputTrimmed = (value || '').trim();
     const ctx = this;
+    ctx.logger.log('onTextInputBlur', { event, inputTrimmed });
 
     function getTagMatching(name: string) {
       const choiceTags = ctx.$choiceTags.getValue() || [];
@@ -254,7 +255,6 @@ export class LibFormTagInternalComponent implements OnInit, OnDestroy {
         return true;
       }
       const hasSelectBoxOpen = ctx.matAutocomplete.isOpen;
-      ctx.logger.log('onTextInputBlur', { inputTrimmed, hasSelectBoxOpen });
       if (!hasSelectBoxOpen) {
         ctx.notfiy('Must match item in list');
         return false;
@@ -291,7 +291,6 @@ export class LibFormTagInternalComponent implements OnInit, OnDestroy {
         return false;
       }
       const hasSelectBoxOpen = ctx.matAutocomplete.isOpen;
-      ctx.logger.log('onTextInputBlur', { inputTrimmed, hasSelectBoxOpen });
       if (!hasSelectBoxOpen) {
         ctx.onBlurredTextField.next(inputTrimmed);
         return true;
@@ -321,31 +320,40 @@ export class LibFormTagInternalComponent implements OnInit, OnDestroy {
     this.inputTextControl.setValue(null);
   }
 
-  optionSelectedFromList(event: MatAutocompleteSelectedEvent): void {
+  optionSelectedFromAutoComplete(event: MatAutocompleteSelectedEvent): void {
     const optionText = event.option.viewValue;
     const options = this.$choiceTags.getValue() || [];
     const selectedTag = options
       .filter((tag) => doesTextMatch(tag.name, optionText))
       .pop();
-    if (!selectedTag) {
-      this.logger.error(
-        'optionSelectedFromList() not sure how autocomplete selected something not in the list...'
-      );
-    }
-    this.logger.log('optionSelectedFromList()', {
+    this.logger.log('optionSelectedFromAutoComplete()', {
       event,
       optionText,
       options,
       selectedTag,
     });
+    if (!selectedTag) {
+      this.logger.error(
+        'optionSelectedFromAutoComplete() not sure how autocomplete selected something not in the list...'
+      );
+    }
     this.onMenuItemClicked.next(selectedTag);
     this.resetTextInput();
     this.textInput.nativeElement.blur();
   }
 
-  focusOnEnter(e: KeyboardEvent) {
-    if (e.keyCode === 13) {
-      this.logger.log('enter key pressed', { key: e.key, code: e.keyCode });
+  optionActivatedFromAutoComplete(event: MatAutocompleteActivatedEvent) {
+    this.logger.log('optionActivatedFromAutoComplete()', {
+      event,
+    });
+  }
+
+  onKeyDown(e: KeyboardEvent) {
+    const key = e.keyCode
+    if ((key === ENTER) || (key === COMMA)) {
+      const inputText = this.textInput.nativeElement.value;
+      this.logger.log('token end pressed', { key, e, inputText });
+      this.processText(inputText);
       setTimeout(() => {
         this.textInput.nativeElement.focus();
       });

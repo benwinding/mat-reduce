@@ -21,6 +21,7 @@ import {
   TestDateComponent,
   TestSignatureComponent,
 } from './test-3rd-party';
+import { TestTabsComponent } from './test-layouts';
 
 export const materialRoutes: Routes = [
   {
@@ -69,6 +70,13 @@ export const materialRoutes: Routes = [
   },
 ];
 
+export const layoutsRoutes: Routes = [
+  {
+    path: 'mat-tabs-reduce',
+    component: TestTabsComponent,
+  },
+];
+
 export const thirdPartyRoutes: Routes = [
   {
     path: 'form-phone-number',
@@ -98,6 +106,7 @@ export const thirdPartyRoutes: Routes = [
 
 const allRoutes: Routes = [
   ...materialRoutes,
+  ...layoutsRoutes,
   ...thirdPartyRoutes,
   {
     path: '**',

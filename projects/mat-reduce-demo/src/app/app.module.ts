@@ -37,6 +37,7 @@ import {
   TestSelectObjectAutocompleteComponent,
 } from './test-material';
 import { RouterModule } from '@angular/router';
+import { TestTabsComponent } from './test-layouts';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { RouterModule } from '@angular/router';
     TestSignatureComponent,
     TestSelectObjectSelectAllComponent,
     TestSelectObjectAutocompleteComponent,
+    TestTabsComponent,
 
     AppBtnBackComponent,
   ],

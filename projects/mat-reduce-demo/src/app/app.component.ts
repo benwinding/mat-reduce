@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { materialRoutes, thirdPartyRoutes } from './app.routing';
+import { layoutsRoutes, materialRoutes, thirdPartyRoutes } from './app.routing';
 
 @Component({
   selector: 'app-root',
@@ -12,6 +12,16 @@ import { materialRoutes, thirdPartyRoutes } from './app.routing';
           <h2>Material Wrappers</h2>
           <a
             *ngFor="let linkItem of linkItemsMaterial"
+            [routerLink]="[linkItem.path]"
+            routerLinkActive="active"
+            #rla="routerLinkActive"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            {{ linkItem.path }}
+          </a>
+          <h2>Layout Wrappers</h2>
+          <a
+            *ngFor="let linkItem of linkItemsLayouts"
             [routerLink]="[linkItem.path]"
             routerLinkActive="active"
             #rla="routerLinkActive"
@@ -67,4 +77,5 @@ import { materialRoutes, thirdPartyRoutes } from './app.routing';
 export class AppComponent {
   linkItemsMaterial = materialRoutes;
   linkItems3rdParty = thirdPartyRoutes;
+  linkItemsLayouts = layoutsRoutes;
 }

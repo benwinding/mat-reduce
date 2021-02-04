@@ -35,6 +35,7 @@ import {
   TestTogglesComponent,
   TestSelectObjectSelectAllComponent,
   TestSelectObjectAutocompleteComponent,
+  TestTagStringsComponent,
 } from './test-material';
 import { RouterModule } from '@angular/router';
 import { TestTabsComponent } from './test-layouts';
@@ -59,6 +60,7 @@ import { TestTabsComponent } from './test-layouts';
     TestSignatureComponent,
     TestSelectObjectSelectAllComponent,
     TestSelectObjectAutocompleteComponent,
+    TestTagStringsComponent,
     TestTabsComponent,
 
     AppBtnBackComponent,

@@ -12,6 +12,7 @@ import {
   TestFormGroupComponent,
   TestAssigneeComponent,
   TestNumberComponent,
+  TestTagStringsComponent,
 } from './test-material';
 import {
   TestEditorComponent,
@@ -55,6 +56,10 @@ export const materialRoutes: Routes = [
   {
     path: 'form-tags',
     component: TestTagsComponent,
+  },
+  {
+    path: 'form-tag-strings',
+    component: TestTagStringsComponent,
   },
   {
     path: 'form-formgroup',

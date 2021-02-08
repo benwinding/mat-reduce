@@ -24,6 +24,12 @@ import { FormBase } from '../form-base-class';
             </span>
           </div>
         </mat-select-trigger>
+        <ng-container *ngIf="hasSelectAll">
+          <div class="select-all-c" (click)="onClickSelectAll($event)">
+            <mat-checkbox [ngModel]="allSelected"> </mat-checkbox>
+            <span class="select-all-text">-- Select All --</span>
+          </div>
+        </ng-container>
         <mat-option *ngFor="let selection of selections" [value]="selection">
           {{ selection }}
         </mat-option>
@@ -35,6 +41,14 @@ import { FormBase } from '../form-base-class';
       .full-width {
         width: 100%;
         padding-bottom: 15px;
+      }
+      .select-all-c {
+        display: flex;
+        align-items: center;
+        padding: 16px;
+      }
+      .select-all-text {
+        margin-left: 10px;
       }
     `
   ],
@@ -54,4 +68,22 @@ import { FormBase } from '../form-base-class';
 export class LibFormSelectStringMultipleComponent extends FormBase<string[]> {
   @Input()
   selections: string[];
+  @Input()
+  hasSelectAll: boolean;
+
+  allSelected: boolean;
+
+  onClickSelectAll(e) {
+    e.preventDefault();
+    this.allSelected = !this.allSelected; // to control select-unselect
+
+    let newValue: Object[];
+    if (!this.allSelected) {
+      newValue = [];
+    } else {
+      const selectionsSafe = Array.isArray(this.selections) ? this.selections : [];
+      newValue = [...selectionsSafe];
+    }
+    this.writeValue(newValue);
+  }
 }

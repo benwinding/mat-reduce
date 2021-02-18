@@ -9,7 +9,7 @@ import { tryGetJsonString } from '../../utils/try-get-json';
   selector: 'form-button-toggles',
   template: `
     <div class="full-width">
-      <p>{{ placeholder }}</p>
+      <p *ngIf="placeholder" cass="form-button-toggles-label">{{ placeholder }}</p>
       <mat-button-toggle-group [name]="name">
         <mat-button-toggle
           *ngFor="let option of ($optionsWithChecked | async)"
@@ -24,7 +24,9 @@ import { tryGetJsonString } from '../../utils/try-get-json';
     `
       .full-width {
         width: 100%;
-        padding-bottom: 15px;
+      }
+      .form-button-toggles-label {
+        font-family: Roboto, "Helvetica Neue", sans-serif;
       }
     `,
   ],

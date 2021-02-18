@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
@@ -40,6 +41,7 @@ import { AutoCompleteDropDownArrowComponent } from './internal/autocomplete-drop
 import { LibFormCheckboxComponent } from './form-checkbox.component';
 import { LibFormTagInternalComponent } from './internal/form-tag-internal.component';
 import { LibFormTagStringsComponent } from './form-tag-strings.component';
+import { LibFormButtonToggleComponent } from './form-button-toggles.component';
 
 const exportedModules = [
   CommonModule,
@@ -51,6 +53,7 @@ const exportedModules = [
   MatChipsModule,
   MatCardModule,
   MatButtonModule,
+  MatButtonToggleModule,
   MatBadgeModule,
   MatDialogModule,
   MatAutocompleteModule,
@@ -63,8 +66,9 @@ const exportedModules = [
 ];
 
 const exported = [
-  LibFormNumberComponent,
+  LibFormButtonToggleComponent,
   LibFormCheckboxComponent,
+  LibFormNumberComponent,
   LibFormSelectObjectAutoCompleteComponent,
   LibFormSelectObjectComponent,
   LibFormSelectObjectMultipleComponent,
@@ -73,6 +77,7 @@ const exported = [
   LibFormSelectStringMultipleComponent,
   LibFormTagMultipleComponent,
   LibFormTagSingleComponent,
+  LibFormTagStringsComponent,
   LibFormTextAreaComponent,
   LibFormTextAreaDisabledComponent,
   LibFormTextClearableComponent,
@@ -82,7 +87,6 @@ const exported = [
   LibFormTextPasswordComponent,
   LibFormToggleComponent,
   LibFormToggleReversedComponent,
-  LibFormTagStringsComponent
 ];
 
 const internalComponents = [

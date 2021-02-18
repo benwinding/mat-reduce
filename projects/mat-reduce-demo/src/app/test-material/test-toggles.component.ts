@@ -41,14 +41,37 @@ import { FormControl } from '@angular/forms';
     <h5>Value</h5>
     <pre>{{testControlCheck.value}}</pre>
 
+    <h3>Button Toggle!</h3>
+    <form-button-toggles 
+      [formControl]="testControlButton"
+      placeholder="Okay There"
+      [options]="optionsButtons"
+    >
+    </form-button-toggles>
+
+    <h5>Value</h5>
+    <pre>{{testControlButton.value}}</pre>
   `
 })
 export class TestTogglesComponent {
   formControlEnabled = new FormControl(true);
+  
+  testControlButton = new FormControl(false);
+  optionsButtons = [
+    {
+      value: true,
+      label: 'This Is True',
+    },
+    {
+      value: false,
+      label: 'This Is false',
+    }
+  ]
 
   testControl = new FormControl(false);
   testControlR = new FormControl(null);
   testControlCheck = new FormControl(false);
+
 
   constructor() {
     this.formControlEnabled.valueChanges.subscribe(isEnabled => {

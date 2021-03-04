@@ -1,7 +1,7 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { FormBase } from '../form-base-class';
-import { take } from 'rxjs/operators';
+import { take, delay } from 'rxjs/operators';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -37,23 +37,16 @@ import { take } from 'rxjs/operators';
             matTooltip="Clear current color"
             class="bg-white close-btn"
           >
-            <mat-icon class="txt-black">
-              clear
-            </mat-icon>
+            <mat-icon class="txt-black"> clear </mat-icon>
           </button>
         </div>
       </mat-card>
-      <mat-card
-        *ngIf="disabled"
-        class="box"
-        [style.background]="value"
-      >
+      <mat-card *ngIf="disabled" class="box" [style.background]="value">
         <div class="flex-space-between">
           <span>
             {{ value ? value : 'click to pick color' }}
           </span>
-          <span>
-          </span>
+          <span> </span>
         </div>
       </mat-card>
     </mat-form-field>
@@ -92,20 +85,20 @@ import { take } from 'rxjs/operators';
         align-items: center;
         justify-content: space-between;
       }
-    `
+    `,
   ],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => LibFormColorComponent),
-      multi: true
+      multi: true,
     },
     {
       provide: NG_VALIDATORS,
       useExisting: forwardRef(() => LibFormColorComponent),
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+  ],
 })
 export class LibFormColorComponent extends FormBase<string> implements OnInit {
   @Input()
@@ -113,14 +106,12 @@ export class LibFormColorComponent extends FormBase<string> implements OnInit {
 
   constructor() {
     super();
-    this.$nginit.pipe(take(1)).subscribe(() => this.init());
+    this.$nginit.pipe(take(1), delay(1)).subscribe(() => this.init());
   }
 
   async init() {
     if (!this.value) {
-      setTimeout(() => {
-        this.value = this.defaultColor;
-      });
+      this.value = this.defaultColor;
     }
   }
 

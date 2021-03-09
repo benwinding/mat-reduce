@@ -1,7 +1,7 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { FormBase } from '../form-base-class';
-import { take, delay, takeUntil, map } from 'rxjs/operators';
+import { take, delay, takeUntil, map, debounceTime } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -110,8 +110,9 @@ export class LibFormColorComponent extends FormBase<string> implements OnInit {
   constructor() {
     super();
     this.$textColor = this.internalControl.valueChanges.pipe(
+      debounceTime(30),
       takeUntil(this._destroyed),
-      map((color) => invertColor(color))
+      map((color) => invertColor(this.internalControl.value))
     );
     this.$nginit.pipe(take(1), delay(1)).subscribe(() => this.init());
   }
@@ -131,6 +132,9 @@ export class LibFormColorComponent extends FormBase<string> implements OnInit {
 /* https://stackoverflow.com/a/35970186/2419584 */
 
 function invertColor(hex: string, bw = true) {
+  if (typeof hex != 'string') {
+    return '#000000';
+  }
   if (hex.indexOf('#') === 0) {
     hex = hex.slice(1);
   }

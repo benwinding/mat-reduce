@@ -103,7 +103,7 @@ import { Observable } from 'rxjs';
 })
 export class LibFormColorComponent extends FormBase<string> implements OnInit {
   @Input()
-  defaultColor = '#42d742';
+  defaultColor: string;
 
   $textColor: Observable<string>;
 

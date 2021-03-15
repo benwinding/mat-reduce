@@ -20,7 +20,7 @@ import { take } from 'rxjs/operators';
       <h3>{{ placeholder }}</h3>
       <div class="signature-border" [class.disabled-border]="disabled">
         <canvas #signaturePad [hidden]="disabled"> </canvas>
-        <img [hidden]="!disabled" [src]="this.value || blankImageSrc" />
+        <img *ngIf="disabled" [src]="this.value || blankImageSrc" />
       </div>
     </div>
   `,

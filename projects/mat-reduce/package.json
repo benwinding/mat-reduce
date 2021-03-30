@@ -9,7 +9,7 @@
   "homepage": "https://github.com/benwinding/mat-reduce",
   "description": "A _less_ verbose angular material library",
   "dependencies": {
-    "mat-reduce-core": "^10.1.19",
+    "mat-reduce-core": "^10.1.21",
     "ngx-quill": "12.x",
     "quill": "^1.3.6",
     "quill-html-edit-button": "^1.0.10",

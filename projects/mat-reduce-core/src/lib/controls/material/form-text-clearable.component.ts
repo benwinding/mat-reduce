@@ -19,6 +19,7 @@ import { FormBase } from '../form-base-class';
       <input
         *ngIf="disabled || locked"
         matInput
+        [placeholder]="placeholder"
         [disabled]="true"
         [value]="value"
         [name]="autoCompleteObscureName"

@@ -1,5 +1,5 @@
 import { Component, forwardRef, Input, OnInit, OnDestroy } from '@angular/core';
-import { NG_VALIDATORS, NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
+import { NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { FormBase } from '../form-base-class';
 
 @Component({
@@ -12,7 +12,9 @@ import { FormBase } from '../form-base-class';
         [name]="name"
         [formControl]="internalControl"
       >
-        {{ placeholder }} ({{ value ? yes : no }})
+        <ng-container *ngIf="placeholder">
+          {{ placeholder }} ({{ value ? yes : no }})
+        </ng-container>
       </mat-slide-toggle>
     </div>
   `,

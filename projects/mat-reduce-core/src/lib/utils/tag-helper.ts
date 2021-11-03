@@ -4,7 +4,7 @@ export function doesTextMatch(text1: string, text2: string): boolean {
   }
   const text1Safe = text1 + '';
   const text2Safe = text2 + '';
-  const matches = text1Safe.toLowerCase() === text2Safe.toLowerCase();
+  const matches = text1Safe.toLowerCase().trim() === text2Safe.toLowerCase().trim();
   return matches;
 }
 

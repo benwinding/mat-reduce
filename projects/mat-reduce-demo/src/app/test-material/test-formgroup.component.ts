@@ -7,7 +7,7 @@ import { Tag } from '../from-mat-reduce-core';
 
 function makeTag(name): Tag {
   return {
-    name,
+    name: name.trim(),
     id: uuidv1()
   };
 }
